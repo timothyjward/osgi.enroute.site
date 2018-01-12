@@ -5,29 +5,17 @@ markdown: kramdown
 collections:
   book:
     output: true
-  qs:
+  external:
     output: true
-  tutorial_base:
+  examples:
     output: true
-  tutorial_rsa:
-    output: true
-  tutorial_iot:
-    output: true
-  tutorial_wrap:
-    output: true
-  tutorial_eval:
-    output: true
-  tutorial_maven:
+  tutorial:
     output: true
   services:
     output: true
-  trains:
+  concepts: 
     output: true
-  videos:
-    output: true
-  appnotes:
-    output: true
-  doc:
+  resources:
     output: true
   faq:
     output: true

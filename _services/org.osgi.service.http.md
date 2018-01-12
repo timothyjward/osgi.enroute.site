@@ -1,6 +1,6 @@
 ---
 title: org.osgi.service.http
-layout: service
+layout: services
 version: 1.2.1
 summary:  An HTTP server framework
 ---

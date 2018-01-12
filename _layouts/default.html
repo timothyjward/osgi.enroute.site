@@ -11,10 +11,18 @@
 
 	<ul class=container12>
 		<li span=3>
-			<div>
-			{% include sidebar.htm %}
-			</div>
-			
+                       <div>
+                        {% include externalbar.htm  %}
+                        </div>
+
+                        <div>
+                        {% include toc-sidebar.html %}
+                        </div>
+
+                        <div>
+                        {% include resourcebar.htm %}
+                        </div>
+	
 		<li span=9>
 			<div>
 				<h1>{{h1}} {{page.title}}</h1>

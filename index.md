@@ -1,7 +1,4 @@
 ---
-layout: front
-title: OSGi enRoute
+layout: redirect
+redirect: /book/090-Introduction.html
 ---
-
-# bnd manual
-

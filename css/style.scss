@@ -35,6 +35,27 @@ $color-vignette:	#F0F0F0;
 @import "base.scss";
 @import "book.scss";
 
+.imageLeft {
+    text-align: center;
+}
+
+.header-link {
+  position: relative;
+  left: -0.0em;
+  opacity: 0;
+
+  \-webkit-transition: opacity 0.2s ease-in-out 0.1s;
+  \-moz-transition: opacity 0.2s ease-in-out 0.1s;
+  \-ms-transition: opacity 0.2s ease-in-out 0.1s;
+}
+
+h2:hover .header-link,
+h3:hover .header-link,
+h4:hover .header-link,
+h5:hover .header-link,
+h6:hover .header-link {
+  opacity: 1;
+}
 
 /*
 	Styling of the main menu
@@ -194,6 +215,20 @@ padding:12px;
     font-size:2em;
     vertical-align:middle;
 }
+
+a.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes enlarge {
