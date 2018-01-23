@@ -25,11 +25,47 @@ As payback is not immediate, addressing foundational issues like sustainability 
 It is perhaps to those disciplines we should look to for guidance?
 
 
+## Complexity, Change and the role of Modularity
+
+All Complex Adaptive Systems (CAS) are composed of a hierarchy of structural layers; each layer internally modular. Complex adaptive systems (CAS), including Ecosystems, Social Systems, Biological cells, and Financial Markets, are characterized by intricate hierarchical arrangements of boundaries and signals: [Signals and Boundaries - John Holland](https://mitpress.mit.edu/books/signals-and-boundaries). The following principles are quite generic and will be familar to software engineers conversent with SOLID / Lean Agile methodologies 
+
+### Modularity  
+
+Why is Modularity so important? Modularity makes complexity manageable; Modularity enables parallel work; and Modularity is tolerant of uncertainty. By “tolerant of uncertainty” we mean that particular elements of a modular design may be changed after the fact and in unforeseen ways: [Design Rules, Volume 1 The Power of Modularity](https://mitpress.mit.edu/books/design-rules). To successfully implement Modularity, the internal implementation details of a Module must be shielded from the Module's external environment: the external environment being the aggregate of all other modules, the underlying runtime and higher level Services. The only permissible interactions between the Module, and its host `Environment`, is then via the Module’s (in a software context) public Interfaces. 
+
+Once achieved, the internal implementation details of the Module can be changed at will.
+
+### Cohesion  
+
+Systems evolve over time. To accomodate structural change Systems must localise the effects of structural chnage by maximising Cohesion: Things that are closely related, that must change in unison, that must evolve together, need to be colocated together within the same Module. Things that evolve at a different rates, and/or could be used separately in different runtime contexts, should be in separate Modules, and these Modules should be `Loosely Coupled` via the published Interfaces that change much more slowly over time. 
+The _Principles of Package Cohesion_  summarise these ideas: 
+   * Reuse-release equivalence principle (REP) - The unit of reuse is the unit of release.
+   * Common-reuse principle (CRP) - Classes that aren’t reused together should not be grouped together.
+   * Common-closure principle (CCP) - Classes that change together belong together.
+
+### Loose Coupling
+
+To allow substitution and interchangeability Modules must be loosely coupled. Critically this cannot be achieved if Modules refer to each other explicitly by a specific unique name and version. Rather, to enable substitution, Module relationships need to be expressed in terms of the Capabilities they expose to the environment via the public Interfaces, and also what they Require from the environment to run. In the context of software, to allow the impact of changes to be determined, Modules should semantically version these Requirement and Capabilities (see - https://semver.org, also https://www.osgi.org/wp-content/uploads/AgilityandModularity2014v21.pdf). The _Principles of Package Coupling_ provide guidance concerning the inter-dependencies between Loosely-Coupled Modules:
+   * Acyclic dependencies principle (ADP) - The dependency structure between packages must not contain cyclic dependencies.
+   * Stable-dependencies principle (SDP) - The dependencies between packages should be in the direction of the stability of the packages. A package should only depend upon packages that are more stable than it is.
+   * Stable-abstractions principle (SAP) - Packages that are maximally stable should be maximally abstract (i.e. public Module Interfaces). Unstable packages should be concrete (Module implementations). The abstractness of a package should be in proportion to its stability.
+
+### Structural Hierarchy 
+
+As already explained boundaries encapsulate complexity, and the entities created by these `Boundaries` interact with each other via loosely coupled `Signals`. What is perhaps less well appreciated is that The introduction of Modularity at one structural layer introduces a new higher layer of structural abstraction. This process is iterative; by this we mean that a new boundary can be created to enclose a group of related Modules, thereby creating a super-Module: and so yet another layer of structural abstraction. The following questions apply at each layer of this hierarchy: 
+   * Which Modules are required to re-produce the desired functionality for the next sturctural layer?
+   * How do these Modules communicate at runtime if co-located, if distrubuted?
+   * What is the life-cycle? 
+   * How is the Composite entity configured?
+
+The structural OSGi™/Java hierarchy will be familiar to the reader and perfectly illustrates this concept. 
+
+![Modularity and complexity](img/ComplexityModularity3.png)
+
+
 ## Complexity & Software Engineering
 
-The answer to the above question is both Yes and No. 
-
-Current research into Complex Adaptive Systems has much to teach the software industry; however a number of foundational principles were independently discovered by the Software Industry in the 1970's. 
+Current research into Complex Adaptive Systems has much to teach the software industry; however a number of foundational principles were independently discovered by the Software Industry in the 1970's.
 
 Notable insights into the nature of Complexity within Software systems include:
 
@@ -39,7 +75,7 @@ and
 
 > _Lehman’s Law_: As a system evolves, its complexity increases unless work is done to maintain or reduce it.
 
-Regarding the role of Modularity in tackling this problem, [Parnas](https://en.wikipedia.org/wiki/David_Parnas) in his seminal paper [On the Criteria To Be Used in Decomposing Systems into Modules](http://repository.cmu.edu/cgi/viewcontent.cgi?article=2979&context=compsci), [Parnas](https://en.wikipedia.org/wiki/David_Parnas) states... 
+Regarding the role of Modularity in tackling this problem, [Parnas](https://en.wikipedia.org/wiki/David_Parnas) in his seminal paper [On the Criteria To Be Used in Decomposing Systems into Modules](http://repository.cmu.edu/cgi/viewcontent.cgi?article=2979&context=compsci), [Parnas](https://en.wikipedia.org/wiki/David_Parnas) states...
 
 > “The major advancement in the area of modular programming has been the development of coding techniques and assemblers which (1) allow one module to be written with little knowledge of the code in another module, and (2) allow modules to be reassembled and replaced without reassembly of the whole system. This facility is extremely valuable for the production of large pieces of code ..."
 
@@ -56,41 +92,13 @@ and finally
 
 > we must conclude that hierarchical structure and "clean" decomposition are two desirable but independent properties of a system structure.
 
-As explained later, runtime Hierarches are actually the result of Modularity and so in this case the two concepts are closely inter-related.    
+As explained later, runtime Hierarches are actually the result of Modularity and so in this case the two concepts are closely inter-related.
 
 Further notable insights into the nature of Complexity within distributed Software systems include:
 
 > [_The 8 Fallacies of Distributed Computing_](http://nighthacks.com/jag/res/Fallacies.html)
 
-which despite claims to the contrary are as valid today as when they were first crafted.  
-
-
-## Complexity, Change and the role of Modularity
-
-All Complex Adaptive Systems (CAS) are composed of a hierarchy of structural layers; each layer internally modular. Complex adaptive systems (CAS), including Ecosystems, Social Systems, Biological cells, and Financial Markets, are characterized by intricate hierarchical arrangements of boundaries and signals: [Signals and Boundaries - John Holland](https://mitpress.mit.edu/books/signals-and-boundaries). The following principles are quite generic and will be familar to software engineers conversent with SOLID / Lean Agile methodologies 
-
-* **Modularity** - Why is Modularity so important? Modularity makes complexity manageable; Modularity enables parallel work; and Modularity is tolerant of uncertainty. By “tolerant of uncertainty” we mean that particular elements of a modular design may be changed after the fact and in unforeseen ways: [Design Rules, Volume 1 The Power of Modularity](https://mitpress.mit.edu/books/design-rules). To successfully implement Modularity, the internal implementation details of a Module must be shielded from the Module's external environment: the external environment being the aggregate of all other modules, the underlying runtime and higher level Services. The only permissible interactions between the Module, and its host `Environment`, is then via the Module’s (in a software context) public Interfaces. Once achieved, the internal implementation details of the Module can be changed at will.
-
-* **Cohesion** - Systems evolve over time. To accomodate structural change Systems must localise the effects of structural chnage by maximising Cohesion: Things that are closely related, that must change in unison, that must evolve together, need to be colocated together within the same Module. Things that evolve at a different rates, and/or could be used separately in different runtime contexts, should be in separate Modules, and these Modules should be `Loosely Coupled` via the published Interfaces that change much more slowly over time. 
-The _Principles of Package Cohesion_  summarise these ideas: 
-   * Reuse-release equivalence principle (REP) - The unit of reuse is the unit of release.
-   * Common-reuse principle (CRP) - Classes that aren’t reused together should not be grouped together.
-   * Common-closure principle (CCP) - Classes that change together belong together.
-
-* **Loose Coupling** - To allow substitution and interchangeability Modules must be loosely coupled. Critically this cannot be achieved if Modules refer to each other explicitly by a specific unique name and version. Rather, to enable substitution, Module relationships need to be expressed in terms of the Capabilities they expose to the environment via the public Interfaces, and also what they Require from the environment to run. In the context of software, to allow the impact of changes to be determined, Modules should semantically version these Requirement and Capabilities (see - https://semver.org, also https://www.osgi.org/wp-content/uploads/AgilityandModularity2014v21.pdf). The _Principles of Package Coupling_ provide guidance concerning the inter-dependencies between Loosely-Coupled Modules:
-   * Acyclic dependencies principle (ADP) - The dependency structure between packages must not contain cyclic dependencies.
-   * Stable-dependencies principle (SDP) - The dependencies between packages should be in the direction of the stability of the packages. A package should only depend upon packages that are more stable than it is.
-   * Stable-abstractions principle (SAP) - Packages that are maximally stable should be maximally abstract (i.e. public Module Interfaces). Unstable packages should be concrete (Module implementations). The abstractness of a package should be in proportion to its stability.
-
-* **Structural Hierarchy** - As already explained boundaries encapsulate complexity, and the entities created by these `Boundaries` interact with each other via loosely coupled `Signals`. What is perhaps less well appreciated is that The introduction of Modularity at one structural layer introduces a new higher layer of structural abstraction. This process is iterative; by this we mean that a new boundary can be created to enclose a group of related Modules, thereby creating a super-Module: and so yet another layer of structural abstraction. The following questions apply at each layer of this hierarchy: 
-   * Which Modules are required to re-produce the desired functionality for the next sturctural layer?
-   * How do these Modules communicate at runtime if co-located, if distrubuted?
-   * What is the life-cycle? 
-   * How is the Composite entity configured?
-
-The structural OSGi™/Java hierarchy will be familiar to the reader and perfectly illustrates this concept. 
-
-![Modularity and complexity](img/ComplexityModularity3.png)
+which despite claims to the contrary are as valid today as when they were first crafted.
 
 
 ## Measuring Complexity
@@ -117,15 +125,7 @@ To complete the logical exercise, lets what happens if we ignore any Cohesion co
 
 ![Modularity and complexity](img/ComplexityModularity2.png)
 
-To conclude, even after accounting for the new layers of structural Complexity created by Modularity, the reduction of System Complexity - through appropriate use of Modularity - is profound. To realise these significant benefits appropriate Developer tooling is required to manage the additional layers of structural abstraction, and the target runtime platform must automatically Orchestrate & Assembly such highly Modular systems while presenting Operations will a single simple entity to Manage: i.e. _shielded from Operations_ from the structural details of the composite system. 
+To conclude, even after accounting for the new layers of structural Complexity created by Modularity, the reduction of System Complexity - through appropriate use of Modularity - is profound. 
 
-## Complexity & TCO  
-
-The Total Cost of Ownership is simple a financial measure of how well Systems are designed to cope with ongoing Complexity & Change!
-
-
-The longer the planned life-time of the System, more Agile the Business requirements, the more volatile the runtime environment the more costly Complexity becomes and more Critically modularity becomes. Furthermore, the higher the degree of Business Agility, the more adaptive the System requirements, the more volatile the Environment, the more Loose-Coupling needs to be driven down through the Structural Hierarchy. Again we see that runtime Hierarchy, Cohesion and Loose-Coupling are related concerns.
-
-For businesses that require Agility and / or for System that require longevity and / or must operate in volatile environmenrts, properly implemented Modularity offers transformation costs savings. To achieve this potential, applications must be design to be optimally Modular, leveraging Open Industry Standards for Modularity, the runtime environment must _fully shield_ Operations from the structural details of these composite / highly modular Applications, and ofcourse the runtime Environment itself must be Operationally simple to maintain and evolve over time.
-
+However, to realise these significant benefits appropriate Developer tooling is required to manage the additional layers of structural abstraction, and the target runtime platform must automatically Orchestrate & Assembly such highly Modular systems while presenting Operations will a single simple entity to Manage: i.e. _shielded from Operations_ from the structural details of the composite system. 
 

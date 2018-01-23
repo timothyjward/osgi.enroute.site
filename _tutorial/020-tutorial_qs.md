@@ -2,7 +2,7 @@
 title: Quick Start 
 layout: tutorial
 lprev: 015-Prerequisite.html 
-lnext: 010-tutorial.html
+lnext: 030-tutorial_microservice.html
 summary: Your first OSGi™ based Microservice (< 5 minutes). 
 ---
 
@@ -12,8 +12,9 @@ Simplest project to get a running osgi app in fewer steps
 
 ## Project Setup
 
-Paste the following Maven project skeletion to a file named `settings.xml`.
+Paste the following Maven project skeleton to a file named `settings.xml`.
 
+{% highlight html %}
     <settings>
       <profiles>
         <profile>
@@ -38,13 +39,14 @@ Paste the following Maven project skeletion to a file named `settings.xml`.
         </profile>
       </profiles>
     </settings>
+{% endhighlight %}
 
-Now issue the command
+Now issue the command to create the project template
 
     mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project -DarchetypeVersion=7.0.0-SNAPSHOT
 
 
-Fill in the settings as shown
+Fillng the the project details with appropriate values 
 
     Define value for property 'groupId': com.acme.example
     Define value for property 'artifactId': quickstart
@@ -59,7 +61,7 @@ Fill in the settings as shown
 
 ## Creating an OSGi™ MicroService
 
-Launch eclipse and **import** the Maven project that was created in `quickstart` directory. 
+Launch eclipse and **import** the Maven project just created in `quickstart` directory. 
 
 **Menu File -> Import**
 
@@ -84,6 +86,7 @@ The next step is to write the implementation code in the provided component clas
 
 On open the `ComponentImpl` source file you'll see the following tesmplate 
 
+{% highlight java %}
     package com.paremus.examples;
 
     import org.osgi.service.component.annotations.Component;
@@ -94,6 +97,7 @@ On open the `ComponentImpl` source file you'll see the following tesmplate
         //TODO add an implementation
     
     }
+{% endhighlight %}
 
 This needs to be edit to include:
 
@@ -104,6 +108,7 @@ This needs to be edit to include:
 
 After which the `CompenentImpl` will look as follows:
 
+{% highlight java %}
     package com.acme.prime.upper.application;
 
     import javax.ws.rs.GET;
@@ -124,6 +129,7 @@ After which the `CompenentImpl` will look as follows:
         } 
     
     }
+{% endhighlight %}
 
 Now remember to **Save** your changes.
 

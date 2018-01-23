@@ -1,40 +1,34 @@
 ---
-title: Modularity Maturity Model 
+title: Complexity, Modularity & Business 
 summary: Modularity the foundations of effective Organisational structures. 
 layout: concepts 
 lprev: 090-complexity-modularity 
 lnext: 010-concepts 
 ---
 
-Talk about reuse-release equivalence here? 
+## Complexity & TCO
+
+The Total Cost of Ownership is simple a financial measure of how well Systems are designed to cope with ongoing Complexity & Change!
 
 
-## Motivation
+The longer the planned life-time of the System, more Agile the Business requirements, the more volatile the runtime environment the more costly Complexity becomes and more Critically modularity becomes. Furthermore, the higher the degree of Business Agility, the more adaptive the System requirements, the more volatile the Environment, the more Loose-Coupling needs to be driven down through the Structural Hierarchy. Again we see that runtime Hierarchy, Cohesion and Loose-Coupling are related concerns.
 
-Since its foundation in 1998 the OSGi Allaince has pursued the goal of highly maintainable, agile and so economically sustainable software eco-systems, and todays OSGi Alliance Specifications provide elegant, modular foundations required to achieve these objectives.
-
-Yet as OSGi has evolved, so has developer tooling, recommended best practices, examples and documentation; all of which can still be found on the Internet. While providing a historical perspective on the evolution of OSGi™; this legacy together with the intrinsic challenges in creating truly modular code, have enabled OSGi's critics to label OSGi as 'too hard' for the average developer. It is indeed true that historically it has been easier to get started with a popular languages like node.js or Ruby on Rails, ignoring the down stream maintenance consequences.
-
-enRoute has been created by the OSGi Allaince to directly address this conundrum / criticism.
-
-enRoute provides an OSGi/Java development environment that aims to be as simple to use as other popular rapid delivery frameworks for simple applications; but critically enRoute achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi/Java.
-
-![Lowering the barriers](/img/book/why-enroute.png)
+For businesses that require Agility and / or for System that require longevity and / or must operate in volatile environmenrts, properly implemented Modularity offers transformation costs savings. To achieve this potential, applications must be design to be optimally Modular, leveraging Open Industry Standards for Modularity, the runtime environment must _fully shield_ Operations from the structural details of these composite / highly modular Applications, and ofcourse the runtime Environment itself must be Operationally simple to maintain and evolve over time.
 
 
-## Motivation
+## Traditional Approach dealing with COmplexity 
 
-Since its formation in 1998, the goal of the OSGi™ Allaince has been the pursuit of highly maintainable, agile and economically sustainable software eco-systems. For two decades the OSGi Allaince has pursued this goal and, in response to a deeping understanding on how to achieve these fundamental objectives, OSGi specifications have evolved.
+givem what we've learn't lets review some standard management practices for reducing Complexity
 
-The OSGi Alliance has embraces relevant industry trends: for example, OSGi Alliance R7 specifications now provide elegant, modular foundations for both Microservices and runtime Reactive systems.
+No Chnage no Problem 
 
-Yet as OSGi has evolved, so has developer tooling, recommended best practices, examples and documentation; all of which can still be found on the Internet. While this provides a fascinating historical perspective on the evolution of the technology; this legacy together with the intrinsic challenges in creating truly modular code, have enabled OSGi's critics to label OSGi as 'too hard' for the average developer. It is indeed true that historically it has been easier to get started with a popular non-modular, non-type safe language like node.js or Ruby on Rails, ignoring the down stream maintenance consequences.
+* Outsource Application - Complexity is someone else problem - Charge you for Changes?!
+* Run on Cloud - just shift the Complexity from your VM to a third Party VM
+* Consolidate Functionality - 3 Applicaton performing overlapping functions replace by 1. Operation complexity decreases - but Developer cmplexity /increases by ...
+* Docker / MicroServices - 
+* DevOps - Dead sea effect.    
 
-enRoute has been created by the OSGi Allaince to directly address this conundrum / criticism.
 
-enRoute provides an OSGi/Java development environment that is as easy to use as other popular rapid delivery frameworks for simple applications; but critically enRoute achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi/Java, and essential for the creation of functionally sophisticated & adaptive Enterprise & IoT software system that are economically sustainabled overtime.
-
-![Lowering the barriers](/img/book/why-enroute.png)
 
 
 A more organisation perspective ....
@@ -169,4 +163,32 @@ operational support for module addition/removal/replacement.
 Summaries generic arguments for Organisation here (from this and previous section - leads into OSGi). ?
 
 
+## Motivation
 
+Since its foundation in 1998 the OSGi Allaince has pursued the goal of highly maintainable, agile and so economically sustainable software eco-systems, and todays OSGi Alliance Specifications provide elegant, modular foundations required to achieve these objectives.
+
+Yet as OSGi has evolved, so has developer tooling, recommended best practices, examples and documentation; all of which can still be found on the Internet. While providing a historical perspective on the evolution of OSGi™; this legacy together with the intrinsic challenges in creating truly modular code, have enabled OSGi's critics to label OSGi as 'too hard' for the average developer. It is indeed true that historically it has been easier to get started with a popular languages like node.js or Ruby on Rails, ignoring the down stream maintenance consequences.
+
+enRoute has been created by the OSGi Allaince to directly address this conundrum / criticism.
+
+enRoute provides an OSGi/Java development environment that aims to be as simple to use as other popular rapid delivery frameworks for simple applications; but critically enRoute achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi/Java.
+
+![Lowering the barriers](/img/book/why-enroute.png)
+
+
+## Motivation
+
+Since its formation in 1998, the goal of the OSGi™ Allaince has been the pursuit of highly maintainable, agile and economically sustainable software eco-systems. For two decades the OSGi Allaince has pursued this goal and, in response to a deeping understanding on how to achieve these fundamental objectives, OSGi specifications have evolved.
+
+The OSGi Alliance has embraces relevant industry trends: for example, OSGi Alliance R7 specifications now provide elegant, modular foundations for both Microservices and runtime Reactive systems.
+
+Yet as OSGi has evolved, so has developer tooling, recommended best practices, examples and documentation; all of which can still be found on the Internet. While this provides a fascinating historical perspective on the evolution of the technology; this legacy together with the intrinsic challenges in creating truly modular code, have enabled OSGi's critics to label OSGi as 'too hard' for the average developer. It is indeed true that historically it has been easier to get started with a popular non-modular, non-type safe language like node.js or Ruby on Rails, ignoring the down stream maintenance consequences.
+
+enRoute has been created by the OSGi Allaince to directly address this conundrum / criticism.
+
+enRoute provides an OSGi/Java development environment that is as easy to use as other popular rapid delivery frameworks for simple applications; but critically enRoute achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi/Java, and essential for the creation of functionally sophisticated & adaptive Enterprise & IoT software system that are economically sustainabled overtime.
+
+![Lowering the barriers](/img/book/why-enroute.png)
+
+
+A more organisation perspective ....
