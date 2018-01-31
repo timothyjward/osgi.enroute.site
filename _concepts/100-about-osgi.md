@@ -1,9 +1,9 @@
 ---
 title: OSGi Architecture
 summary: A short overview of what OSGi is about
-layout: concepts 
-lprev: 090-modularity
-lnext: 210-overview
+layout: toc-guide-page 
+lprev: 095-modularity-maturity-model 
+lnext: 090-complexity-modularity 
 ---
 
 The OSGi technology is a set of specifications that define a _dynamic component system for Java_. These specifications enable a development model where an _application_ is composed of several _components_ which are packaged in _bundles_. Components are communicating through _nano-services_. 

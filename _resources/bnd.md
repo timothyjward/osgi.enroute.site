@@ -1,8 +1,9 @@
 ---
-layout: default
+layout: toc-guide-page
+summary: Work Horse of the OSGi™ Build System
 ---
 
-# Background
+## Background
 bnd is the Swiss army knife of OSGi, it is used for creating and working with OSGi bundles. Its primary goal is take the pain out of developing bundles. With OSGi you are forced to provide additional metadata in the JAR's manifest to verify the consistency of your "class path". This metadata must be closely aligned with the class files in the bundle and the policies that a company has about versioning. Maintaining this metdata is an error prone chore because many aspects are redundant.
 
 bnd's raison d'etre is therefore to remove the chores and use the redundancy to create the manifest from the class files instead of maintaining it by hand. The core task is therefore to analyze the class files and find any dependencies. These dependencies are then merged with ''instructions'' supplied by the user. For example, adding a version to all imported packages from a specific library can be specified as:
@@ -56,7 +57,7 @@ bnd will not create an output file if none of the resources is newer than an exi
 
 The program is available in several forms: command line, ant task, maven plugin, and an Eclipse plugin.
 
-##Tips
+## Tips
 There are some common pitfalls that can be prevented by following the tips:
 
 * Keep it simple. bnd's defaults are pretty good and not specifying is usually the best solution. KISS!

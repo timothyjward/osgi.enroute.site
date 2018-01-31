@@ -1,9 +1,9 @@
 ---
 title: Microservice 
-layout: tutorial
+layout: toc-guide-page
 lprev: 020-tutorial_qs.html 
-lnext: 010-tutorial.html
-summary: An OSGi™ based microservice tutorial  (< 10 minutes). 
+lnext: 015-Prerequisite.html
+summary: Creating a tradition 3-tier Microservice (< 10 minutes). 
 ---
 
 ## Introduction

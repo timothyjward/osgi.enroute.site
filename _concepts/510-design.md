@@ -1,7 +1,7 @@
 ---
 title: Designing Service Oriented Systems
 summary: How to design with services
-layout: concepts 
+layout: toc-guide-page 
 lprev: 215-sos.html
 lnext: 217-ds.html
 ---

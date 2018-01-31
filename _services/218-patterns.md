@@ -1,7 +1,7 @@
 ---
 title: Patterns
 summary: OSGi Patterns
-layout: services 
+layout: toc-guide-page
 lprev: 217-ds.html
 lnext: 300-principles.html
 ---

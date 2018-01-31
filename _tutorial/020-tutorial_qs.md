@@ -1,9 +1,9 @@
 ---
 title: Quick Start 
-layout: tutorial
-lprev: 015-Prerequisite.html 
+layout: toc-guide-page
+lprev: 017-enRoute-ArcheTypes.html 
 lnext: 030-tutorial_microservice.html
-summary: Your first OSGi™ based Microservice (< 5 minutes). 
+summary: Your first really simple OSGi™ REST Microservice (< 5 minutes). 
 ---
 
 ## Summary 

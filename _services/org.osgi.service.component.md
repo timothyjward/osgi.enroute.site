@@ -1,6 +1,6 @@
 ---
 title: org.osgi.service.component
-layout: services
+layout: toc-guide-page
 version: 1.3
 summary: An extender for Declarative Services components 
 ---

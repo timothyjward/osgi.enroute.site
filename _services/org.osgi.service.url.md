@@ -1,6 +1,6 @@
 ---
 title: org.osgi.service.url
-layout: services
+layout: toc-guide-page
 version: 1.0
 summary:  A facility to register URL handlers via the service registry
 ---

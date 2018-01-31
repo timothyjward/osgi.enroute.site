@@ -1,7 +1,7 @@
 ---
 title: Using Native Libraries in a Bundle
 summary: Discusses the issues with native libraries and OSGi
-layout: resources
+layout: toc-guide-page
 ---
 
 Sometimes a bundle may contain several native libraries. One may be JNI

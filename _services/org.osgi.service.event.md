@@ -1,6 +1,6 @@
 ---
 title: org.osgi.service.event
-layout: services
+layout: toc-guide-page
 version: 1.0
 summary: A simple publish and subscribe mechanism for generic events 
 ---

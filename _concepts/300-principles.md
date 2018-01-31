@@ -1,59 +1,11 @@
 ---
 title: Principles
 summary: A rather rambling section of principles of enRoute
-layout: concepts 
+layout: toc-guide-page 
 lprev: 218-patterns.html
 lnext: /book/210-doc.html
 ---
 
-This is the more theoretical section that only the 1% will read. You can safely skip it and belong to the 99%, it is just a section where the ideas behind OSGi enRoute, and largely behind OSGi, are given some more footing so that that minority that actually wants to know where things come from are also satisfied. 
-
-## Principles
-
-With the Internet today it is no problem to find a solution to almost any detailed question. It is therefore hard to understand how we worked only a decade ago without Google, Bing, and Stack Overflow at our finger tips. Across my desk there are hundreds of books explaining CVS, XML, XSLT, LDAP, and other old technologies, silently testifying about this BG (Before Google) era. However, there are also books in that bookshelf that do not prescribe a solution to a detailed problem but that attempt to go deeper into the mysteries of the software development process. Books that discuss the _principles_ of the software development process without reverting to ephemeral screen shots.
-
-So why are principles important? Principles are important because they _guide us_ towards solutions to problems we are not always directly aware of. Software is a frighteningly complex endeavor that forces its practitioners to make hundreds to thousands of decisions each day; decisions that can actually have quite far reaching consequences. Though each of these decisions has a local optimum, it is not that local optimum that creates great systems. You cannot look at the millions of parts in a 747 airplane and point out a single part that makes it fly. Flying is the combined result of all those millions of parts _interacting_. To make these parts work, they need to be _designed_. To make these designs work together, we need an _architecture_ that defines the rules and constraints of the designs. To define an architecture we need principles that guide us in developing the right architecture. 
-
-This chapter therefore outlines the principles in software development that are used in the enRoute project. These principles provide the guidelines for the enRoute architecture.
-
-## Caveat
-
-In software a situation is rarely black and white. In almost all cases there are many forces at play that make some solutions more desirable than others. In the upcoming chapters the different aspects of software development are discussed. Not with the intent to provide black  and white rules but only with the hope that the forces for that aspect are understood and recognized.
-
-This chapter is about the grey and there will be many cases of 'on the other hand'. There are actually a number of contradictions in this text because they do require trade offs that must be understood. In the architecture chapter we will make concrete choices. 
-
-## Time
-
-Trying to explain our industry to lay people is hard. It is hard because what we software developers are doing has remarkably little to do with the concrete world; cyberspace is truly a different area. We use words like _build_, _object_, and _framework_ that are defined in a concrete world but have much more ephemeral semantics in our virtual world. You build a house from concrete, stones, and wood, a far cry from flipping bits on a hard disk in what we call the build process. Objects are, yeah, what are objects actually? And where a real framework is touchable, our frameworks are intangible. No wonder that many of our partners are at a loss when we try to describe what it is that we do. We tend to utterly confuse them with these inadequate metaphors.
-
-Out of this all, the hardest aspect to explain of our work is the _volatility_. The baker bakes bread, and the bricklayer builds buildings. They deliver a concrete result to their customers and the next day they bake or build something brand new, unrelated to yesterday's work. Software engineers 'build' their 'software' several times a day, but they seem to deliver largely the same thing over and over to their customers. We seem to be working on something that is continuously evolving but is still called the same. The closest metaphor is maybe a city. A city is a continuously evolving entity that never stands still, still we continue to call it the same name. Julius Ceasar would not recognize Rome today, yet it is still the same city that he once knew. 
-
-It is interesting to see how we lack proper terminology in our industry. In [maven][4] we talk about an artifact but it is not clear if it refers to the bits on disk (the JAR file), or the project that builds it, or maybe even something else? In this document we use _program_ for the what is the combination of _groupId_ and _artifactId_ in maven and _revision_ when a specific _version_ is added. The term _project_ defines the concept of a set of programs that can be used to _build_ a revision.
-
-The difficulty of describing these core development processes clarifies why explaining to uninitiated what you do day in and out is hard. The core of our business is a long lasting process of reshuffling bits so that when they are combined with computers and users we achieve the results we promised. We call this process 'maintenance' but it has very little to do with the maintenance in the real world. In the real world, products deteriorate. A car needs an oil change or certain parts are designed to wear out over time and need to be replaced before they pass a breaking point, causing great damage. Bizarrely, in software we theoretically do not have wear and tear since a bit is a bit and they do not chance happenstance. A revision is immutable for all time. What we call 'maintenance' is actually a different process. In this process we:
-
-* Fix bugs.
-* Add features.
-
-Though bugs can just be stupidities, quite often they are caused by the coder's assumptions of the environment. And when this environment changes, the assumptions are no longer met and the code fails. This is also called _bitrot_. It is the weird effect that over time programs that are not maintained will start to fail.
- 
-It should therefore be clear that a large part of our work is addressing the effects of time. The context changes, which requires us to change the software, which changes the context for others. When we develop software we should be aware at any time that we are not really building anything but that we are in a continuous re-shaping process. It is crucial to be aware that any real world system lives in an ever evolving context where our own changes contribute to this changing context.
-
-There are many practices in our industry that would be perfectly OK if change was not continuous, but that have unexpected consequences in world that never stops changing.
-
-A surprising example is _aggregating_, putting parts together in a greater whole. For example, you repackage a number of JARs in a single JAR. Every time you aggregate a set of parts, you create an additional responsibility because the underlying artifacts, the dependencies, will each change over time at their own rate.  Each of these changes will add maintenance costs to rebuild the aggregate. Also, you will have to make the aggregation evolve at the rate of its fastest evolving part or the clients of the fastest moving part will be upset. Therefore, by aggregating you increase the entropy of the build. 
-
-Last but not least, you now also constrain the revisions of the constituents as they are in the aggregate. Clients, that need a different set of the constituents are out of luck. 
-
-The problems around aggregation are highlighted by the concept of _profiles_. A profile is a set of API artifacts aggregated together so that end users can have a single JAR to compile against. In the Java world there are a number of J2ME profiles, and of course Java SE and Java EE can also be seen as profiles when squinting the eyes a bit. Developers in general love them because it seems to simplify their lives considerably. That is, until they find out there is a newer version of a profile's constituent that they absolutely need or when it is time to add new parts and they find that the process of maintaining the profile is highly politicized since there are now many different interests to take into account. In the 90's Ericsson and HP had TMOS, a Telecom Management Operating System, that imploded because they found it impossible to release a revision that satisfied the needs of all their users.    
-
-Though an aggregate or repackaging can have benefits, see [Modularity], the drawbacks of increasing the rate of evolution and the additional constraints between the parts do have a cost caused when the aggregate is used in a continuously changing world. These costs are often ignored because they occur in the future after the initial aggregation decision.  These future costs should be more consciously taken into account. We should reflect on our way of working not only with an eye towards processes in the real world, but be acutely aware of the effect of a continuous changing world for our software.
-
-With respect to time, we should then take the following principles into account:
-
-* Versioning – Ensure that independent parts are versioned so that we (and the computer know) of what revision we are talking about.
-* Prepare for change – Ensure that the code base is always optimal for additional changes since they will happen.
-* Minimize the cost of change – Since things will change ensure that when change happens the impact, and thus the cost, is minimal.
 
 ## Roles
 In the coming sections we will look in detail into the different aspects of software development. In these descriptions we use different roles that are played by the actors in a development process. This does not imply that all these roles are different people, the same person likely plays all roles for small systems. However, it is useful to recognize that the roles are quite different.
@@ -67,36 +19,6 @@ In the coming sections we will look in detail into the different aspects of soft
 * _Quality Assurance_ – Tests that the application meets the minimum requirements
 * _Deployer_ – Takes an application and deploys it in a runtime system.
 * _User_ – The people and systems using a system.
-
-## Less is More
-
-The [mathematical theory of complexity][6] is surprisingly, ehh, complex. Worse, it seems utterly useless for understanding or explaining software complexity. It seems the best measure of software complexity is the good old simple _size_, although with some caveats. Officially called _lex parsimoniae_. Or poetically phrased: 'Less is more'. In general a solution with fewer parts should be preferred over an equally valuable solution that uses more parts. This is [Ockham's razor][7] revisited for software instead of hypotheses.
-
-The caveats are also poetically described, attributed to [Einstein][8], that 'Everything should be as simple as possible, but not simpler'. Or as the witticism: 'Every complex solution has a simple solution, that is plain wrong'.
-
-It is hard to describe where the balance is but in general it is best to err on the side of _conciseness_. This does not mean that shorter variable names are better or [packing ten statements in one line][9] will decrease the complexity of the software. However, given two equivalent functions but one larger than the other, then the smaller should have preference.
-
-A tool to keep things small is to [Do Not Repeat Yourself]. Ensure that each concept, fact, item, function, is only defined once and use a reference in other places. If several functions can share a common block, factor out this commonality. If you can reuse classes with small tweaks, do it. Your later readers and maintainers will love you for it.
-
-If the same thing can be expressed more concisely, then the difference is _cruft_. Cruft is the extra text around the stuff that really matters. Some languages, XML is a key example, are often more than 90% redundant. You can verify this by compressing a large XML file. Though a certain amount of redundancy can help understanding, it quickly becomes distracting because we humans have limited cognitive capabilities. 
-
-An important part why size is so relevant for complexity is our eyes and our mind. We humans have a limited cognition, it is assume we can handle about [7±2 'things'][10]. Actually, it is likely that this is 3 groups of 3 things. That is, up to about 3 or 4 'things' do not require counting. If you drop some matches on a table you immediately see that there are one, two or three matches, you do not need to count such low numbers. More than 3 matches tend to be grouped by us automatically, so 9 matches would be seen as 3 groups of 3 matches. This effect is called _subitizing_.
-
-Over the 7±2 limit we need to _chunk_. Chunking means combining 'things' in higher level groups. In general we are good in working with large sets of things. For example, we all know the western alphabets that have between 25 and 30 characters. By chunking together letters we can words that can convey highly complicated material. 
-
-Our numbers have comma separators for thousands so we can more easily recognize the chunks. That is, 10000000 is hard to recognize as ten million but for 10,000,000 it does not require any effort. Looking at the Japanese and Chinese alphabets that have between a few thousands to 80.000 characters it is clear that humans can handle very large sets despite their limitation of working with 7±2 set members simultaneously. 
-
-A good example is the American telephone number. Since it consists of ten digits it falls outside the range of what we humans are comfortable with. By breaking the number up in the area code (3 digits), exchange (3 digits), and line number (4 digits) we can remember it much easier.
-
-In our industry we have been chunking since we left the switches on the first computers. Octal and Hexadecimal numbers took initially advantage of chunking. Assembly and higher level languages also chunked lower level concepts (microcode) into higher level concepts so they became easier to work with. Objects, and packages are higher level concepts that group underlying code. All with the effect that it becomes easier to reason about a software system. And why some code bases are really hard, they usually have many more than nine bundles, or nine packages per bundle, or nine objects per package. This is often inevitable but it should be realized that keeping the number of things low is a significant factor in simplifying.   
-
-It should be obvious from this discussion why [Modularity] is so crucial. Modularity can limit the number of simultaneous concepts that need to be considered before a change can be made. Modularity is the chunking mechanism of software.
-
-With respect to size, we should therefore take the following into account:
-
-* Less is more, in general at least.
-* Optimize for readability, small is beautiful, reduce cruft.
-* Use chunking to keep the number of chunks that one needs to have in mind understanding a part to less than ten. This is in general why we have functions, objects, packages, and bundles.  
 
 ## Modules
 

@@ -1,23 +1,10 @@
 ---
 title: Resources 
-layout: resources 
+layout: toc-guide-page
+summary: Online resources and repositories
 ---
 
-This section provides addition information that may be useful to you once you've completed the enRoute tutorials.
-
-<table>
-	<colgroup>
-		<col style="width:30%">
-		<col style="width:70%">
-	</colgroup>
-{% for f in site.resources %}{%unless f.noindex%}<tr>
-	<td><a href="{{f.url}}">{{f.title}}</a></td><td> {{f.summary}}</td>
-</tr>
-{%endunless%}{% endfor %}
-
-</table>
-
-### OSGi enRoute Repositories
+## OSGi enRoute Repositories
 
 We have organized the work around a number of Github repositories. All these repositories are either Apache Software License version 2.0, or EPL 1.0 unless indicated otherwise. To make this all work, there are actually a rather large number of repositories involved, which tends to get confusing. Therefore an illustration how it all hangs together:
 
@@ -30,7 +17,7 @@ We have organized the work around a number of Github repositories. All these rep
 * [`osgi.enroute.template`][template] – This repository is an OSGi enRoute workspace for project templates in bndtools. It is a normal workspace but it uses weird names so these names can be replaced when the template is expanded. The template must currently manually be imported in the bndtools build.
 * [`osgi.enroute.examples`][examples] – The OSGi enRoute service catalog demonstrates the use of the OSGi API with small examples. These examples can be found in this repository. 
 
-### Tools
+## Tools
 
 In sorted order:
 
@@ -40,7 +27,7 @@ In sorted order:
 * [Gradle][gradle] - The command line based build tool used in the continuous build on Travis.
 
 
-### Projects
+## Projects
 
 Projects providing implementations of OSGi specifications can be found on the following wikipedia page: [https://en.wikipedia.org/wiki/OSGi_Specification_Implementations](https://en.wikipedia.org/wiki/OSGi_Specification_Implementations)
 

@@ -1,9 +1,9 @@
 ---
-title: Prerequisites
-layout: tutorial
-lprev: 010-tutorial.html 
-lnext: 020-tutorial_qs.html 
-summary: Prerequsities needed for running up the enRoute tutorials.  
+title: Prerequisites 
+layout: toc-guide-page
+lprev: 030-tutorial_microservice.html 
+lnext: 017-enRoute-ArcheTypes.html 
+summary: Prerequistes & configurations required for running these Tutorials.  
 ---
 
 Before you start any of the tutorials you must prepare your environment so that the right tools are installed. This page helps you to achieve this. We need to run the following tools on your computer:

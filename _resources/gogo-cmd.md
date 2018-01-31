@@ -2,7 +2,7 @@
 title: Extending the Gogo shell 
 summary: A primer on how to write commands in the Gogo shell
 author: Peter Kriens
-layout: resources
+layout: toc-guide-page
 ---
 
 This application note was written out of my (Peter Kriens) frustration with many Gogo commands I meet in the wild. The way the commands are written often take way more lines than necessary and are not reusable. This application note was written with support from [SMA](http://www.sma.de/)

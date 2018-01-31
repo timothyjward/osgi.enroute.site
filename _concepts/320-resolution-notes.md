@@ -1,7 +1,7 @@
 ---
 title: Notes about Resolution
 summary: Notes regarding resolving bundle capabilities and requirements
-layout: concepts
+layout: toc-guide-page 
 ---
 
 OSGi has an advanced dependency management mechanism based on matching
