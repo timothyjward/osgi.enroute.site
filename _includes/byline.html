@@ -18,8 +18,6 @@
       {% assign check_author_contact = page.author_contacts[0] %}
       {% if check_author_contact contains '@' %}
         by <a href="mailto:{{ page.author_contacts }}">{{ page.authors }}</a>
-      {% else %}
-        by <a href="https://discourse.mcneel.com/users/{{ page.author_contacts }}/activity">{{ page.authors }}</a>
       {% endif %}
     {% endif %}
   </span>
