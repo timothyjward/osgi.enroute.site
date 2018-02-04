@@ -64,6 +64,14 @@ These requirements are provided in a bndrun file, which defines how the OSGi app
 
 To prepare for the [tutorials] past the following Maven project skeleton to a file named `settings.xml` into your project root directory.
 
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    settings.xml 
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-block">
+
 {% highlight html %}
     <settings>
       <profiles>
@@ -91,4 +99,5 @@ To prepare for the [tutorials] past the following Maven project skeleton to a fi
     </settings>
 {% endhighlight %}
 
-
+  </div>
+</div>

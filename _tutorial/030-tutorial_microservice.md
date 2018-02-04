@@ -48,7 +48,7 @@ Having created the root project we'll now created the required application modul
 
 Now change directory into the newly created `microservice` project directory
 
-**To create the `api` module**
+To create the `api` module
 
 {% highlight shell-session %}
 mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=api -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -72,14 +72,22 @@ Y: :
 * Delete the template files created in `dao-api/src/main/java/org/osgi/enroute/examples/microservice` as these are not required.
 * Create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao` into which we create the following three files:
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java**
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java`
 {% highlight java %}
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("1.0.0")
 package org.osgi.enroute.examples.microservice.dao;
 {% endhighlight %}
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java**
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#PersonDao" aria-expanded="false" aria-controls="PersonDao">
+    PersonDAO.java 
+  </a>
+</p>
+<div class="collapse" id="PersonDao">
+  <div class="card card-block">
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao;
  
@@ -102,8 +110,18 @@ public interface PersonDao {
     public void delete(Long pk) ;
 }
 {% endhighlight %}
+</div>
+</div>
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/AddressDao.java**
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/AddressDao.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#AddressDao" aria-expanded="false" aria-controls="AddressDao">
+    AddressDAO.java 
+  </a>
+</p>
+<div class="collapse" id="AddressDao">
+  <div class="card card-block">
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao;
  
@@ -127,17 +145,27 @@ public interface AddressDao {
  
 } 
 {% endhighlight %}
+</div>
+</div>
 
 Now create a `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` directory to which we add the following three files
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java**
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
 {% highlight java %}
 @org.osgi.annotation.bundle.Export
 @org.osgi.annotation.versioning.Version("1.0.0")
 package org.osgi.enroute.examples.microservice.dao.dto;
 {% endhighlight %}
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/PersonDTO.java**
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/PersonDTO.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#PersonDTO" aria-expanded="false" aria-controls="PersonDTO">
+    PersonDTO.java 
+  </a>
+</p>
+<div class="collapse" id="PersonDTO">
+  <div class="card card-block">
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.dto;
  
@@ -153,8 +181,19 @@ public class PersonDTO {
     public List<AddressDTO> addresses = new ArrayList<>();
 }
 {% endhighlight %}
+</div>
+</div>
 
-**dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/AddressDTO.java**
+
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/AddressDTO.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#AddressDTO" aria-expanded="false" aria-controls="AddressDTO">
+   AddressDTO.java 
+  </a>
+</p>
+<div class="collapse" id="AddressDTO">
+  <div class="card card-block">
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.dto;
  
@@ -166,12 +205,14 @@ public class AddressDTO {
     public String country;
 } 
 {% endhighlight %} 
+</div>
+</div>
 
 ## The microservice DAO Impl
 
 Check that you are in the `microservice` project directory, then ...
 
-**To create the `impl` module**
+To create the `impl` module
 
 {% highlight shell-session %}
 mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -210,7 +251,16 @@ Now add the following module dependencies to the `<dependencies>` section in `da
 * Delete the template files in `dao-impl/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
 * Now create the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl` into which we create the following four files:
 
-**dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java**
+`dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#PersonTable" aria-expanded="false" aria-controls="PersonTable">
+    PersonTable.java 
+  </a>
+</p>
+<div class="collapse" id="PersonTable">
+  <div class="card card-block">
+
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.impl;
 public interface PersonTable {
@@ -241,8 +291,20 @@ public interface PersonTable {
             + ") ;";
 }
 {% endhighlight %}
+</div>
+</div>
 
-**dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonDaoImpl.java**
+
+`dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonDaoImpl.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#PersonDaoImpl" aria-expanded="false" aria-controls="PersonDaoImpl">
+    PersonDaoImpl.java 
+  </a>
+</p>
+<div class="collapse" id="PersonDaoImpl">
+  <div class="card card-block">
+
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.impl;
  
@@ -415,8 +477,19 @@ public class PersonDaoImpl implements PersonDao {
     }
 }
 {% endhighlight %}
+</div>
+</div>
 
-**dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressTable.java**
+
+`dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressTable.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#AddressTable" aria-expanded="false" aria-controls="AddressTable">
+    AddressTable.java 
+  </a>
+</p>
+<div class="collapse" id="AddressTable">
+  <div class="card card-block">
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.impl;
 public interface AddressTable {
@@ -452,8 +525,20 @@ public interface AddressTable {
             + "PRIMARY KEY (email_address)" + ") ;";
 }
 {% endhighlight %}
+</div>
+</div>
 
-**dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressDaoImpl.java**
+
+`dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressDaoImpl.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#AddressDaoImpl" aria-expanded="false" aria-controls="AddressDaoImpl">
+    AddressDaoImpl.java 
+  </a>
+</p>
+<div class="collapse" id="AddressDaoImpl">
+  <div class="card card-block">
+
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.dao.impl;
  
@@ -596,13 +681,14 @@ public class AddressDaoImpl implements AddressDao {
     }
 }
 {% endhighlight %}
-
+</div>
+</div>
 
 ## The REST Service
 
 Check that you are in the `microservice` project directory, then ...
 
-**To create the `rest-component` module**
+To create the `rest-component` module
 
 {% highlight shell-session %}
 mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=rest-component -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -646,7 +732,16 @@ Now add the following module dependencies to the `<dependencies>` section in `re
 * Delete the itemplate files in `rest-service/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
 * Now create the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest` into which we create the following two files: 
 
-**rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java**
+`rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#RestComponentImpl" aria-expanded="false" aria-controls="RestComponentImpl">
+    RestComponentImpl.java 
+  </a>
+</p>
+<div class="collapse" id="RestComponentImpl">
+  <div class="card card-block">
+
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.rest;
  
@@ -711,8 +806,20 @@ public class RestComponentImpl {
     }
 }
 {% endhighlight %}
+</div>
+</div>
 
-**rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/JsonpConvertingPlugin.java**
+
+`rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/JsonpConvertingPlugin.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#JsonpConvertingPlugin" aria-expanded="false" aria-controls="JsonpConvertingPlugin">
+   JsonpConvertingPlugin.java 
+  </a>
+</p>
+<div class="collapse" id="JsonpConvertingPlugin">
+  <div class="card card-block">
+
+
 {% highlight java %}
 package org.osgi.enroute.examples.microservice.rest;
  
@@ -864,10 +971,22 @@ public class JsonpConvertingPlugin<T> implements MessageBodyReader<T>, MessageBo
     }
 }
 {% endhighlight %}
+</div>
+</div>
+
 
 We now create the directory `rest-service/src/main/resources/static/main/html` in which we create the following file:
 
-**rest-service/src/main/resources/static/main/html/person.html**
+`rest-service/src/main/resources/static/main/html/person.html`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#person" aria-expanded="false" aria-controls="person">
+    person.html
+  </a>
+</p>
+<div class="collapse" id="person">
+  <div class="card card-block">
+
+
 {% highlight html %}
 <link rel="import" href="https://polygit.org/polymer+v2.2.0/components/iron-ajax/iron-ajax.html">
 <link rel="import" href="https://polygit.org/polymer+v2.2.0/components/iron-input/iron-input.html">
@@ -1012,10 +1131,21 @@ We now create the directory `rest-service/src/main/resources/static/main/html` i
   </script>
 </dom-module>
 {% endhighlight %}  
+</div>
+</div>
 
 And we create the `rest-service/src/main/resources/static/css` directory for the `style.css` file
 
-**rest-service/src/main/resources/static/css/style.css**
+`rest-service/src/main/resources/static/css/style.css`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#style" aria-expanded="false" aria-controls="style">
+   style.css 
+  </a>
+</p>
+<div class="collapse" id="style">
+  <div class="card card-block">
+
+
 {% highlight css %}
 /*
     osgi.enroute.examples.component Style Sheet
@@ -1101,10 +1231,21 @@ body {
   }
 }
 {% endhighlight %}
+</div>
+</div>
 
 Also in directory `rest-service/src/main/resources/static` add the following `index.html`
 
-**rest-service/src/main/resources/static/index.html**
+`rest-service/src/main/resources/static/index.html`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#index" aria-expanded="false" aria-controls="index">
+    index.html 
+  </a>
+</p>
+<div class="collapse" id="index">
+  <div class="card card-block">
+
+
 {% highlight html %}
 <!DOCTYPE html>
 <html lang="en">
@@ -1147,12 +1288,14 @@ Also in directory `rest-service/src/main/resources/static` add the following `in
  
 </html>
 {% endhighlight %}
+</div>
+</div>
 
 ## The Composite Application 
 
 Check that you are in the `microservice` project directory, then ...
 
-**To create the `application` module**
+To create the `application` module
 
 {% highlight shell-session %}
 mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -1216,7 +1359,7 @@ Also add the following plugin inside `<plugins>` section in the file `rest-app/p
 
 Create the directory `rest-app/src/main/java/config` in which 
 
-**rest-app/src/main/java/config/package-info.java**
+`rest-app/src/main/java/config/package-info.java`
 {% highlight java %}
 @org.osgi.annotation.bundle.Requirement(namespace="osgi.extender", name="osgi.configurator", version="1")
 package config;
@@ -1224,7 +1367,16 @@ package config;
 
 Create the directory `rest-app/src/main/resources/OSGI-INF/configurator` and then the following file 
 
-**rest-app/src/main/resources/OSGI-INF/configurator/configuration.json**
+`rest-app/src/main/resources/OSGI-INF/configurator/configuration.json`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#configuration" aria-expanded="false" aria-controls="configuration">
+    configuration.json
+  </a>
+</p>
+<div class="collapse" id="configuration">
+  <div class="card card-block">
+
+
 {% highlight java %}
 {
     // Global Settings
@@ -1246,10 +1398,12 @@ Create the directory `rest-app/src/main/resources/OSGI-INF/configurator` and the
            "provider.target": "(name=microservice.database)" }
 }
 {% endhighlight %}
+</div>
+</div>
 
 Copy the contents below over `rest-app/rest-app.bndrun`
 
-**rest-app/rest-app.bndrun**
+`rest-app/rest-app.bndrun`
 {% highlight shell-session %}
 index: target/index.xml
  
