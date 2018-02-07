@@ -5,10 +5,9 @@ description: Tutorials
 permalink: /Tutorials/
 order: 1 
 ---
-
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Link to Code 
+    Link to Code
   </a>
 </p>
 <div class="collapse" id="collapseExample">

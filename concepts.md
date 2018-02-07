@@ -5,11 +5,12 @@ description: Concepts
 permalink: /Concepts/
 order: 4 
 ---
-Since 1998 the OSGi™ Allaince has evolved a series of modularity Specifications which provide the foundations for highly maintainable, agile and so economically sustainable software eco-systems. As part of this ongoing endevour, enRoute has been created to address the criticism that building modular systems is too hard a task for the average developer.
+The OSGi™ Allaince has evolved a series of modularity Specifications which provide the foundations for highly maintainable, agile, and so economically sustainable software eco-systems. As part of this ongoing endevour, enRoute has been created to leverage latest OSGi™ specifications and to demonstrate that creating modular applications is actually rather simple.
+
+Why this is fundamental to your business' future sustainability is the subject of this section. 
 
 ![Lowering the barriers](/img/book/why-enroute.png)
 
-Why this is so important to you & your business' future sustainability is the subject of this section. 
 
 <style>
 table, td, th {    

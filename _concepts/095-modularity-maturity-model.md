@@ -8,9 +8,9 @@ lnext: 100-about-osgi
 
 ## Complexity & Cost
 
-> The most import measure of Complexity is the cost of software maintenance: i.e. the cost required to change a System. 
+> The most import measure of Complexity is the financial cost associated with software maintenance: i.e. the cost required to change a System. 
 
-A variety of studies concurr that Software maintenance can account for as much as 90% of the total life-time system cost:e.g. a study by [Erlikh 2000](Erlikh, I. (2000) Leveraging Legacy System Dollars for E-Business. Information Technology Proceedings, May/June 2000, 17-23.) determined that 80% of software costs are concerned  with **evolution** of the software.
+A number of independent studies concurr that Software maintenance accounts for ~80% of the total life-time cost of a software system: e.g. [Erlikh 2000](Erlikh, I. (2000) Leveraging Legacy System Dollars for E-Business. Information Technology Proceedings, May/June 2000, 17-23.) determined that 80% of software costs are concerned  with **evolution** of the software.
 
 These costs typically breakdown into following activities in the following proportions.
 
@@ -46,16 +46,16 @@ where
 * $$Complexity_{k}$$ is the complexity of System {k}
 * $$NumberOfChanges_{k}$$ are the number of changes that System {k} undergoes during the period of interest. 
 
-Hence to minimise change costs we need to minimise this expression.
+To minimise change costs we need to minimise this expression.
 
 
 ### Avoid Change
 
 Simply avoid Change. 
 
-Irrespective of how complex a system is, if there is no change, then no change related costs are incurred. However, real world Organisations, even those with completely static business models, must respond to security patches and component Obsolesces. 
+Irrespective of how complex a system is, if there is no change, then no change related costs are incurred. However real world Organisations, even those with static business models, must respond to security patches and component Obsolesces. 
 
-No change strategy also results in an extremely fragile Operational environment. When the inevitable unplanned environmental change occurs (i.e. resource failure or Operational error), it is more likely to have a catastrophic effect: i.e. a Black Swan event.  
+A no change strategy also results in an extremely fragile Operational environment. When the inevitable unplanned environmental change occurs (i.e. resource failure or Operational error), it is more likely to have a catastrophic effect: i.e. a Black Swan event.  
 
 ### Write Throw Away Code
 
@@ -68,7 +68,9 @@ Obviously, the more modular the overall software eco-system, the simple it becom
 
 ### Consolidate Applications
 
-To reduce Compexity, reduces the number of Applicatons by consolidation of funtionality. However, if we consider [Glass's law](090-complexity-modularity#qualitative-measures) we can immediately see problem with this approach. 
+To reduce Compexity, reduces the number of Applicatons by consolidation of funtionality. 
+
+However, if we consider [Glass's law](090-complexity-modularity#qualitative-measures) we can immediately see problem with this approach. 
 
 Consider three business services each composed of 4 functions, 3 of which are the same for each System;
 
@@ -86,7 +88,7 @@ While Operational complexity clearly decreases, from managing 3 applications to 
 
 Also note that Operational flexibility and resilience are also reduced as the whole User population is now dependent upon the one functioning application.  
 
-Perhaps not the desired outcome for a multi-million dollar application consolidation program. 
+So perhaps not the desired outcome for a multi-million dollar application consolidation program? 
 
 ### Outsourcing
 
@@ -98,13 +100,15 @@ The 3rd party achieves a lower cost, not by re-engineering the applications to d
 
 Here we simply move the Complexity problem from a physcial platfrom to a virtual platform either on or off-site. 
 
-Virtualisation has **no-effect** on application Complexity, and **increases** infrastructure complexity. Hence the investment in any Virtualisation or Container strategy should be justified on infrastructure costs savings through increased resource utilisation. Even then, one must account for potentially significant increases in infrastructure Complexity, which in-turn can lead to increased Service outages.
+Virtualisation has **no-effect** on application Complexity, and **increases** infrastructure complexity. Hence the investment in any Virtualisation or Container strategy should only be justified on infrastructure costs savings through increased resource utilisation. Even then, one must account for potentially significant increases in infrastructure Complexity, which in-turn can lead to increased Service outages.
 
-Similar arguments applies to 3rd Party Cloud providers, however they shield you from the infrastructure complexity (at a cost).
+Similar arguments applies to 3rd Party Cloud providers, however they do shield you from the infrastructure complexity (at a cost).
 
 ### DevOps & MicroServices?
 
-A limited modularity strategy may be pursued via adoption of REST based Microservices. Here by 'limited' we mean that large applications are broken down into a set of smaller deployable functions that communcated with each other via REST, however the internal implementation of each Microservice remains non-Modular.
+A limited modularity strategy may be pursued via adoption of REST based Microservices. 
+
+By 'limited' we mean that large applications are broken down into a set of smaller deployable functions that communcated with each other via REST, however the internal implementation of each Microservice remains non-Modular.
 
 Now rather than consolidating 
 	`System A (a,b,c,x)`, `System B (a,b,c,y)`, `System C (a,b,c,z)` 
@@ -115,16 +119,16 @@ which can then be re-combined into Composite Systems
 
 As already disucsssed in [Qualitative Measures](090-complexity-modularity.html#qualitative-measures), while code complexity is reduced we now have created a significant amount of Orchestration complexity: see [Complexity & Hierarchy](090-complexity-modularity.html#complexity--hierarchy).
 
-This is a problem as Organisations lack orchestration / management platforms that are operational simple and yet capable of handling the inter-related sets of Microservices. The response is DevOps; i.e. the Development Teams are made responsible for all aspects of their Application: from code to Production Operation. However, this now results in tight coupling between the Developement teams and the Operational environment, and this introduces systemic Operational Risks. Specifically, there is always a danger that talented members of staff move on; in a DevOps centric environment that relies on high quality DevOps, this immediately translates to an Operational risk to the business: [The Wetware Crisis: the Dead Sea effect](http://brucefwebster.com/2008/04/11/the-wetware-crisis-the-dead-sea-effect/).
+This is a problem as Organisations lack orchestration / management platforms that are operational simple and yet capable of handling the inter-related sets of Microservices. 
 
-Note that DevOps did not originate with Netflix, neither is Microservices partuclarly new. In the mid 1990's Financial Service organisations were undergoing a technology revolution with distributed computing delivering pricing and decision support to hundreds of Traders. Application developers working side by side with Traders to deliver intra-day software releases was not uncommon. During this same period the 1st wave of Microservice architecures emerged including CORBA and the powerful Java/Jini platform.
+The usual response is DevOps; i.e. the Development Teams are made responsible for all aspects of their Application: from code to Production Operation. However, this now results in tight coupling between the Developement teams and the Operational environment, and this introduces systemic Operational Risks. Specifically, there is always a danger that talented members of staff move on; in a DevOps centric environment that relies on high quality DevOps, this immediately translates to an Operational risk to the business: [The Wetware Crisis: the Dead Sea effect](http://brucefwebster.com/2008/04/11/the-wetware-crisis-the-dead-sea-effect/).
 
-Microservices is a qualified step in the right direction. However a ad-hoc REST based Microservices strategy lacks the Requirements / Capabilities mechanisms required to automate Orchestration & Assembly; these required to avoid exposing significant structural Complexity to the runtime. Microservices also only address one structural layer of the [runtime structural hierarchy](89-complexity-modularity.html#structural-hierarchy). 
+Microservices is a qualified step in the right direction. However an ad-hoc REST based Microservices strategy lacks the dependency management mechanisms required to automate Assembly & Orchestration; these required to avoid exposing significant structural Complexity to Operations. Also, Microservices only address one structural layer of the [runtime structural hierarchy](89-complexity-modularity.html#structural-hierarchy). 
 
 REST based Microservices approach imposes architectural constraints on the Application which may or may not be appropriate.
 {: .p.note}
 
-We need a more coherent Modularity strategy, one that can include a Microservices approach when appropriate, but in a manner that avoids the issues identified.  
+We need a more coherent Modularity strategy, one that can include a Microservices approach when appropriate, but in a manner that addresses the issues identified.  
 
 
 ## The Modularity Maturity Model
