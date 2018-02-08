@@ -41,6 +41,7 @@ A module archetype defines an enRoute Maven module that will be built and output
 * The api archetype
 * The ds-component archetype
 * The rest-component archetype
+* The bundle-test archetype
 * The application archetype
 
 ### The api Archetype
@@ -49,18 +50,30 @@ The api archetype is used to build an API bundle for your enRoute application. T
 The ds-component Archetype
 
 ### The ds-component Archetype 
-The ds-component Archetype is used to create an OSGi service using Declarative Services. This provides a simple programming model for referencing services from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
+
+The ds-component archetype is used to create an OSGi service using Declarative Services. This provides a simple programming model for referencing services from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
 
 ### The rest-component Archetype
 
-The rest-component archetype is similar to the ds-component  archetype, in that it defines an OSGi service using Declarative Services. This service, however, makes use of the OSGi JAX-RS whiteboard specification to transparently provide the JAX-RS resource methods as REST endpoints. This archetype is therefore an excellent way to get started when writing a REST microservice                                                   
+The rest-component archetype is similar to the ds-component  archetype, in that it defines an OSGi service using Declarative Services. This service, however, makes use of the OSGi JAX-RS whiteboard specification to transparently provide the JAX-RS resource methods as REST endpoints. This archetype is therefore an excellent way to get started when writing a REST microservice 
+                                                  
+### The bundle-test Archetype 
+
+The bundle-test archetype creates a special kind of bundle known as a *tester bundle*, and then executes this bundle in an OSGi framework. This allows a bundle-test project to run tests inside a real OSGi framework, observing changes in services and lifecycle events. The archetype provides a template JUnit test, and a bndrun file which configures both the tester bundle and the execution of the tests.
+
 ### The application Archetype
 
 The application archetype is different from the other enRoute modules, in that its output is not an OSGi bundle but rather a runnable application. The application archetype is designed to reference the other modules in your application, and use them to resolve an application based on your runtime requirements.
 
 These requirements are provided in a bndrun file, which defines how the OSGi application should be launched, and what should be contained in it. This bndrun can be resolved to turn its requirements into a list of bundles to run, and then exported into a runnable jar file.
 
-## Project Setup
+In addition to gathering requirements an application module also defines the configuration that will be supplied to the application. This configuration is supplied as a bundle which gets deployed into the application framework and is processed by an OSGi configurator implementation.
+
+## Project Setup For SNAPSHOT Archetypes
+
+<div class="alert alert-warning">
+  Maven automatically searches for archetypes in the Maven Central repository, but it will not discover archetypes from other repositories without additional configuration. This section describes the configuration necessary to use the OSGi enRoute SNAPSHOT archetypes. It is not necessary for enRoute archetypes with release versions.
+</div>
 
 To prepare for the [tutorials] past the following Maven project skeleton to a file named `settings.xml` into your project root directory.
 
