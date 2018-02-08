@@ -2,7 +2,7 @@
 layout: toc-page
 title: Tutorials 
 description: Tutorials 
-permalink: /Tutorials/
+permalink: /Tutorial/
 order: 1 
 ---
 <p>

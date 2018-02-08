@@ -75,7 +75,7 @@ In addition to gathering requirements an application module also defines the con
   Maven automatically searches for archetypes in the Maven Central repository, but it will not discover archetypes from other repositories without additional configuration. This section describes the configuration necessary to use the OSGi enRoute SNAPSHOT archetypes. It is not necessary for enRoute archetypes with release versions.
 </div>
 
-To prepare for the [tutorials] past the following Maven project skeleton to a file named `settings.xml` into your project root directory.
+To prepare for the tutorials paste the following Maven project skeleton to a file named `settings.xml` in your project root directory.
 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
