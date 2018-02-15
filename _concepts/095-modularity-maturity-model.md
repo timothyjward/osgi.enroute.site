@@ -19,14 +19,14 @@ These costs typically breakdown into following activities in the following propo
 * Perfective (New Functionality) - 61%
 * Other - 4%
  
-To provide a financial context, lets apply to some typical project costs:
+To provide a financial context, lets apply this breakdown to some typical project costs:
 
-* A small Enterprise software project that costs $1M to deliver will have a lifetime cost of $10M.
-* An Industry 4.0 soluton that has an implementation costs of $20M, will have a lifetime cost of $200M.
-* A modest Smart City solution that has an implementation cost of $50M, will have a lifetime cost of $500M, of which ...
-    * $85M is fault fixing.
-    * $90M of costs relating to changes in the Environment.
-    * $305M ongoing functional enhancements.
+* A small Enterprise software project that costs $1M to deliver will have a lifetime cost of $5M.
+* An Industry 4.0 soluton that has an implementation costs of $20M, will have a lifetime cost of $100M.
+* A modest Smart City solution that has an implementation cost of $50M, will have a lifetime cost of $250M, of which ...
+    * $42.5M is fault fixing.
+    * $45M of costs relating to changes in the Environment.
+    * $152.5M ongoing functional enhancements.
 
 Given the increasing sophistication of modern software solutions these figures almost certainly underestimate the total lifetime costs. 
 
@@ -35,7 +35,7 @@ Here we are ofcourse simply restating [DARPA's observation](090-complexity-modul
 
 ## Possible Solutions? 
 
-For an Organisation with **K** Systems, then change related costs per period of time can be expressed as: 
+For an Organisation with **K** Systems, the change related costs per period of time can be expressed as: 
 
 <div> 
 $$f(total cost) &#8733; \sum_{k=1}^{K}(Complexity_{k})&#215;(NumberOfChanges_{k})$$
@@ -48,8 +48,11 @@ where
 
 To minimise change costs we need to minimise this expression.
 
+### Traditional Management Approaches
 
-### Avoid Change
+Traditional management approaches attempt to bear down on Operational costs (the proxy for Complexity) by one or more of the following: 
+
+#### Avoid Change
 
 Simply avoid Change. 
 
@@ -57,7 +60,7 @@ Irrespective of how complex a system is, if there is no change, then no change r
 
 A no change strategy also results in an extremely fragile Operational environment. When the inevitable unplanned environmental change occurs (i.e. resource failure or Operational error), it is more likely to have a catastrophic effect: i.e. a Black Swan event.  
 
-### Write Throw Away Code
+#### Write Throw Away Code
 
 Rather than trying to maintain an existing code-base, whole-sale re-write the application using commodity developer resources each time major changes are required.  
 
@@ -66,7 +69,7 @@ This may be a valid strategy for a small consumer start-ups, but not sophisticat
 Obviously, the more modular the overall software eco-system, the simple it becomes to rip-n-replace individual Modules.
  
 
-### Consolidate Applications
+#### Consolidate Applications
 
 To reduce Compexity, reduces the number of Applicatons by consolidation of funtionality. 
 
@@ -90,21 +93,30 @@ Also note that Operational flexibility and resilience are also reduced as the wh
 
 So perhaps not the desired outcome for a multi-million dollar application consolidation program? 
 
-### Outsourcing
+#### Outsourcing
 
 Here we simply sign over our Complexity problem to a 3rd party. 
 
 The 3rd party achieves a lower cost, not by re-engineering the applications to drive down complexity, but by retaining the status-quo and using cheaper engineeing resources to implement change requests. As changes remain challenging the 3rd Party is incentivized to minimise these, and charge a premium for exceptions not covered in the contract. 
 
-### Virtualisation, Containers and / or 3rd Party Cloud
+#### Virtualisation, Containers and / or 3rd Party Cloud
 
-Here we simply move the Complexity problem from a physcial platfrom to a virtual platform either on or off-site. 
+Here we simply move the Complexity problem from a physical platfrom to a virtual platform either on or off-site. 
 
 Virtualisation has **no-effect** on application Complexity, and **increases** infrastructure complexity. Hence the investment in any Virtualisation or Container strategy should only be justified on infrastructure costs savings through increased resource utilisation. Even then, one must account for potentially significant increases in infrastructure Complexity, which in-turn can lead to increased Service outages.
 
-Similar arguments applies to 3rd Party Cloud providers, however they do shield you from the infrastructure complexity (at a cost).
+Exactly the same argument applies to 3rd Party Cloud providers; moving an Application to a third party Cloud environment has no effect on the Application's internal Complexity. However third Party Cloud providers do shield you from the infrastructure Complexity (at a cost).
 
-### DevOps & MicroServices?
+
+### Current IT Trends 
+
+The fact that third Party Cloud environments don't address the fundamental problem of Application complexity, while not broadcast by the industry, has not escaped unnoticed.
+
+The un-coordinated responses explicitly or implicilty attempt to address the Application Complexity problem, through the management of modularity and dependencies of one form or another. 
+
+While not explicitly XXXX  and has spawned term "Cloud Native" applications    
+
+#### MicroServices?
 
 A limited modularity strategy may be pursued via adoption of REST based Microservices. 
 
@@ -121,6 +133,13 @@ As already disucsssed in [Qualitative Measures](090-complexity-modularity.html#q
 
 This is a problem as Organisations lack orchestration / management platforms that are operational simple and yet capable of handling the inter-related sets of Microservices. 
 
+#### 12 Factor Applications
+
+#### Serverless Application Model
+
+
+#### DevOps
+
 The usual response is DevOps; i.e. the Development Teams are made responsible for all aspects of their Application: from code to Production Operation. However, this now results in tight coupling between the Developement teams and the Operational environment, and this introduces systemic Operational Risks. Specifically, there is always a danger that talented members of staff move on; in a DevOps centric environment that relies on high quality DevOps, this immediately translates to an Operational risk to the business: [The Wetware Crisis: the Dead Sea effect](http://brucefwebster.com/2008/04/11/the-wetware-crisis-the-dead-sea-effect/).
 
 Microservices is a qualified step in the right direction. However an ad-hoc REST based Microservices strategy lacks the dependency management mechanisms required to automate Assembly & Orchestration; these required to avoid exposing significant structural Complexity to Operations. Also, Microservices only address one structural layer of the [runtime structural hierarchy](89-complexity-modularity.html#structural-hierarchy). 
@@ -134,7 +153,7 @@ We need a more coherent Modularity strategy, one that can include a Microservice
 ## The Modularity Maturity Model
 
 As explained in [Agility and Modularity: Two Sides of the Same Coin](https://www.osgi.org/wp-content/uploads/AgilityandModularity2014v21.pdf), senior management are familiar with the concepts of modularity and dependencies when in the context of Organisational management structures.
-
+t
 Recognising this, the <em>Modularity Maturity Model</em> was proposed by Dr Graham Charters at the OSGi Community Event 2011, as a way of describing how far down the modularity path an organisation or project is. It is named after the [Capability Maturity Model](http://en.wikipedia.org/wiki/Capability_Maturity_Model), which allows organisations or projects to measure their improvements on a software development process.
 
 Note that the following terminology is OSGi™ agnostic and that it can be applied to any modularity model. It is also intended as a guide rather than prescriptive.
@@ -178,7 +197,7 @@ Dynamism is the culmination of the organization’s Modularity journey: this bui
 * As semantic versioning is used, the impact of change is efficiently communicated to all interested parties, including governance and change control processes.
 * Individual components may be rapidly and safely deployed and /or changed in the Production environment, enabling runtimeAgilty & Adaption. 
 * As the dynamic assembly process is aware of the capabilities of the hosting runtime environment, application structure and behavior may automatically adapt to location, allowing transparent deployment and optimization for public cloud or traditional private data center environments.
-* Dependent upon the business problem - REST based Microservices, 12 Factor-Apps, Asychronous Actor based AI designs, or traditional XA transactional systems are all equally valid design choices.
+* Architecture neutrality is achieved. Dependent upon the business problem - REST based Microservices, 12 Factor-Apps, Asychronous Actor based AI designs, or traditional XA transactional systems are all equally valid design choices, and as requirements dictate business logic may be simply moved between these alternatives.
 * The Agile foundations have been layed to now effectively leverage Machine Learning & AI techniques.
 
 ![Modularity Maturity Model](img/Modularity-Maturity-Model.png)

@@ -1,7 +1,7 @@
 ---
 title: Microservice 
 layout: toc-guide-page
-lprev: 020-tutorial_qs.html 
+lprev: 022-tutorial_osgi_runtime.html 
 lnext: 015-Prerequisite.html
 summary: Creating a tradition 3-tier Microservice (< 10 minutes). 
 ---
@@ -1439,6 +1439,8 @@ To run the resultant OSGi based REST Microservice change back to the top level p
     java -jar rest-app/target/rest-app.jar
 
 The REST service can be seen by pointing a browser to [http://localhost:8080/microservice/index.html](http://localhost:8080/microservice/index.html)
+
+![MicroService demo](img/MicroService.png)
 
 Stop the application using Ctrl+C in the console.
 
