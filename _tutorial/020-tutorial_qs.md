@@ -3,7 +3,9 @@ title: Quick Start
 layout: toc-guide-page
 lprev: 017-enRoute-ArcheTypes.html 
 lnext: 022-tutorial_osgi_runtime.html
-summary: Your first really simple OSGi™ REST Microservice (< 5 minutes). 
+summary: Your first really simple OSGi™ REST Microservice (< 5 minutes).
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance 
 ---
 
 ## Summary 
@@ -83,28 +85,20 @@ package com.paremus.examples;
 
 with the following code,
 
-{% highlight shell-session %}
-package com.acme.prime.upper.application;
- 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
- 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsResource;
- 
-@Component(service=ComponentImpl.class)
-@JaxrsResource
-public class ComponentImpl {
-     
-    @Path("rest/upper/{string}")
-    @GET
-    public String toUpper(@PathParam("string") String string) {
-        return string.toUpperCase();
-    }
-     
-}
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#Upper" aria-expanded="false" aria-controls="Upper">
+    Upper.java
+  </a>
+</p>
+<div class="collapse" id="Upper">
+  <div class="card card-block">
+{% highlight java tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
 {% endhighlight %}
+
+  </div>
+</div>
+
 and then save the file.
 
 As shown, the modifications include:
@@ -149,12 +143,15 @@ And now we see that our application `com.acme.example.impl` and the OSGi Declara
             com.acme.example.impl;version='[1.0.0,1.0.1)',\
             org.apache.felix.scr;version='[2.1.0,2.1.1)'
 
-We now create a runnable application JAR as follows
+We now create a runnable application JAR as follows.
 {% highlight shell-session %}
 $ mvn package
 {% endhighlight %}
 
-and the resultant `quickstart` application may be started as described [above](020-tutorial_qs.html#running-the-application) 
+Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-application).
+
+Note that in this versions of `quickstart` only the REST endpoint will be available.
+{: .note} 
 
 
 ## Creating an OSGi™ MicroService using Eclipse IDE
@@ -207,29 +204,19 @@ This needs to be edit to include:
 * Incude the required `imports`
 
 After which the `CompenentImpl` will look as follows:
-
-{% highlight java %}
-    package com.acme.prime.upper.application;
-
-    import javax.ws.rs.GET;
-    import javax.ws.rs.Path;
-    import javax.ws.rs.PathParam;
-
-    import org.osgi.service.component.annotations.Component;
-    import org.osgi.service.jaxrs.whiteboard.propertytypes.JaxrsResource;
-
-    @Component(service=ComponentImpl.class)
-    @JaxrsResource
-    public class ComponentImpl {
-    
-        @Path("rest/upper/{string}")
-        @GET
-        public String toUpper(@PathParam("string") String string) {
-            return string.toUpperCase();
-        } 
-    
-    }
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#UpperIDE" aria-expanded="false" aria-controls="UpperIDE">
+    Upper.java 
+  </a>
+</p>
+<div class="collapse" id="UpperIDE">
+  <div class="card card-block">
+{% highlight java tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
 {% endhighlight %}
+
+  </div>
+</div>
 
 Now remember to **Save** your changes.
 
@@ -243,18 +230,23 @@ In the `app` maven module, double click `app.bndrun` to display `Bndtools Resolv
 We need to resolve all the dependencies to run the bundle and see our message displayed so 
 
 Click the **Resolve** button...
+
 ![Modularity and complexity](img/5.png){: height="400px" width="400px"}
 
 Now click **Finish** button...
+
 ![Modularity and complexity](img/6.png){: height="400px" width="400px"}
 
 It's ready to run. Select the **Run OSGi** button
+
 ![Modularity and complexity](img/7.png)
 
 See the results in the console screen.
+
 ![Modularity and complexity](img/8.png)
 
 With the project running, navigate to [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower) and see check the results
+
 ![Modularity and complexity](img/9.png)
 
 We confirmed that the service is working as expected. 
@@ -264,12 +256,15 @@ We confirmed that the service is working as expected.
 
 The last step is to generate a runnable jar file. 
 Right click the `quickstart` module in the left pane, and select **Run As -> Maven**
+
 ![Modularity and complexity](img/10.png)
 
 Enter package as the goal and click **Run**
+
 ![Modularity and complexity](img/11.png){: height="400px" width="400px"}
 
 Wait for maven to finish the generation.
+
 ![Modularity and complexity](img/12.png)
 
 The runnable jar file created will be `app/target/app.jar`. 

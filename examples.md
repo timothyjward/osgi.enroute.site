@@ -4,6 +4,8 @@ title: Examples
 description: Examples 
 permalink: /Examples/
 order: 2
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance
 ---
 enRoute examples illustrate the correct use of the more frequently used OSGi™ specifications. Where example code is used within an enRoute Tutorial, the approprite link this provided, along with links to the OSGi™ Service or usage patterns demonstrated by the code example.    
 

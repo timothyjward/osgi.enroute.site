@@ -4,6 +4,8 @@ summary: How does Modularity tame Complexity?
 layout: toc-guide-page 
 lprev: 100-about-osgi
 lnext: 095-modularity-maturity-model
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance
 ---
 
 ## The Problem

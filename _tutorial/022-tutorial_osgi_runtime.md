@@ -1,9 +1,11 @@
 ---
-title: So much more!  
+title: Much more!  
 layout: toc-guide-page
 lprev: 020-tutorial_qs.html  
 lnext: 030-tutorial_microservice.html 
-summary: A peek behind the curtain - the OSGi™ µServices runtime!  
+summary: A peek behind the curtain - the OSGi™ µServices runtime!
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance  
 ---
 
 ## Summary 

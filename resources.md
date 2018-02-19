@@ -3,7 +3,9 @@ layout: toc-page
 title: Resources 
 description: Resources 
 permalink: /Resources/
-order: 5 
+order: 5
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance
 ---
 
 This section provides addition information that may be useful to you once you've completed the enRoute tutorials.

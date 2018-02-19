@@ -3,7 +3,9 @@ title: Quick Start
 layout: toc-guide-page
 lprev: 020-tutorial_qs.html 
 lnext: 015-Prerequisite.html
-summary: A walkthrough of the Quick Start exmple 
+summary: A walkthrough of the Quick Start exmple
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance 
 ---
 
 The quickstart example is a simple OSGi enRoute application created from the enRoute project archetype. It contains a single OSGi service which exposes a REST endpoint and some static files, and an application project which packages up the service and its dependencies into a runnable JAR file.

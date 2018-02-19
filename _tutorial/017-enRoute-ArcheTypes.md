@@ -3,7 +3,9 @@ title: OSGi enRoute Archetypes
 layout: toc-guide-page
 lprev: 015-Prerequisite.html 
 lnext: 020-tutorial_qs.html
-summary: Explanation of the Maven Archetypes used by enRoute  
+summary: Explanation of the Maven Archetypes used by enRoute
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance  
 ---
 
 

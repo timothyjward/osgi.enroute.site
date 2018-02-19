@@ -3,7 +3,9 @@ title: Prerequisites
 layout: toc-guide-page
 lprev: 030-tutorial_microservice.html 
 lnext: 017-enRoute-ArcheTypes.html 
-summary: Prerequistes & configurations required for running these Tutorials.  
+summary: Prerequistes & configurations required for running these Tutorials.
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance 
 ---
 
 Before you start any of the tutorials you must prepare your environment so that the right tools are installed. This page helps you to achieve this. 

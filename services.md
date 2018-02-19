@@ -3,7 +3,9 @@ layout: toc-page
 title: Services 
 description: Services 
 permalink: /Services/
-order: 3 
+order: 3
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance 
 ---
 
 This section introduces service oriented design, provides an overview of OSGi™ Declarative Services and then provides information on some of the most important OSGi™ services and usage patterns. 

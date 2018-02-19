@@ -4,6 +4,8 @@ summary: Modularity - The necessary foundations for Agile and Efficient Organisa
 layout: toc-guide-page 
 lprev: 090-complexity-modularity 
 lnext: 100-about-osgi
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance
 ---
 
 ## Complexity & Cost
