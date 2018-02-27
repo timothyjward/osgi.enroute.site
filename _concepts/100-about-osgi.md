@@ -6,6 +6,13 @@ lprev: 095-modularity-maturity-model
 lnext: 090-complexity-modularity 
 ---
 
+> “First they ignore you, then they ridicule you, then they fight you, then you win.”
+-- Mahatma Gandhi
+
+> OSGi is a disruptive technology that will transform how enterprise Java applications are designed, developed, and managed!
+
+
+
 The OSGi technology is a set of specifications that define a _dynamic component system for Java_. These specifications enable a development model where an _application_ is composed of several _components_ which are packaged in _bundles_. Components are communicating through _nano-services_. 
 
 An application in this context represents the functionality desired by the organization. For example, an expense account reporting application or a payroll application. The goal is to make the application code as small as possible because that code is not reusable. It is the code that is unique for the application and usually highly coupled to a large set of components. That, however, works two ways. Since applications are not reusable extra dependencies are very cheap.
