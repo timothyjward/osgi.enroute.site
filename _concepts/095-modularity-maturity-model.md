@@ -12,7 +12,7 @@ sponsor: OSGi™ Alliance
 
 > The most import measure of Complexity is the financial cost associated with software maintenance: i.e. the cost required to change a System. 
 
-A number of independent studies concurr that Software maintenance accounts for ~80% of the total life-time cost of a software system: e.g. [Erlikh 2000](Erlikh, I. (2000) Leveraging Legacy System Dollars for E-Business. Information Technology Proceedings, May/June 2000, 17-23.) determined that 80% of software costs are concerned  with **evolution** of the software.
+A number of independent studies concurr that software maintenance accounts for ~80% of the total life-time cost of a software system: e.g. [Erlikh 2000](Erlikh, I. (2000) Leveraging Legacy System Dollars for E-Business. Information Technology Proceedings, May/June 2000, 17-23.) determined that 80% of software costs are concerned  with **evolution** of the software.
 
 These costs typically breakdown into following activities in the following proportions.
 
@@ -50,34 +50,28 @@ where
 
 To minimise change costs we simply need to minimise this expression.
 
+
 ## Traditional Approaches
 
-Traditional approaches that attempt to bear down on Operational costs (the proxy for Complexity) include: 
+If we ignoring the role of Modularity - what other approaches are available for managing Complexity? Possible approaches to bearing down on Operational costs (the proxy for Complexity) might include:
+  
+* **Avoid all Changes**: If there is no change, there is no cost of change. Physically impossible and contradicts the ethos of an Agile Organisation.
+* **Force Conformity / Reduce Diversity**: Force all the Systems to use the same infrastructure services. Consolidate applications where possible, enforce a single architecture, a single protocol, a single language: e.g. HTTP everywhere & REST Microservices. Physically possible but again impacts Organisational Agility.
+* **Hide Complexity**: Make the complexity for various layers of the runtime someone elses problem - either by wholesale Outsourcing, by using third Party Clouds (Baremetal, VM, Container, FaaS). 
+
+Traditional IT strategies usually include one or more elements of the above. 
 
 ### Avoid Change
 
-Simply avoid Change! 
+A **no change** strategy results in extremely fragile Operational environments. When the inevitable unplanned environmental change occurs (i.e. resource failure or Operational error), this event is much more likely to have a catastrophic effect: i.e. a Black Swan event.
 
-Irrespective of how complex a system is, if there is no change, then no change related costs are incurred. 
-
-However real world Organisations, even those with static business models, must respond to security patches and component obsolesces. A **no change** strategy also results in an extremely fragile Operational environment. When the inevitable unplanned environmental change occurs (i.e. resource failure or Operational error), it is more likely to have a catastrophic effect: i.e. a Black Swan event.  
-
-### Write Throw Away Code
-
-Rather than trying to maintain an existing code-base, wholesale rewrite the application using commodity developer resources each time major changes are required.  
-
-This may be a valid strategy for a small consumer start-ups, but not sophisticated Telco, Financial Service, or an Industry 4.0 solutions that require ongoing incremental enhancements to a complex inter-related eco-system of Services.
-
-Ironically, the more modular the overall software ecosystem, *the simple it becomes* to rapidly rip-n-replace individual Modules.
- 
+Real world Organisations, even those with static business models that require no new functionality, must still respond to [security patches, fixes and accomodate environmentally forced changes](095-modularity-maturity-model#complexity--cost). 
 
 ### Consolidate Applications
 
 To reduce Complexity, reduces the number of Applicatons by consolidation of funtionality. 
 
-However, if we consider [Glass's law](090-complexity-modularity#qualitative-measures) we can immediately see problem with this approach. 
-
-Consider three business services each composed of 4 functions, 3 of which are the same for each System;
+However, if we consider [Glass's law](090-complexity-modularity#qualitative-measures) we can immediately see a problem. Consider three business services each composed of 4 functions, 3 of which are the same for each System;
 
 `System A (a,b,c,x)`, 
 `System B (a,b,c,y)`, 
@@ -89,11 +83,12 @@ The Complexity estimate for these three systems would then be:
 
 Whereas the equivalent consolidate `System D (a,b,c,x,y,z)` will have a complexity measure of `6<sup>3.11</sup> = 263` 
 
-In this example while **Operational Complexity** decreases from managing 3 applications to 1 larger application, **Code Complexity** (the much larger issue), remains essentially unchanged. The degree of functional overlap between Systems being consolidated may be greater than 75%, or one may argue that the expotential <sup>3.11</sup> is too high for your organisation; however the argument concerning the ineffectivness of functional consolidation in reducing complexity still stands. 
+In this example while **Operational Complexity** decreases from managing 3 applications to 1 larger application, however **Code Complexity** (the much larger issue), remains essentially unchanged. The degree of functional overlap between Systems being consolidated may be greater than 75%, or one may argue that the expotential <sup>3.11</sup> is too high for your organisation; however the argument concerning the ineffectivness of functional consolidation in reducing complexity still stands. 
 
 Also note that Operational flexibility and resilience are reduced as the whole User population is now dependent upon the one monolithic application.  
 
 So perhaps not the desired outcome for a multi-million dollar application consolidation program? 
+
 
 ### Outsourcing
 
@@ -107,20 +102,29 @@ Here we simply move the Complexity problem from a physical platform to a virtual
 
 Virtualisation has **no-effect** on application Complexity, and **increases** infrastructure complexity. Investment in Virtualisation or Container strategy should only be justified on infrastructure costs savings through increased resource utilisation. One must also account for potentially significant increases in infrastructure Complexity, which in-turn can lead to increased Service outages.
 
-The same argument applies to 3rd Party Cloud providers; moving an Application to a third party Cloud environment has no effect on the Application's internal Complexity. However third Party Cloud providers do shield you from the infrastructure Complexity (at a cost).
+The same argument applies to 3rd Party Cloud providers; moving an Application to a third party Cloud environment has no effect on the Application's internal Complexity. However third Party Cloud providers - at a cost - do shield you from the infrastructure Complexity.
+
+
+### Write Throw Away Code
+
+Finally, rather than trying to maintain an existing code-base, wholesale rewrite the application using commodity developer resources each time major changes are required.  
+
+This may be a valid strategy for a small consumer start-ups, but increasingly not so for sophisticated Telco, Financial Service, or an Industry 4.0 systems that require ongoing incremental enhancements to a complex inter-related eco-system of Services.
+
+Ironically, the more modular the overall software ecosystem, *the simple it becomes* to rapidly rip-n-replace individual Modules.
 
 
 ## Current Trends 
 
-All of the above _traditional_ IT strategies fail to address the fundamental problem of Application complexity. Of the approaches discussed, only public Cloud providers shield infrastructure / environmental complexity from their Users.
+If traditional strategies fail to address the fundamental problem of Application complexity what about current application trends? 
 
-So what about current application trends? Do these help?  
+Do these help?
 
 ### MicroServices?
 
 A limited modularity strategy may be pursued via adoption of REST based Microservices. 
 
-By 'limited' we mean that large applications are broken down into a set of smaller deployable Services that communcated with each other via REST, however in most cases the internal implementation of each Microservice remains non-Modular.
+By 'limited' we mean that large applications are broken down into a set of smaller deployable Services that communcated with each other via REST, however in most cases the internal implementation of each Microservice remains non-Modular. This is also an example of **Force Conformity / Reduce Diversity** as all applications must use HTTP/REST to communicate. 
 
 Contrary to the consolidation [example](095-modularity-maturity-model#consolidate-applications), we now break the Systems
 	`System A (a,b,c,x)`, `System B (a,b,c,y)`, `System C (a,b,c,z)` 
@@ -136,26 +140,26 @@ REST / Container centric Microservices strategies generally lack standards based
 
 ### Twelve-Factor Applications?
 
-Twelve-Factor methodology is a variant of the current REST / Microservices trend.
+Twelve-Factor methodology is a variant of the REST / Microservices trend.
 
 The Twelve-Factor methodology encourages: 
 * the use of declarative formats for setup automation - to minimize time and cost on-boarding new developers;
 * the use of clean contracts to define dependencies on underlying runtime - to enabled portability; 
-* to focus on minimizng divergence between development and production - to enable continuous deployment; 
+* to focus on minimizing divergence between development and production - to enable continuous deployment; 
 * and to scale up without significant changes to tooling, architecture, or development practices.
 
 Like Microservices, Twelve-Factor methodology is applicable to any application written in any programming language. However, just like Microservices, to achieve this language agnostic position, Twelve-Factor needs to specify a number of application design constraints which may or may not be acceptable. 
 
-Twelve-Factor methodology is vague about modularity and dependendencies: i.e. simply stating dependencies should be managed. Both Heavyweight monoliths or highly modular Composite Systems like [our Microservices example](_tutorial/030-tutorial_microservice) may be crafted to be "Twelve-Factor" compliant.
+While mentioning the benefits of modularity and dependendency management Twelve-Factor methodology is vague about how this should be achieved. Both Heavyweight monoliths or highly modular Composite Systems like [our Microservices example](_tutorial/030-tutorial_microservice) may be crafted to be "Twelve-Factor" compliant.
 
-Hence, Twelve-Factor methodology does not address Application Complexity, however like REST based Microservices it may be one of a number of useful design patterns used within a Modularity strategy.  
+While Twelve-Factor methodology does not address Application Complexity, like REST based Microservices it may be one of a number of useful design patterns used within the context of a more all-encompassing Modularity strategy.  
 
 
 ### Serverless Application Model
 
-Yet another variant is the _Serverless_ application. Here, developers create units of Application logic that are instantiated in third-Party Function-as-a-Service compute offerings: i.e. databases, search indexes, queues, SMS messaging, and email delivery. While very similar in concept to compute Grid offerings that were available over a decade ago; the recent _Serverless_ movement prefers to reference AWS Lambda as the inspiration. 
+In a Serverless environment, developers create units of Application logic that are instantiated in third-Party Function-as-a-Service compute offerings: i.e. databases, search indexes, queues, SMS messaging, and email delivery. While very similar in concept to compute Grid offerings that were available over a decade ago; the recent _Serverless_ movement prefers to reference AWS Lambda as the inspiration. 
 
-Application Complexity is reduced for the FaaS User as the software infrastructure is provided as a third-party Service. 
+FaaS is an example of a **Hide Complexity** strategy, as the Developer's concern is only the Application logic, with all software infrastructure provided as third-party Services. 
 
 State benefits of Serverless include:
 
@@ -181,26 +185,25 @@ Finally, while a number of open Source projects exists, currently no industry st
 
 Proponents of REST based Microservices, Twelve-Factor & Serverless also tend to be _Polyglot_ advocates: arguing that runtime services can be written using off-the-street developers using their favorite langangue of choice. 
 
-However, from a maintenance perspective an overly indulgent Polyglot strategy is a significant Organisational problem. Consider a Microservice processing pipeline consisting of Python, Go, Rust, C++ and Haskell Service components. Maintenance of this Service either requires:
+However, this is inconsistent with **Force Conformity / Reduce Diversity**. From a maintenance perspective an overly indulgent Polyglot strategy is a significant Organisational problem. Consider a Microservice processing pipeline consisting of Python, Go, Rust, C++ and Haskell Service components. Maintenance of this Service either requires:
 * the Organisation to maintain a diverse set of Developer skills that will be difficult and costly to maintain over extended periods;
 * Or to treat all Service Components as dispoable units; to be re-written from scratch as and when new functionality is required; each time using commodity Development resources and their preferred language.
-
-Neither approach is efficient, or economiclly sustainable.
-{: .p.warning} 
 
 It is also worth noting that the [TIOBE Index for January 2018](https://www.tiobe.com/tiobe-index/) yet again places Java as the industries leading programming language, a position broadly held since 2003: this perhaps an indication that senior management in Organisations understand that unnecessary language diversity (unnecessary Complexity) is an **excellent mechanism** for generating explosive levels of runtime complexity (see [CISQ Technical Debt Calculation](ihttp://it-cisq.org/standards/technical-debt/)), and ofcourse future recruiting issues: i.e. _vacancy for a developer - must have 5 years experience in all of the following - Python, Go, Rust, C++ and Haskell._
 
 
 ### DevOps
 
-A common response to uncontrolled Operational Complexity is DevOps. In the DevOps model, the Development teams are made responsible for all aspects of their Application; from code development to Production. Developers can *deal* with the Operational complexity; and direct access to Production Systems - without an Operations barrier - allows the developer to deploy code, and recover from the errors caused by the deployment, more rapidly. 
+A common response to uncontrolled Operational Complexity is DevOps. 
+
+In the DevOps model, the Development teams are made responsible for all aspects of their Application; from code development to Production. The argument is that Developers can '*deal* ' with the Operational complexity; and in addition direct access to Production Systems - without Operational barriers - allows the developer to deploy code, and recover from the errors caused by the deployment, more rapidly. 
 
 However, the DevOps model results in tight coupling between Developement teams and the Operational Services for which they are now responsible. This tight-coupling introduces systemic Operational Risk: talented members of a Development team are more likely to leave the company, and in a DevOps centric environment, this immediately translates to an Operational risk to the business: [The Wetware Crisis: the Dead Sea effect](http://brucefwebster.com/2008/04/11/the-wetware-crisis-the-dead-sea-effect/).
 
 
 ## Modularity First - The Modularity Maturity Model
 
-Complexity is a critical business problem. Complexity cannot be ignored, cannot be consolidated away, hidden by a third Party Cloud or an out-source contract. Directly or indirectly the costs associated with Complexity will always re-emerge. 
+Complexity is a critical business problem. Complexity cannot be ignored, cannot be consolidated away, hidden by a third Party Cloud, or an out-source contract. Directly or indirectly the costs associated with Complexity will always re-emerge. 
 
 A Modularity first strategy is the only way that Complexity can be addressed, and high maintainable, economically sustainable software systems delivered. 
 
@@ -248,7 +251,7 @@ Dynamism is the culmination of the organization’s Modularity journey: this bui
 * Individual components may be rapidly and safely deployed and /or changed in the Production environment, enabling runtimeAgilty & Adaption. 
 * As the dynamic assembly process is aware of the capabilities of the hosting runtime environment, application structure and behavior may automatically adapt to location, allowing transparent deployment and optimization for public cloud or traditional private data center environments.
 * Architecture neutrality is achieved. Dependent upon the business problem - REST based Microservices, 12 Factor-Apps, Asychronous Actor based AI designs, or traditional XA transactional systems are all equally valid design choices, and as requirements dictate business logic may be simply moved between these alternatives.
-* The Agile foundations have been layed to now effectively leverage Machine Learning & AI techniques.
+* The Agile foundations have been layed to now effectively leverage runtime adaptive Machine Learning & AI techniques.
 
 ![Modularity Maturity Model](img/Modularity-Maturity-Model.png)
 
@@ -256,9 +259,11 @@ Each Organization’s modularization migration strategy (i.e. the route to trave
 
 ## Conclusions 
 
-As Complexity is the primary issues that affects the economic sustainability of software systems; a coherent strategy for Modularity - based on Open Industry standards - must be our start point. The Modularity strategy must define how to describe dependencies and life-cycles for all entities, at all structure layers, of each Composite System: from the fine grained artefacts created by the Component Developers, to the distributed Composite System run by Operations; enabling all layers of the runtime environment to be automatically Assembly / Orchestrated.
+Complexity is the primary issues that affects the economic sustainability of software systems; and so a coherent strategy for Modularity - based on Open Industry standards - must be our start point. 
 
-The Modularity strategy does not constrain application architecture, the protocols to be used between Services, or the runtime environment within which the Composite System will run. Hence, we are still able to create **maintainable** REST Microservices, Twelve-Factor applications, or Serverless applications; but most importantly subsequently changing these design decisions at a later point in time in response to changing Business requirements. As the runtime Applications are self-decribing and self-assembling entities, updates can be simply and rapidly applied by Operations; avoiding the need to tightly-couple Developers to Production Systems.
+This Modularity strategy must define how to describe dependencies and life-cycles for all entities, at all structure layers, of each Composite System: from the fine grained artefacts created by the Component Developers, to the distributed Composite System run by Operations; enabling all layers of the runtime environment to be automatically Assembly / Orchestrated.
+
+It is important to note that such a Modularity strategy does not exclude REST based Microservices, use of Cloud, a Twelve-Factor approach, or use of Function-as-a-Service; rather a Modularity first strategy is an enabler for **maintainable** versions of all of the these; while also ensuring that these design decisions can be changed at a later point in time in response to changing Business requirements. 
 
 Today, OSGi™ / Java is the only modularity / language combination powerfull enough to address Complexity Crisis and so DARPA's longevity challenge. However, the OSGi Alliance are looking to generalise OSGi Dependency Management and Service Registry concepts, bringing these benefits to other popular languages.  
 
