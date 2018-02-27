@@ -1,5 +1,5 @@
 ---
-title: Much more!  
+title: OSGi Runtime & Debug  
 layout: toc-guide-page
 lprev: 020-tutorial_qs.html  
 lnext: 030-tutorial_microservice.html 
