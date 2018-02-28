@@ -12,21 +12,24 @@ sponsor: OSGi™ Alliance
 
 A simple tutorial where we first run, and then re-create and re-run, a simple OSGi™ Microservice.
 
-## Running the Application
+## Building and Running the Example
 
-We start by first downloading, building and running the enRoute `quickstart` example. In addition to demonstrating the simple application, this will also confirm that your local [environment](015-Prerequisite.html#required-tools) meets the require prerequisits.
+We start by first downloading, building and running the enRoute `quickstart` example. In addition to demonstrating the simple application this will also confirm that your local [environment](015-Prerequisite.html#required-tools) meets the require prerequisits.
 
 Download the [enroute examples](https://github.com/timothyjward/osgi.enroute/tree/55e14b52e277c653ad8975eccf7e92d7813abfec) from GitHub and change directory into `examples/quickstart`.
+
+### Building the example
  
 Build the Application with the following commands:
 
 {% highlight shell-session %}
-$ mvn install
 $ mvn bnd-resolver:resolve
 $ mvn package 
 {% endhighlight %}
 
-We now have a runnable artefact which can be started with the command 
+### Running the example
+
+We now have a runnable artifact which can be started with the command 
 {% highlight shell-session %}
 $ java -jar app/target/app.jar
 {% endhighlight %}
@@ -39,13 +42,14 @@ or if minimalisim is more your thing, the raw REST endpoint [http://localhost:80
 
 When you want to terminate the application press **Ctrl+C**.
 
-
-## Project Setup
+## Recreating the Quickstart example
 
 We'll now recreate the quickstart example locally as though it were your own greenfield OSGi project. 
 
-It is assumed that you have the required [environment](015-Prerequisite.html#required-tools) installed on your laptop and created the [setting.xml](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes) project skeleton in your project root directory. 
+It is assumed that you have the required [environment](015-Prerequisite.html#required-tools) installed on your laptop and created the [settings.xml](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes) project skeleton in your project root directory. 
 {: .note }
+
+### Project Setup
 
 First issue the command to create the project template
 
@@ -54,10 +58,10 @@ First issue the command to create the project template
 
 Fillng the the project details with appropriate values 
 
-    Define value for property 'groupId': com.acme.example
+    Define value for property 'groupId': org.osgi.enroute.examples.quickstart
     Define value for property 'artifactId': quickstart
-    Define value for property 'version' 1.0-SNAPSHOT: : 
-    Define value for property 'package' com.acme.example: : 
+    Define value for property 'version' 1.0-SNAPSHOT: :
+    Define value for property 'package' org.osgi.enroute.examples: : org.osgi.enroute.examples.quickstart.rest
     Confirm properties configuration:
     groupId: com.acme.example
     artifactId: quickstart
@@ -65,25 +69,28 @@ Fillng the the project details with appropriate values
     package: com.acme.example
     Y: : 
 
+If you're using an IDE then this would be a good time to import the generated maven projects
+{: .note }
 
-## Creating an OSGi™ MicroService using the CLI
+### Implementing the MicroService
 
-Having created the project skeleton, replace the contents of `quickstart/impl/src/main/java/com/acme/example/ComponentImpl.java` 
+Having created the project skeleton, edit `quickstart/impl/src/main/java/org/osgi/enroute/examples/quickstart/rest/ComponentImpl.java` 
 
 {% highlight shell-session %}
-package com.paremus.examples;
+package org.osgi.enroute.examples.quickstart.rest;
 
-    import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Component;
 
-    @Component
-    public class ComponentImpl {
+@Component
+public class ComponentImpl {
     
-        //TODO add an implementation
+    //TODO add an implementation
     
-    }
+}
+
 {% endhighlight %}
 
-with the following code,
+and add the following implementation details
 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#Upper" aria-expanded="false" aria-controls="Upper">
@@ -101,19 +108,45 @@ with the following code,
 
 and then save the file.
 
-As shown, the modifications include:
-* An implementation replacing the the `TODO` section
-* As this is a MicroService the `@JaxrsResource` annotation is included.
-* The `@Component` is modified to `@Component(service=ComponentImpl.class)`
-* The required `imports` are included. 
+The important modifications include:
+* A JAX-RS resource method implementation, replacing the the `TODO` section
+* The `@Component` is modified to register this component as an OSGi service
+* The `@JaxrsResource` annotation is used to mark this as a JAX-RS whiteboard resource.
 
-From your `quickstart` project root we now build the example.
+### Building the implementation
+
+It's now time to build the implementation project.
+
+<div>
+ <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#impl-build-cli" aria-controls="impl-build-cli" role="tab" data-toggle="tab">Using the CLI</a></li>
+  <li role="presentation"><a href="#impl-build-eclipse" aria-controls="impl-build-eclipse" role="tab" data-toggle="tab">Using Eclipse</a></li>
+ </ul>
+
+ <div class="tab-content">
+  <div markdown="1" role="tabpanel" class="tab-pane active" id="impl-build-cli">
+From the `quickstart/impl` project we now build the impl bundle.
 {% highlight shell-session %}
 $ mvn install
 {% endhighlight %}
-If this step fails, run the following `mvn bnd-resolver:resolve` and then repeate `mvn install`
-{: .warning}
+      
+We use the `install` goal here to make sure that the built artifact is available to other projects in later steps
+{: .note }
+  </div>
+  <div  markdown="1" role="tabpanel" class="tab-pane" id="impl-build-eclipse">
+When using Bndtools your IDE will be incrementally rebuilding your projects every time that you save, so there's no need to run a build. You can also run a build manually.
+      
+Right click the `quickstart` module in the left pane, and select **Run As -> Maven**
 
+![Modularity and complexity](img/10.png)
+
+Enter package as the goal and click **Run**
+  </div>
+ </div>
+</div>
+
+
+### Resolving the Application
 
 Before generating the runtime dependency information used by the OSGi framework take a look at `quickstart\app\app.bndrun`
 
@@ -121,113 +154,28 @@ Before generating the runtime dependency information used by the OSGi framework 
 
     -standalone: ${index}
 
-    -runrequires: osgi.identity;filter:='(osgi.identity=com.acme.example.impl)'
+    -runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
     -runfw: org.apache.felix.framework
     -runee: JavaSE-1.8
 
-As shown no `runbundles` are currently specified. We specify the `runbundles` with
+As shown the bndrun contains a `runrequires` defining the key bundles in the application, but no `runbundles` listing the actual bundles needed at runtime. The `runbundles` can be calculated for us automatically.
+
+<div>
+ <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#resolve-cli" aria-controls="resolve-cli" role="tab" data-toggle="tab">Using the CLI</a></li>
+  <li role="presentation"><a href="#resolve-eclipse" aria-controls="resolve-eclipse" role="tab" data-toggle="tab">Using Eclipse</a></li>
+ </ul>
+
+ <div class="tab-content">
+  <div markdown="1" role="tabpanel" class="tab-pane active" id="resolve-cli">
+From the `quickstart/app` project we now resolve the application using the bnd-resolver-maven-plugin
 
 {% highlight shell-session %}
 $ mvn bnd-resolver:resolve
 {% endhighlight %}
-And now we see that our application `com.acme.example.impl` and the OSGi Declarative Services framework have been included.
-
-    index: target/index.xml
-
-    -standalone: ${index}
-
-    -runrequires: osgi.identity;filter:='(osgi.identity=com.acme.example.impl)'
-    -runfw: org.apache.felix.framework
-    -runee: JavaSE-1.8
-    -runbundles: \
-            com.acme.example.impl;version='[1.0.0,1.0.1)',\
-            org.apache.felix.scr;version='[2.1.0,2.1.1)'
-
-We now create a runnable application JAR as follows.
-{% highlight shell-session %}
-$ mvn package
-{% endhighlight %}
-
-Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-application).
-
-Note that in this versions of `quickstart` only the REST endpoint will be available.
-{: .note} 
-
-
-## Creating an OSGi™ MicroService using Eclipse IDE
-
-We'll now repeate this process using the Eclipse IDE. Make sure that you've followed the [project setup](020-tutorial_qs.html#project-setup) instructions, that your version of [Eclipse](015-Prerequisite.html#useful-tools) meets the require prerequisits, and that you have the appropriate version of the [bndtools](015-Prerequisite.html#installing-bndtools) plugin installed.
-
-Launch eclipse and **import** the Maven project just created in `quickstart` directory. 
-
-**Menu File -> Import**
-
-![Modularity and complexity](img/1.png){: height="400px" width="400px"} 
-
-Click **Next** and browse for the directory created with the name `quickstart`.
-
-![Modularity and complexity](img/2.png){: height="400px" width="400px"}
- 
-Now open the **Bndtools** perspective clicking the open perspective toolbar in the top left corner.
-
-![Modularity and complexity](img/3.png){: height="400px" width="400px"}
-
-The Maven project template has created a root maven project called `quickstart` and two maven modules:
-
-* `impl`-  for the implementation of the bundle 
-* `app` - used to package the app.
-
-![Modularity and complexity](img/4.png)
-
-The next step is to write the implementation code in the provided component class. 
-
-On open the `ComponentImpl` source file you'll see the following tesmplate 
-
-{% highlight java %}
-    package com.paremus.examples;
-
-    import org.osgi.service.component.annotations.Component;
-
-    @Component
-    public class ComponentImpl {
-    
-        //TODO add an implementation
-    
-    }
-{% endhighlight %}
-
-This needs to be edit to include:
-
-* An implementation replacing the the **TODO** section 
-* As this is a MicroService include the `@JaxrsResource` annotation
-* Modify `@Component` to `@Component(service=ComponentImpl.class)`
-* Incude the required `imports`
-
-After which the `CompenentImpl` will look as follows:
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#UpperIDE" aria-expanded="false" aria-controls="UpperIDE">
-    Upper.java 
-  </a>
-</p>
-<div class="collapse" id="UpperIDE">
-  <div class="card card-block">
-{% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
-{% endhighlight %}
-
   </div>
-</div>
-
-Now remember to **Save** your changes.
-
-
-## Running the MicroService
-
-Now it's time to run the bundle and see if it works. 
-
-In the `app` maven module, double click `app.bndrun` to display `Bndtools Resolve` screen. Here we can see that the implementation bundle is added to the run requirements.
-
-We need to resolve all the dependencies to run the bundle and see our message displayed so 
+  <div markdown="1" role="tabpanel" class="tab-pane" id="resolve-eclipse">
+In the `app` maven module, open the `app.bndrun` to display the `Bndtools Resolve` screen. Here we can see that the implementation bundle is added to the run requirements.
 
 Click the **Resolve** button...
 
@@ -236,8 +184,37 @@ Click the **Resolve** button...
 Now click **Finish** button...
 
 ![Modularity and complexity](img/6.png){: height="400px" width="400px"}
+  </div>
+ </div>
+</div>
 
-It's ready to run. Select the **Run OSGi** button
+If you look again at the `app.bndrun` file you will see that our rest service implementation `org.osgi.enroute.examples.quickstart.impl`, an OSGi Declarative Services implementation, and a number of other bundles have been included in the `runbundles`.
+
+### Running the application
+
+We now create a runnable application JAR.
+
+Note that in this version of `quickstart` only the REST endpoint will be available.
+{: .note} 
+
+<div>
+ <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#run-cli" aria-controls="run-cli" role="tab" data-toggle="tab">Using the CLI</a></li>
+  <li role="presentation"><a href="#run-eclipse" aria-controls="run-eclipse" role="tab" data-toggle="tab">Using Eclipse</a></li>
+ </ul>
+
+ <div class="tab-content">
+  <div markdown="1" role="tabpanel" class="tab-pane active" id="run-cli">
+Now that the initial development is done we're ready to build and package the whole application by running the following command in the project root
+      
+{% highlight shell-session %}
+$ mvn package
+{% endhighlight %}
+
+Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-example).
+  </div>
+  <div markdown="1" role="tabpanel" class="tab-pane" id="run-eclipse">
+In the `app` maven module, open the `app.bndrun` to display the `Bndtools Resolve` screen. Select the **Run OSGi** button
 
 ![Modularity and complexity](img/7.png)
 
@@ -245,17 +222,11 @@ See the results in the console screen.
 
 ![Modularity and complexity](img/8.png)
 
-With the project running, navigate to [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower) and see check the results
+With the project running, navigate to [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower) and check the results
 
 ![Modularity and complexity](img/9.png)
 
-We confirmed that the service is working as expected. 
-
-
-## Creating a runnable artefact
-
-The last step is to generate a runnable jar file. 
-Right click the `quickstart` module in the left pane, and select **Run As -> Maven**
+If you want to get hold of the runnable application jar then right click the `quickstart` module in the left pane, and select **Run As -> Maven**
 
 ![Modularity and complexity](img/10.png)
 
@@ -267,21 +238,8 @@ Wait for maven to finish the generation.
 
 ![Modularity and complexity](img/12.png)
 
-The runnable jar file created will be `app/target/app.jar`. 
+The runnable jar file created will be `app/target/app.jar`, and may be started as described [above](020-tutorial_qs.html#running-the-example).
 
-To run the service using the following command in the console:
-
-    java -jar app/target/app.jar
-
-To test the service visit the REST endpoint URL [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower)
-
-When you want to exit press **Ctrl+C**.
-
-    [INFO] Started Jetty 9.3.22.v20171030 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=1,selectors=4]
-    Jan 09, 2018 9:16:57 PM org.apache.cxf.endpoint.ServerImpl initDestination
-    INFO: Setting the server's publish address to be /
-    [DEBUG] [ServiceReference 14 from bundle 7 : org.apache.aries.jax.rs.whiteboard:0.0.1.201712130150 ref=[org.osgi.service.http.context.ServletContextHelper] properties={objectClass=[org.osgi.service.http.context.ServletContextHelper], osgi.http.whiteboard.context.name=default, osgi.http.whiteboard.context.path=, service.bundleid=7, service.id=14, service.scope=singleton}] Ignoring invalid ServletContextHelper service
-    21:16:57.494 [main] DEBUG org.eclipse.jetty.util.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@7586beff added {org.apache.felix.http.jetty.internal.RequestLogTracker@2d9caaeb,POJO}
-    Jan 09, 2018 9:16:57 PM org.apache.cxf.endpoint.ServerImpl initDestination
-    INFO: Setting the server's publish address to be /
-
+   </div>
+ </div>
+</div>
