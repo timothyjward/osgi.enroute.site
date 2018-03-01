@@ -1,9 +1,9 @@
 ---
-title: Microservice - jpa 
+title: Persistence with JPA 
 layout: toc-guide-page
 lprev: 022-tutorial_osgi_runtime.html 
 lnext: 015-Prerequisite.html
-summary: A brief re-run using JPA instead of JDBC (< 10 minutes).
+summary: A variant of the Microservices example using JPA & Hibernate (< 10 minutes).
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---

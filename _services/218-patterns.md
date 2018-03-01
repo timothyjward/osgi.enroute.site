@@ -8,6 +8,10 @@ lnext: 300-principles.html
 
 There are a number of patterns used in OSGi systems.
 
+## Services 
+
+
+
 ## Whiteboard Pattern
 
 The Service Whiteboard pattern is useful when you need to register with a server (for example to get events) but the absence of that other party does not prevent you from making progress. A typical example is listening to changes in the configuration entries in the Configuration Admin service. The Configuration Admin service should dispatch these to any Configuration Listeners service. However, a Configuration Listener can run perfectly happy before there is a Configuration Admin service around. And since the Configuration Admin can run before any Configuration Listener service are registered, the life cycles of the Configuration Admin service and the Configuration Listener service are completely decoupled.
@@ -94,4 +98,5 @@ The following OSGi service specifications are extenders:
 * OSGi JPA – The Persistence header identifies the presence of a persistence.xml file that identifies the persistence objects.
 * Metatype – The Metatype service can find metatype definitions inside bundles.
 * Remote Service Admin – The RSA Endpoint discovery model can detect endpoint definitions in bundles.
+
 

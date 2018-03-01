@@ -37,6 +37,8 @@ plugins:
 collections:
   tutorial:
     output: true
+  FAQ:
+    output: true
   concepts:
     output: true
   resources:
