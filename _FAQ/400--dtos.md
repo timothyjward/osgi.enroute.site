@@ -4,12 +4,15 @@ summary: OSGi started to heavily use DTO's since R5. DTOs do not look very objec
 layout: toc-guide-page 
 ---
 
-A Data Transfer Object is used to represent the state of a related runtime object in a form suitable for easy transfer to some receiver. The receiver can be in the same Java VM but is more likely in another process or on another system that is remote. All Data Transfer Objects are easily serializable having only public fields of a limited set of type. DTO's also provide a normalised  internal data representation which, via the Converters introduced in R7, may be mapped to, for example JMX, JSON, YAML representations, or visa-versa. 
+Whenever two parts of a software system want to communicate they need to exchange data. Data Transfer Objects (DTOs) are all about how this data is represented. If you know C then a DTO is a `struct`. If you don't know C then a DTO is an object without methods, it is pure data.
+
+Data Transfer Objects have only public fields, and these fields may have one of a limited set of types. This limits the risk of unnecessary coupling between modules, allows DTOs to be easily serialized (even though they are not `java.io.Serializable`), and makes DTOs easy to transform using the OSGi Converter. DTOs are therefore excellent candidates for service API parameters and return values, they can be used remotely, or outside of Java, and can be represented using JSON, YAML or any format of your choice. 
 
 
 ## A DTO's structure
 
-Data Transfer Objects are public (static) classes with no methods, other than the compiler supplied default constructor, having only public fields limited to the easily serializable types: i.e. A DTO is equivalent to a _struct_ in C.
+Data Transfer Objects are public (static) classes with no methods, other than the compiler supplied default constructor, having only public fields limited to the easily serializable types: i.e. A DTO is equivalent to a _struct_ in C. It is suggested (although not required) that a DTO type extend the `DTO` base class.
+
 For example:
 
         public class BundleDTO extends DTO {
@@ -35,13 +38,13 @@ the _Types_ that can be used in DTOs is limited to:
 
 The List, Set, Map and array aggregates must only hold objects of the listed types.
 
-Again, as the object graph from a Data Transfer Object must be a tree to simplify serialization and deserialization, the DTO class has some very specific requirements:
+The object graph from a Data Transfer Object must be a tree (i.e. not have any cycles) to simplify serialization and deserialization. The DTO class also has some other specific requirements:
 
 * **public** – Only public classes with public members work as DTO. 
-* **static** – Fields must **not** be static but inner classes must be static. 
+* **static** – Fields must **not** be static but inner classes **must** be static. 
 * **no-arg constructor** – To allow instantiation before setting the fields
 * **extend** – DTOs can extend another DTO
-* **no generics** – DTOs should never have a generic signature, nor extend a class that has a generic signature because this makes serialization really hard.
+* **no generics** – DTOs should never have a variable generic signature because this makes serialization really hard.
 
 
 ### Equals and HashCode
@@ -57,7 +60,7 @@ It is rare but allowed to add `equals` and `hashCode` methods.
 
 ### DTOs and Threads 
 
-A Data Transfer Object is a representation of a runtime object at the point in time the Data Transfer Object was created. Data Transfer Objects do not track state changes in the represented runtime object. Since Data Transfer Objects are simply fields with no method behavior, modifications to Data Transfer Object are inherently not thread safe. Care must be taken to safely publish Data Transfer Objects for use by other threads as well as proper synchronization if a Data Transfer Object is mutated by one of the threads.
+A Data Transfer Object is a representation of a runtime object at the point in time the Data Transfer Object was created. Data Transfer Objects do not track state changes in the represented runtime object. Since Data Transfer Objects are simply fields with no method behavior, modifications to Data Transfer Objects are inherently not thread safe. Care must be taken to safely publish Data Transfer Objects for use by other threads as well as proper synchronization if a Data Transfer Object is mutated by one of the threads.
 
 
 ## Where next?
