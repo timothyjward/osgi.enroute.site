@@ -1,9 +1,9 @@
 ---
-title: How do I add a new Module? 
+title: Adding new / updating existing Modules? 
 layout: toc-guide-page
 lprev: last.html 
 lnext: next.html 
-summary: because 
+summary: This tutorial walks through the process of adding a new and updating existing Modules. 
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---

@@ -7,12 +7,6 @@ order: 4
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---
-The OSGi™ Allaince has evolved a series of modularity Specifications which provide the foundations for highly maintainable, agile, and so economically sustainable software eco-systems. As part of this ongoing endevour, enRoute has been created to leverage latest OSGi™ specifications and to demonstrate that creating modular applications is actually rather simple.
-
-Why this is fundamental to your business' future sustainability is the subject of this section. 
-
-![Lowering the barriers](/img/book/why-enroute.png)
-
 
 <style>
 table, td, th {    
