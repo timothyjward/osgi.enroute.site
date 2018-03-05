@@ -1,446 +1,183 @@
 ---
-title: Introducing Declarative Services (DS) 
+title: Declarative Services (DS) 
 layout: toc-guide-page
 version: 1.3
-summary: An extender for Declarative Services components 
+lprev: 210-semantic_versioning.html 
+lnext: 400--dtos.html 
+summary: An overview of the Declarative Services DI framework 
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance  
 ---
 
+Increasingly Declarative Services ( _abbrv_ DS) is the backbone of OSGi. While other Dependency Injection frameworks can be used with OSGi, the OSGi Alliance strongly recommend DS.
 
-![Declarative Services Collaboration Diagram](/img/services/org.osgi.service.component.overview.png)
+All of the enRoute [examples](../examples) are DS based, and walk you from the simplest of DS Components [quickstart](../examples/010-examples.html#the-ds-component) through DS range of capabilities.
 
-## When to Use?
 
-Always! DS is the backbone of OSGi. Whenever you write code in OSGi you write them as DS components. 
-
-## Example Usage
-
-	@Component
-	public class MyComponent implements SomeService {
-		LogService log;
-		
-		@Activate
-		void activate(
-			ComponentContext cc, 
-			BundleContext bc, 
-			Map<String,Object> config) {}
-
-		@Deactivate
-		void deactivate(
-			ComponentContext cc, 
-			BundleContext bc, 
-			Map<String,Object> config) {}
-		
-		@Modified
-		void modified(Map<String,Object> config) {}
-
-		@Reference
-		void setLogService(LogService log) {
-			this.log = log;
-		}
-	}
-	
 ## Background
 
-Not sure what we were smoking when designing the original OSGi specification, or maybe it was just youthful exuberance, but OSGi did not really become useful for the rest of us until we had Declarative Services (DS) with their annotations. Though some old hardliners still seem to resist DS (see [Real Men Don't Use DS][1]), it is obvious that if you use OSGi and not use DS you're either extremely deep down in middleware or you're masochistic. 
+DS (a.k.a _Service Component Runtime_  _abbrv_ SCR) is an [Extender Pattern]() that creates components from an XML resource in your bundle. Code annotations allow the toolchain to write the required XML on the fly; so no direct interaction with XML is required. The XML file defines the Bundle's dependencies, properties, and registered services; allowing DS to automatically instantiate the class, inject the dependencies, activate the component, and register the services.
 
-DS (or also called the Service Component Runtime SCR) is an extender that creates components from, shudder, an XML resource in your bundle. In the bad old days you had to write this XML but fortunately there are now some annotations that allow bnd to write the required XML on the fly. This XML file defines your dependencies, properties, and registered services. When the time comes, DS will instantiate the class, inject the dependencies, activate it, and register the services. In short, DS takes the pain out of OSGi, leaving you with all the pleasures.
 
-There are many similarities with injection frameworks that we shall not name here. However, this is like comparing a flat space with a 3D space since DS handles _dynamic_ dependencies. Though for many a developer the dynamics in OSGi are off-putting, the advent of distributed systems makes it more and more clear that the world is dynamic and trying to hide these dynamics from the developer is a really bad idea. Over and over, nature proves to us that trying to give the impression of a perfect world only makes us fall deeper and harder when the perfection inevitably cracks. The beauty of DS is that it allows us to live in a dynamic world with very little effort. If you're a skeptic, realize that those [lustrous points][2] had no clue what that Square was talking about. So bear with us, and one day you might become a beautiful Sphere!
 
-## The Simplest Component
+## DS & Dynamism
 
-Adding a `@Component` annotation to a public class will turn it into a component. Since the effects are rather pointless on an empty class, let's add a constructor so we can at least see something happening. Make sure to use the right `Component` annotation since some annotation names are clearly more popular than others. 
+The most significant and compelling difference between DS, and other dependency injection frameworks, is that DS has a life-cycle and handles _dynamic_ dependencies: resource can be found and resource can be lost.
 
-	package osgi.enroute.examples.component.examples;
-	
-	import org.osgi.service.component.annotations.Component;
-	
-	@Component
-	public class InfinitelySmallPoint {
-		public InfinitelySmallPoint() {
-			System.out.println("I am a lustrous point");
-		}
+The concepts of  _time_ & _change_ are utterly lacking in any other DI engines. 
+{: .note }
+
+DS deals with the complexity of potentially volatile services through the use of stronh guarantees.
+
+
+### Ordering
+
+DS provides a very strict ordering. 
+
+* Constructor – DS will always create a new object, it will **never** reuse an existing object.
+* Bind – The bind methods or field injections are called in alphabetical order when using annotations.
+   (Though dynamic methods or field injections can of course be called at any time.)
+* Activate – Only if all static reference methods and field injections are called is the activate method called. 
+    * If this method does not throw an exception, it is guaranteed that the deactivate will be called. 
+    * If an exception is thrown the following phases are not executed.
+* Active – During the active phase the following methods can be called in any order from
+   any thread and in parallel:
+    * Any methods of the registered services
+    * A modified methods that dynamically takes the modified configuration properties
+    * Any of the updated reference methods if defined
+* Deactivate – Clean up
+    * Unbinds – And unbind methods are called
+    * Release of object – DS will release the object so that no longer any references are held
+    * Finalize – Java garbage collects the object
+
+Lazy services are registered before their constructor is called. The initialization of the
+DS component will take place when the service is used for the first time. However, this
+should not be observable by the component itself.
+
+
+## Static References
+
+The default and simplest model of DS is to use `static` references. If a component only has
+static references then it never sees any of the OSGi dynamics. This means that
+with the given ordering there is no need to use volatile or other
+synchronization constructs for static references. 
+
+
+## Optional References
+
+Sometimes a component can deliver its functionality even when a reference is absent. This is then an _optional_ reference. By far the simplest method to handle this is to make the reference optional by specifying the cardinality:
+
+```java
+	@Component(service=ReluctantOptionalReference.class)
+	public class ReluctantOptionalReference {
+
+		@Reference(cardinality=ReferenceCardinality.OPTIONAL)
+		Foo reluctantOptionalReference;
 	}
+```
 
-Obviously, this component will not win the Turing prize since it does not do anything and is more or less a waste of bits, sacrificed in the goal to elucidate you. But hey, doesn't it do a great job? 
+However, this is a _static_ reference. This implies that the component is started regardless of the presence of Foo. If Foo happens to be there then it is injected otherwise the field remains `null`. This model is called _reluctant_.
 
-## Registering a Service
+Unfortunately, this means we miss the Foo service when it is registered a few nanoseconds later. Since the static model has so many advantages there is an option to reconstruct the component when this reference finds a candidate. This is the _greedy_ mode:
 
-The fun parts of OSGi are the services. So how can we register a service? Let's implement an Event Handler service. Such a handler receives events from the [Event Admin service][3]. There are always events emitted by the OSGi framework so that allows us to see something. Registering a service is as simple as implementing its interface. Without an interface a component is an _immediate_ component. Immediate components are immediately started. With one or more implemented interfaces, we automatically register a service.
-
-	@Component(property={EventConstants.EVENT_TOPIC+"=osgi/enroute/*"})
-	public class EventHandlerImpl implements EventHandler {
-	
-		@Override
-		public void handleEvent(Event event) {
-			System.out.println("Event: " + event.getTopic());
-		}
-		
-	}
-
-It is important to realize that this component is by default _lazy_ because it registers a service. It means that it will sit there, not even twiddling its thumbs, until it some other bundle starts using it.
-
-## Creating Events
-
-Though it is not rocket science to create events (just start/stop some components and/or bundles, in OSGi the Framework is mandated to create these events) it would be nice for our fundamental research in OSGi components to have a steady stream. To create such a stream, we need to create Event Admin events every second. This requires us to get access to the Event Admin service (the honest broker between the event senders and receivers) and it would be nice to have a scheduler. Fortunately, they are part of OSGi enRoute. So let's create an Event source:
-
-	@Component(property=CronJob.CRON+"=* * * * * ?")
-	public class EventSource {
-		EventAdmin	eventAdmin;
-		
-		public void run(Object object) {
-			Event event = new Event( 
-				"osgi/enroute/examples/ping", 
-				new HashMap<String,Object>() );
-			eventAdmin.postEvent(event);
-		}
-		
-		@Reference
-		void setEventAdmin( EventAdmin eventAdmin) {
-			this.eventAdmin = eventAdmin;
-		}
-	}
-
-This component does not register a service because it does not implement an interface, it is therefore an _immediate_ component. Since this is an immediate component it will run as long as an Event Admin service is registered. 
-
-When we run this component, we should see the `EventHandlerImpl` component fire messages.
-
-## Initialization
-
-Initializing in a constructor is awkward and ill advised since the object is only partially ready during construction. Initialization should therefore be done separately from object construction. We can annotate a method with the `@Activate` annotation; this method will be called after the dependencies are set and before a service is registered. 
-
-	@Component
-	public class SmallPoint {
-		@Activate
-		void activate() {
-			System.out.println("Hello Lustrous Point!");
-		}
-	}
-
-If things don't happen as you had intended then take a look at:
-
-* Is the component immediate? If not then the activate method will not be called until the service is used.
-* Did your activate method throw an exception? Look in the log or in XRay (the bundle will have a warning sign).
-
-## Dependencies
-
-We've already seen some examples of the dependencies. These dependencies were the simplest ones: _static_ and _single_. These defaults are also the most common and match the `@Inject` annotation from dependency injection frameworks that are dynamically challenged. When the dependencies are satisfied, your component gets instantiated and when they are no longer matched, your component gets mercilessly killed. Since the component is not alive before and after it never sees the effects that the dynamicity has on it. Always start in this mode since it makes your life significantly easier and is rarely worth to effort to optimize.
-
-However, there are some interesting cases that we can simplify by making things more dynamic. For example the [Whiteboard pattern][5]. With this pattern we need to track a number of services. These services can come and go. It would be rather tiring if every arrival of a new member would result in our component's death and then immediate resurrection. This common case is handled by setting to the `cardinality` to `MULTIPLE` and the `policy` to `DYNAMIC`. If DS then finds new members we get quickly informed. This requires us to specify two methods: one method for adding members, the other method for removing the members. The _bind_ method is specified with the @Reference annotation. The _unbind_ method is found through the convention of removing the 'add' prefix of the bind method and replacing it with the 'remove' prefix. That is, `addMember` as the bind method requires `removeMember` as the unbind method.
-
-	@Component
-	public class WhiteboardExample {
-		private final Set<Member> members = new HashSet<>();
-		
-		@Reference(
-			cardinality=ReferenceCardinality.MULTIPLE, 
-			policy=ReferencePolicy.DYNAMIC
-		)
-		public synchronized void addMember( Member member ) {
-			members.add(member);
-		}
-		
-		public synchronized void removeMember( Member member ) {
-			members.remove(member);
-		}
-	}
-	
-Though it is generally not worth the effort, some people can't stop optimizing (and ok, there are a few legitimate cases), and they want also to treat their unary references as being dynamic. This sounds simple but there is a gotcha. The gotcha is the order. DS can first register a new service and then unregister the old service. If you write your code carelessly then it is easy to set your fresh new service to null in your unbind method. If you think about it, it is quite friendly of DS to give you a new service before removing the old, so you're never without one. However, it means you must use an AtomicReference to use those services reliably. We use the `compareAndSet` method; this will only set the reference to `null` if the service to be removed is actually the one we're still using.
-
-This is how it looks:
-
-	@Component
-	public class DynamicLogExample {
-		private final AtomicReference<LogService> logRef = new AtomicReference<>();
+```java
+	@Component(service=GreedyOptionalReference.class)
+	public class GreedyOptionalReference {
 
 		@Reference(
-			cardinality=ReferenceCardinality.MULTIPLE, 
-			policy=ReferencePolicy.DYNAMIC
-		)
-
-		public void setLog( LogService log ) {
-			logRef.set(log);
-		}
-		
-		public void unsetLog( LogService log ) {
-			logRef.compareAndSet(log, null);
-		}
-		
-		void someMethod() {
-			LogService log = logRef.get();
-			log.log("Some String");
-		}
-
+			cardinality=ReferenceCardinality.OPTIONAL,
+			policyOption=ReferencePolicyOption.GREEDY)
+		Foo greedyOptionalReference;
 	}
+```
 
-## Selective References
+DS will now reconstruct the component when there is a _better_ candidate for `foo`. Clearly any candidate will beat no candidate but what means better in the case that we already have `foo`?
 
-The dependencies we've used so far were quite promiscuous: they accepted any service with the given service interface. In certain cases you want to be a bit more selective. Maybe you only want the services with a given property. The `target` option in the `@Reference` annotation holds a filter that makes that reference more selective. You only get services injected that are matching that filter. For example, we only want to see the services that have the `foo` property set. 
+When multiple candidates are available DS will sort them by ranking. Services with a higher _ranking_ are deemed _better_. Service ranking is indicated by a property called `service.ranking`. It is an integer, higher is better.
 
-	@Component
-	public class SelectiveServiceExample {
-		@ProviderType
-		public interface SelectiveService {}
-	
-		@Component
-		public static class Foo implements SelectiveService {}
-	
-		@Component(property={"foo=bar"})
-		public static class FooBar implements SelectiveService {}
+One of the advantages of the static model is that in your activate method all the way to your deactivate method your visible world won't change.
 
-		@Component(property={"foo=bar.batz"})
-		public static class FooBarBatz implements SelectiveService {}
-	
-		@Reference( target="(foo=bar.*)" )
-		void setSelective( SelectiveService selectiveService) {
-			System.err.println("Set selectiveService to: " + selectiveService.getClass().getCanonicalName());
-		}
+The previous examples were still static because none of the references changed between the `activate` and `deactivate` phase. The greedy policy option achieved its replacement by reconstructing the component. This is acceptable in most cases but sometimes the component does not want to die for the sake of an optional reference. In that case we can handle the situation _dynamically_.
+
+By far the easiest solution is to mark the field as _volatile_. **A volatile field will automatically get marked as `policy=DYNAMIC`**.
+
+```java
+	@Component(service=DynamicOptionalReference.class)
+	public class DynamicOptionalReference {
+
+		@Reference(cardinality=ReferenceCardinality.OPTIONAL)
+		volatile Foo dynamicOptionalReference;
 	}
+```
 
-## Configuration
+This is simple but there is an obvious price. The following bad code shows a common (but horrible) pattern that people use to use `foo`:
 
-Declarative Services is highly integrated with OSGi Configuration Admin. It is therefore possible to get the configuration properties as a map in the `activate` method.
+```java
+	if ( foo != null ) // BAD!
+		foo.bar();
+```
 
-	@Component
-	public class SmallPoint {
-		@Activate
-		void activate(Map<String,Object> map) {
-			System.out.println("Configuration " + map);
-		}
-	}
+This innocuous looking code is actually a Null Pointer Exception in the waiting.
+A better way is to do:
 
-Since properties are awkward to use, OSGi DS suppprts annotation interfaces for configuration.The methods of the annotation interface act as the property names:
+```java
+	Foo foo = this.foo;
+	if ( foo != null )
+		foo.bar();
+```
 
-	@Component
-	public class SmallPoint {
-	
-		@interface Config {
-			int port() default 8080;
-			String host();
-		}
-		
-		@Activate
-		void activate(Config config) {
-			System.out.println(
-				"Configuration " 
-				+ config.host()
-				+ ":"
-				+ config.port());
-		}
-	}
-
-Configurations can be updated dynamically. Without any extra effort, this will mean your component gets shot down and then recreated with the latest configuration data. Since this is a bit rough, you can also tell DS that you prefer the more subtle approach and would like to get a courteous callback when the change happens. You can tell DS about your preferences by adding the `@Modified` annotation to a method that takes a map. So we can make our code a bit more efficient in the light of change:
- 
-	@Component
-	public class SlightlyBiggerPoint {
-	
-		@interface Config {
-			int port() default 8080;
-			String host();
-		}
-		
-		@Activate
-		void activate(Config config) {
-			modified(config);
-		}
-		
-		@Modified
-		void modified(Config config) {
-			System.out.println(
-				"Configuration " 
-					+ config.host()+":"+config.port());
-		}
-	}
-
-Again, don't optimize before you got the problem.
-
-## Configuring References
-
-We've discussed earlier that the `@Reference` annotation can set a target filter on the selected services. However, the annotation is set during development time. It could be quite useful if we could override this filter in a running system. Surprise!
-
-Each reference has a name, this is the name of the method with the prefix `add` or `set` removed. If we configure a component we can set a magic property called `<name>.target` with the filter. DS will use this configuration property as if it was set on the annotation.
-
-## Factories
-
-So far we've not discussed the lifecycle of the component. We've assumed it just gets created when its dependencies are satisfied. However, the integration with Configuration Admin allows us to control the life via this component with Configuration Admin's factory configurations. Each factory instance will correspond to a component instance. These factory components are still only created when their dependencies are met.
-
-This is probably one of the coolest features of the components. It allows us to create and delete components on demand. Let's see how we can use this.
-
-First we should disable the creation of a component when there is no configuration whatsoever so that we do not create spurious components. 
-
-	@Component(
-		name="borg",
-		configurationPolicy=ConfigurationPolicy.REQUIRE
-	)
-	public class FactoryInstance {
-		@Activate
-		void activate(Map<String,Object> map) {
-			System.out.println("Born to be alive: " + map.get("borg");
-		}
-	}
-
-We can now create a configuration that creates three components.
-
-	@Component
-	public class Creator {
-                @Reference
-		ConfigurationAdmin cm;
-		
-		@Activate
-		void activate() {
-			create(1);
-			create(2);
-			create(3);
-		}
-		
-		void create(int n) {
-			Configuration c = cm.createFactoryConfiguration("borg", "?");
-			Hashtable<String,Object> ht = new Hashtable<>();
-			ht.put("borg", n);
-			c.update(ht);
-		}
-	}	
+By using a local variable we guarantee that the check (is `foo null`?) is using the same object as the one we will call `bar()` on. This is a very cheap form of synchronization.
 
 
-If we want to delete the three components we could add a `deactivate` method. To delete, we need to locate the Configuration object for each _borg_. We can list the Configuration objects with an _ OSGi filter_. The filter can assert any value in the Configuration's dictionary (map). Once we have the Configuration object we can delete it. 
+## What If The Service Disappears?
 
-	@Deactivate
-	void deactivate() {
-		delete(1);
-		delete(2);
-		delete(3);
-	}
-	
-	void delete(int n) {
-		Configuration[] cs = cm.listConfigurations(
-			"(&(service.factoryPid=borg)(borg="+n+"))"
-		);
-		if ( cs != null ) {
-			for ( Configuration c : cs ) {
-				c.delete();
-			}
-		}
-	}
-		
-## OSGi API
+Your code should always be prepared to accept exceptions when you call other services. This does not mean you should catch them, on the contrary. It is much better to forward the exceptions to the caller so that they do not unnecessarily get wrapped up in wrapping exceptions and lose the
+original context.
 
-In general you want to make your components oblivious of any OSGi API. This makes them easier to unit test and in the spirit of modularity less coupling is more. However, if you write middleware for OSGi systems then it is very attractive to access the Bundle Context or Component Context. The `activate` method is designed to provide you with all those objects, in any order:
+In almost all cases there is a top level function that initiated your request. It is this function that has the responsibility to make sure the overall system keeps working regardless of failures. This kind of robustness code is extremely difficult to get right and should **never** be mixed with application code.
 
-	@Component
-	public class SmallPoint {
-		@Activate
-		void activate(
-			BundleContext bc, 
-			ComponentContext cc, 
-			Map<String,Object> map) {
-			System.out.println("What is my context?");
-		}
-	}
- 
-## Bundle Aware
 
-By default, the components are shared between all bundles. However, sometimes you want to tie the life cycle of a component to the bundle that uses it. This can be set with the `serviceFactory` option. DS will create a unique instance for each bundle that gets that service and that instance will be deactivated when the bundle ungets the service, for example because it is stopped. This may seem a bit esoteric but it allows you to simplify housekeeping you need to do per bundle. It is quite common that you have a service that requires some cleanup, tracking bundles in this service can be cumbersome. A simple solution is then to split the problem in two (where have we heard that before?):
+## Tracking Multiple Services
 
-* A `serviceFactory` service that is instantiated for each bundle that uses the service and is responsible for cleaning up after that bundle
-* A normal singleton service that is oblivious of bundles.
+If you use a [whiteboard pattern](../faq/420-patterns) or other listener like model then in general you want to use dynamics. 
 
-Lets make an example of a service that allows the creation of Widgets. However, these widgets are tricky, they need to be closed whenever the creating bundle stops using them. Let's first design the Widget interface, they turn out to be really good in doing the `foo` thing.
+The reason is that you have _multiple_ references and building and destroying the component at every change in the set of services we're interested in (the _tracked_ services) becomes expensive.
 
-	public interface Widget {
-		void foo();
-		void close();
-	}
+By far the easiest method is to use field injection of a list of services.  If you make this field `volatile` then DS will inject a new list whenever the set of tracked services changes.
 
-The service we now design must be able to create these suckers:
-		
-	public interface WidgetFactory {
-		Widget create();
-	}
+```java
+	@Component(service=SimpleList.class)
+	public class SimpleList {
 
-We're now ready to create a component that acts as the Bundle facade. This facade depends on the actual Widget Factory Implementation and delegates towards it. However, it closely tracks the widgets created through its bundle.
-
-	@Component(serviceFactory=true)
-	public class WidgetFactoryFacade implements WidgetFactory {
-		WidgetFactory singleton;
-		final Set<Widget>		widgets= new IdentityMap<>().keySet();
-		  
-		  
-		@Dectivate
-		void deactivate() {
-			synchronized(widgets) {
-				widgets.forEach( (w) -> w.close() );
-			}
-		}
-		
-		public Widget create() {
-			Widget w = singleton.create();
-			return new Widget() {
-				public void foo() { w.foo(); } 
-				public void close() { 
-					synchronized(widgets) {
-						if ( !widgets.remove(w) )
-							return;
-					}
-					w.close(); 
-				} 
-			}
-		}
-		
 		@Reference
-		void setSingleton( WidgetFactoryImplementation wfi) {
-			this.singleton=wfi;
+		volatile List<Foo>		dynamicFoos;
+	}
+```
+
+However, there are scenarios where the component must interact with the bind
+and unbind of the references. The most common way is then to create a bind
+and unbind method.
+
+```java
+	@Component(service = DynamicBindUnbind.class)
+	public class DynamicBindUnbind {
+
+		final List<Foo> foos = new CopyOnWriteArrayList<>();
+
+		@Reference(
+			cardinality = ReferenceCardinality.MULTIPLE,
+			policy = ReferencePolicy.DYNAMIC)
+		void addFoo(Foo foo) {
+			foos.add(foo);
+		}
+
+		void removeFoo(Foo foo) {
+			foos.remove(foo);
 		}
 	}
+```
 
-And then all that is left is the singleton implementation. This service should not register the WidgetFactory since it is only the facade that will use it. We therefore force the implementation class to be the actual service. Since this is likely a private class, nobody else can get to it.
+In this example we use a `CopyOnWriteArrayList`. This is a so called _non-locking_
+object. Though it is perfectly safe to use in a concurrent environment it will not
+use locks and any iteration over that list is guaranteed not to fail. 
 
-	@Component( service=WidgetFactoryImplementation.class )
-	public class WidgetFactoryImplementation {
-	
-	  public Widget create() {
-	    return new Widget() {
-		  void foo() { 
-	        System.out.println("I am doing what I'm good at"); 
-		  }
-	      void close() { 
-	        System.out.println("You don't need me anymore?"); 
-	      }
-	    }
-	  }
-	}	  
-
-## Gogo Command
-
-Finally, a small example to show you can create a Gogo shell command with DS. Lets make a simple command that allows you to print a word.
-
-	@Component(
-		property={
-			Debug.COMMAND_SCOPE+"=example", 
-			Debug.COMMAND_FUNCTION+"=hello"
-		},
-		service = HelloCommand.class
-	)
-	public class HelloCommand {
-	
-		public String hello(String s) {
-			return "Hello " + s;
-		}
-	}
-
-If you run a Gogo shell in your framework then adding this component will make the hello command available:
-
-	g! hello enRoute
-	Hello enRoute
-	g!
-{: .shell }
-	
-## Example Application
-
-You can find an example application at [OSGi enRoute Example][4]. 
-
-	
-[1]: http://blog.osgi.org/2013/07/real-men-dont-use-ds.html
-[2]: https://github.com/Ivesvdf/flatland/blob/master/oneside_a4.pdf?raw=true
-[3]: http://enroute.osgi.org/services/org.osgi.service.event.html
-[4]: https://github.com/osgi/osgi.enroute.examples/tree/master/osgi.enroute.examples.component.application
-[5]: /book/218-patterns.html#whiteboard-pattern

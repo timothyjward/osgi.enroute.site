@@ -1,8 +1,8 @@
 ---
 title: Designing an API
 layout: toc-guide-page
-lprev: last.html 
-lnext: next.html 
+lprev: 420-patterns.html 
+lnext: 100-Why-OSGi.html 
 summary: because 
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 

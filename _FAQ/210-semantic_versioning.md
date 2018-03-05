@@ -1,11 +1,11 @@
 ---
-title: Resolving - OSGi's Best Kept Secret?
+title: Semantic Versioning 
 layout: toc-guide-page
-lprev: 110-What-is-enRoute.html
-lnext: 210-semantic_versioning.html  
-summary: Resolving is one of the cornerstones of OSGi, but what actually is going on?
+lprev: 200-resolving.html
+lnext: 300-declarative-services.html  
+summary: Why Semantic Versioning is essential for Maintainability   
 author: enRoute@paremus.com
-sponsor: OSGi Alliance 
+sponsor: OSGi Allaince 
 ---
 
 The OSGi Framework uses the Resolver to:

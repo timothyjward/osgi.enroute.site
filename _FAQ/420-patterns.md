@@ -2,8 +2,8 @@
 title: Patterns
 summary: OSGi Patterns
 layout: toc-guide-page
-lprev: 217-ds.html
-lnext: 300-principles.html
+lprev: 400--dtos.html
+lnext: 450-Designing-APIs.html
 ---
 
 There are a number of patterns used in OSGi systems.

@@ -1,7 +1,11 @@
 ---
 title: What is a Data Transfer Object (DTO)?
-summary: OSGi started to heavily use DTO's since R5. DTOs do not look very object oriented, this application note provides the reasoning why DTOs .
-layout: toc-guide-page 
+summary: The reasoning behind the use of DTOs .
+layout: toc-guide-page
+lprev: 300-declarative-services.html 
+lnext: 420-patterns.html 
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance   
 ---
 
 Whenever two parts of a software system want to communicate they need to exchange data. Data Transfer Objects (DTOs) are all about how this data is represented. If you know C then a DTO is a `struct`. If you don't know C then a DTO is an object without methods, it is pure data.
