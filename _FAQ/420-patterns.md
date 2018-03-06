@@ -10,6 +10,21 @@ There are a number of patterns used in OSGi systems.
 
 ## Services 
 
+Probably the most important pattern in OSGi is the *Service Pattern*. In fact services are so important that there's an [entire chapter of the OSGi specification dedicated to them](framework.service.html).
+
+At its heart the OSGi service model has a simple purpose - its job is to allow modules to collaborate at runtime without violating encapsulation. This means:
+
+* No use of the `new` operator - this leaks the implementation class name, its constructor(s) and any initialization methods.
+* No use of the *factory pattern* - this pattern appears to decouple the client from the implementation, but leaves the API coupled to the implementation
+* No central dictator - many container models require one container to manage the lifecycle of all objects. This violates the encapsulation of every module
+
+The Service Registry model differs from these techniques in that the Service Registry exists as a *central broker*. Modules share implementations by advertising them in the service registry, completely decoupling clients from providers. The service registry also provides a notification model, meaning that services can be registered when they are ready (for example when remote website is accessible, or when a USB device is plugged in) and waiting clients can be notified.
+
+### Dependency Injection of Services
+
+As one would expected from a well designed ecosystem, the OSGi module layer is agnostic to the Dependency Injection (DI) / Java component framework used and you find examples of OSGi used with Spring, CDI & Guice. However while alternative DI frameworks can work; Declarative Services is the only component framework that leverages the dynamicity of OSGi while also providing simple abstractions, and so is strongly recommended by the OSGi Alliance. 
+
+The enRoute examples and tutorials all use Declarative Services to provide and consume OSGi services.
 
 
 ## Whiteboard Pattern
