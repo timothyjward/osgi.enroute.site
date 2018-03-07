@@ -12,9 +12,9 @@ In a graph of interconnected software components how do we know if a node change
 
 Versioning of the nodes addresses the first problem; semantic versioning of nodes addresses both problems.
 
-## Change and Semantic Versioning
+For the last 18 years the OSGi Alliance has been a vocal proponent of [Semantic Versioning](http://www.osgi.org/wiki/uploads/Links/SemanticVersioning.pdf). Since ~2009 [semver.org](https://semver.org) has also argued the merits of Semantic Versioning.
 
-By applying simple versioning we can see that changes have occurred; however we do not understand the impact of these changes. However if we use semantic versioning, then the potential impact of this change can also be communicated.
+## Semantic Versioning
 
 Semantic versioning in OSGi is achieved in the following manner:
 
@@ -35,7 +35,7 @@ In the this example we know that `com.acme.bar` will work with `com.acme.foo 1.0
 
 OSGi versioning is on packages, not on bundles. The reasoning for this is simply that Bundles are an ‘‘aggregate’’ artefact and so must move as fast as the fastest moving exported packages they contain. 
 
-Letss pretend for the moment that this is not the case, and that we only version Bundles.
+Lets pretend for the moment that this is not the case, and that we only version Bundles.
 
 Consider a scenario where a bundle contains just two exported packages `foo` and `bar`. A change is applied where,
 * `foo` is not changed
@@ -48,7 +48,5 @@ Note that exactly the same problems applies with respect to REST based Microserv
 
 ## Further reading
 
-The OSGi Alliance have been leading and educating the industry in the use of [semantic versioning](http://www.osgi.org/wiki/uploads/Links/SemanticVersioning.pdf) and its importance for building maintainable software systems for many years. Further information on Semantic Versioning and its automatic management by Bndtools can be found at [Bndtools documentation](http://bnd.bndtools.org/chapters/170-versioning.html) 
-
-More recently, an attempt to publicize the general value of Semantic Versionin  at semver.org, which basically aims to do the same, but outside of OSGi
+[Bndtools documentation](http://bnd.bndtools.org/chapters/170-versioning.html) provides further information on Semantic Versioning, and how Bndtools simplifies the management of this.
 

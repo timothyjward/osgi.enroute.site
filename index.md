@@ -1,5 +1,5 @@
 ---
-title: Welcome to OSGi™ enRoute 
+title: 
 description:
 layout: toc-guide-page-front
 ---
@@ -15,4 +15,4 @@ enRoute provides a development on-ramp that is simple to use; but critically ach
 
 * [Take me to the tutorials...](tutorial)
 * [Browse the examples](examples)
-* [Learn about the concepts behind enRoute](concepts)
+* [Frequently asked Questions](faq)
