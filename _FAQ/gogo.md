@@ -1,7 +1,11 @@
 ---
-title: Gogo shell in OSGi enRoute
+title: The Gogo Shell
 summary: A short introduction to the Gogo shell
 layout: toc-guide-page
+lprev: 450-Designing-APIs.html 
+lnext: 100-Why-OSGi.html 
+author: Peter.Kriens@aQute.biz 
+sponsor: OSGi™ Alliance 
 ---
 
 The Gogo shell is a bash like shell that closely interacts with the OSGi framework. Gogo was designed because there is a need for a service that allows human users as well as well as programs to interact with on OSGi based system with a line based interface: a shell. This shell should allow interactive and string based programmatic access to the core features of the framework as well as provide access to functionality that resides in bundles.
@@ -13,10 +17,22 @@ Shells can be used from many different sources it is therefore necessary to have
 
 The Gogo shell feels very bash like but has a number of differences. Primary, the shell uses plain data objects and their public methods as command names. Instead of coercing everything to strings, the shell actually manipulates objects. It has all the necessary features to program in it like variables and closures. 
 
-Let's explore the shell to show what it can do out of the box. The examples in this OSGi enRoute application note are executed in the OSGi enRoute [osgi.enroute.gogo.commands.provider] project on Github. If you check out the workspace then you can go to the [osgi.enroute.gogo.commands.provider] project, double click the bnd.bnd file. You should then resolve it and and then debug it. This should provide you with the following output in the console:
+See debug tutorial ...
 
 	g! 
 {: .shell }
+
+## Standard OSGi commands 
+
+### lb
+
+### inspect 
+
+### scr:list
+
+### scr:info
+
+
 
 ## Commands
 
@@ -26,7 +42,7 @@ The most simple command is `echo` which works as expected.
 	Hello World
 {: .shell }
 
-## History/Editing
+### History/Editing
 
 In the Eclipse console you can unfortunately not edit the commands. However, you can access the history using the bang ('!').
 
@@ -38,7 +54,7 @@ In the Eclipse console you can unfortunately not edit the commands. However, you
 
 In standard terminals, you can use the cursor keys to move back and forth.
 
-## Quoting
+### Quoting
 
 Quoting (double or single) is optional if the word does not contain spaces or some special characters like '|', ';',  and some others. So in this case 2 tokens are passed to echo. Notice that we can quote the two words turning it into a single token:
 
@@ -48,7 +64,7 @@ Quoting (double or single) is optional if the word does not contain spaces or so
 	Hello                     World
 {: .shell }
 
-## Multiple Commands
+### Multiple Commands
 
 You can execute multiple commands on a line by separating the commands with a semicolon (`';'`).
 
@@ -67,7 +83,7 @@ Multiple commands can also be separated by a _pipe_ character. In that case the 
 	false
 {: .shell }
 
-## IO Redirection
+### IO Redirection
 
 Two built-in commands `cat` and `tac` ( tac = reversed cat because it stores) are available to provide file data and store file data. Together with the pipe operator they replace the input and output redirection of the bash shell.
 
@@ -80,7 +96,7 @@ Two built-in commands `cat` and `tac` ( tac = reversed cat because it stores) ar
 	World
 {: .shell }
 
-## Help
+### Help
 
 Notice that You can find out about the options of a command by using `-?` (This is not implemented on commands without options and it is not always consistently implemented:
 
@@ -91,7 +107,7 @@ Notice that You can find out about the options of a command by using `-?` (This 
 		-? --help                show help
 {: .shell }
 
-## Built-in Commands
+### Built-in Commands
 
 Gogo's commands are methods on objects. By default Gogo adds all public methods on the `java.lang.System` class and the public methods on the session's `BundleContext` as command. This gives us access to some interesting System functions:
 
@@ -144,7 +160,10 @@ We could now also get a specific bundle:
 	Version              2.0.0
 {: .shell }
 
-## Objects
+
+## Objects, Variables, Function ...
+
+### Objects
 
 Notice that neither command required anything special, they are just the methods defined on Bundle Context. The implementation has no clue about Gogo. All these commands return domain plain unadorned objects. We can test this because Gogo has variables that store these plain objects. We can then use those objects in the shell as commands.
 
@@ -163,7 +182,7 @@ Notice that neither command required anything special, they are just the methods
 	...
 {: .shell }
 
-## Variables
+### Variables
 
 Variables can be have any name. They are set with `<name>=<expr>`. They are referred to by `$<name>`. Gogo uses variables also itself. For example, the prompt can be changed by setting a new `prompt` variable.
 
@@ -179,11 +198,11 @@ The following variables are in use by the shell:
 * `.context` – The Bundle Context
 * `prompt` – The shell prompt
 
-## Scope
+### Scope
 
 The syntax feels very natural but there is something a bit tricky going on. The first token in the command can either identify the _name_ of a command or an object. With an object, the next token is the method on that object. This can cause ambiguity. The scope is further discussed later when we add custom commands. Just be aware that the first token is either an object or a command name.
  
-## Literals
+### Literals
 
 We've already use string literals. However, it is also possible to use lists and maps:
 
@@ -193,7 +212,7 @@ We've already use string literals. However, it is also possible to use lists and
 	2
 {: .shell }
 	
-## Expressions
+### Expressions
 
 So how do we access a specific header. A command like `$bundle headers get Bundle-Version` cannot work because Gogo will see this as one command and will complain with: `Cannot coerce headers(String, String) to any of [(), (String)]`. The parentheses come to the rescue:
 
@@ -205,7 +224,7 @@ So how do we access a specific header. A command like `$bundle headers get Bundl
 
 The parentheses first calculate the expression in their inner bowels which then becomes available as the target object for the remaining command. I.e. `($bundle headers)` returns a Dictionary object, which subsequently becomes the target object. The `get` token is the method called on this target object, with the `Bundle-Version` as parameter.
 
-## Back ticks
+### Back ticks
 
 The bash shell has this wonderful capability of executing commands to get an argument by placing back ticks around a command. We can use the parentheses for the same effect, with the added benefit that the parentheses work recursively.
 
@@ -213,7 +232,7 @@ The bash shell has this wonderful capability of executing commands to get an arg
 	Bundle 4 has name org.apache.felix.scr
 {: .shell }
 
-## Functions
+### Functions
 
 The Gogo shell can store commands for later execution. The `{` and `}` delimiters are used for that purpose. We can store these functions in objects or pass them as parameters. To execute a function as a command, you should use the name of the variable without the dollar ('$') sign.   
 
@@ -241,7 +260,7 @@ Obviously it is not very nice that we miss the `World` because we only used $1. 
 
 The `$args` list of arguments cannot be manipulated as a normal object, it gets expanded into its members wherever you use it.  
 
-## Repeat and Conditionals 
+### Repeat and Conditionals 
 
 Gogo provides a number of built in commands that use the functions to provide conditional and repeated execution. For example, the `each` command takes a collection and a function. It then iterates over the collection and calls the function with the element of the iteration.
 
@@ -390,7 +409,7 @@ No running it in the shell makes it look the same:
 	Hello World
 {: .shell }
 
-## Arguments 
+### Arguments 
 
 We can also provide an argument. Gogo attempts to use a syntax that one expects in a shell but then translate this to method calls. So if we have the command:
 
@@ -426,7 +445,7 @@ Since we have an absent value, we do not need the value to be specified. So we c
 {: .shell }
 
 	
-## Naming
+### Naming
 
 So far we have had a 1:1 relation between the command name and the method. However, it was a primary design goal of Gogo to make it _feel_ like a shell but interact seamlessly with standard Java code. In Java we often use _design patterns_ like prefixing the name of a property with `get`. Gogo will therefore try to match a command to a method removing the prefixes and case sensitivity. So if we add a method `getFoo` then we can stil call it:
 
