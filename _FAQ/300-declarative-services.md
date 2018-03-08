@@ -3,7 +3,7 @@ title: Declarative Services (DS)
 layout: toc-guide-page
 version: 1.3
 lprev: 210-semantic_versioning.html 
-lnext: 400--dtos.html 
+lnext: 400-patterns.html 
 summary: An overview of the Declarative Services DI framework 
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance  

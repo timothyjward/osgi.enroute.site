@@ -1,9 +1,9 @@
 ---
-title: Designing an API
+title: API Design
 layout: toc-guide-page
-lprev: 420-patterns.html 
+lprev: 420--dtos.html 
 lnext: 100-Why-OSGi.html 
-summary: because 
+summary: General best practises  
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---

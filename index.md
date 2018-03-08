@@ -1,13 +1,17 @@
 ---
-title: 
-description:
+title: front 
 layout: toc-guide-page-front
 ---
+
 <img src="/img/front-page-1000.jpg">
 
-Based upon the latest OSGi Alliance Specifications and best practices, enRoute provides a simple set of Tutorials and Examples for those unfamiliar with OSGi™. 
+<br>
+<br>
+enRoute provides a simple set of Tutorials and Examples for those unfamiliar with OSGi™. 
 
-enRoute provides a development on-ramp that is simple to use; but critically achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi. At least initially, enRoute takes an opinionated approach to the Development toolchain focusing on Maven.
+enRoute provides a development on-ramp that is simple to use; but critically achieves this without sacrificing the maintainability, adaptiability & evolvability advantages unique to OSGi. 
+
+enRoute is based upon the latest OSGi Alliance Specifications and best practices, and at least initially, takes an opinionated approach to the Development toolchain focusing on Maven.
 
 > I hear and I forget. I see and I remember. I do and I understand! 
 
