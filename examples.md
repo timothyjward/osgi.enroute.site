@@ -7,9 +7,7 @@ order: 2
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance
 ---
-enRoute examples illustrate the correct use of the more frequently used OSGi™ specifications. Where example code is used within an enRoute Tutorial, the approprite link this provided, along with links to the OSGi™ Service or usage patterns demonstrated by the code example.    
-
-The examples are all in a workspace that you can clone from Github. Some examples are combined together, others have their own workspace. It is highly suggested to clone the workspace and play with the example.
+enRoute examples illustrate the use of the more frequently used OSGi™ specifications. All of the examples are available on Github, so clone the workspaces and play!
 
 <style>
 table, td, th {
