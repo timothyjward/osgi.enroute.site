@@ -2,7 +2,7 @@
 title: Microservices
 layout: toc-guide-page
 lprev: 022-tutorial_osgi_runtime.html 
-lnext: 015-Prerequisite.html
+lnext: 032-tutorial_microservice-jpa.html
 summary: Creating a REST based 3-tier Microservice with JDBC persistence (< 10 minutes).
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 

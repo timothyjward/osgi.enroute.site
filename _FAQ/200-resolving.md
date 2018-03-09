@@ -34,6 +34,26 @@ This model consists of a small number of primitive concepts:
 
 ![image](https://user-images.githubusercontent.com/200494/31130842-cf5299d2-a858-11e7-907c-d6cb43954501.png)
 
+### Namespaces 
+
+The Requirements / Capabilities Namespaces currently defined are:
+
+* [_osgi.identity_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#i1776750) - Used to identify a resource type and  provide a unique name: e.g. for a Certificate the type could be x509 and the name could then its SHA-1 fingerprint.
+
+* [_osgi.ee_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#framework.namespaces.osgi.ee) - An OSGi Framework must register capabilities for all the execution environments the Java VM is known to be backward compatible with. For example, if the Java VM provides Java SE 6, then it is backward compatible with 1.2, 1.3, 1.4, 1.5, and 1.6. The osgi.ee capability defines the provided versions as a comma separated list.
+
+* [_osgi.native_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#framework.namespaces.osgi.native) - Used to describe the native environment in which the Framework is executing. An OSGi Framework must provide a capability in the `osgi.native` namespace that represents the native environment in which the Framework is executing.
+
+* [_osgi.content_](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/service.repository.html#i3224340) -  Via which repositores can advertise different formats; each of those format capabilities being identified with a unique SHA-256 checksum and a URL.
+
+* [_osgi.wiring.package_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#i1773241) - A Requirements / Capabilities representation of the information in the Bundle manifest: i.e. Import-Package, DynamicImport-Package, and Export-Package. 
+
+* [_osgi.wiring.bundle_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#i1773242) - Reflects the information in the bundle headers for the purpose of requiring another bundle: i.e. a Require-Bundle header creates a wire from the requiring bundle to the required bundle. 
+
+* [_osgi.wiring.host_](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#i1773243) - Used to allow a [Fragment](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.wiring.html#framework.wiring-fragments) to attach itself to a host Bundle. 
+
+Of these, the last three are concerned with low-level wire-up of the Bundle assembles and can ususally be ignored. For further information see the [Framework Namespace Specification](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/framework.namespaces.html#d0e16016).
+
 
 ## Resolving & Repositories 
 

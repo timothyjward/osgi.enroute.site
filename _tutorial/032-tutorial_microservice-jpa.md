@@ -1,7 +1,7 @@
 ---
 title: Persistence with JPA 
 layout: toc-guide-page
-lprev: 022-tutorial_osgi_runtime.html 
+lprev: 030-tutorial_microservice.html 
 lnext: 015-Prerequisite.html
 summary: A variant of the Microservices example using JPA & Hibernate (< 10 minutes).
 author: enRoute@paremus.com

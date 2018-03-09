@@ -2,7 +2,7 @@
 title: API Design
 layout: toc-guide-page
 lprev: 420--dtos.html 
-lnext: gogo.html 
+lnext: 500-gogo.html 
 summary: General best practises  
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 

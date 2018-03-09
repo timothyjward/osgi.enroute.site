@@ -1,7 +1,7 @@
 ---
 title: Prerequisites 
 layout: toc-guide-page
-lprev: 030-tutorial_microservice.html 
+lprev: 032-tutorial_microservice-jpa.html 
 lnext: 017-enRoute-ArcheTypes.html 
 summary: Prerequistes & configurations required for running these Tutorials.
 author: enRoute@paremus.com
