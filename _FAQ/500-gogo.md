@@ -1,5 +1,5 @@
 ---
-title: The Gogo Shell
+title: Gogo
 summary: A short introduction to the Gogo shell
 layout: toc-guide-page
 lprev: 450-Designing-APIs.html 
@@ -8,23 +8,43 @@ author: Peter.Kriens@aQute.biz
 sponsor: OSGi™ Alliance 
 ---
 
-The Gogo shell is a bash like shell that closely interacts with the OSGi framework. Gogo was designed because there is a need for a service that allows human users as well as well as programs to interact with on OSGi based system with a line based interface: a shell. This shell should allow interactive and string based programmatic access to the core features of the framework as well as provide access to functionality that resides in bundles.
-
-Shells can be used from many different sources it is therefore necessary to have a flexible scheme that allows bundles to provide shells based on telnet, the Java 6 Console class, plain Java console, serial ports, files, etc. Supporting commands from bundles should be made very lightweight and simple as to promote supporting the shell in any bundle. 
+The Gogo shell is a unix `bash` like shell for OSGi frameworks. However unlike `bash` (which coerces all arguments to strings), the Gogo shell manipulates data objects and their public methods as command names. Gogo supports programmatic features like variables and closures. 
 
 
-## Using the Shell
+## Built-in Commands
 
-The Gogo shell feels very bash like but has a number of differences. Primary, the shell uses plain data objects and their public methods as command names. Instead of coercing everything to strings, the shell actually manipulates objects. It has all the necessary features to program in it like variables and closures. 
+When interacting with a running OSGi a framework, as in the [Debug Tutorial](../tutorial/022-tutorial_osgi_runtime), if you see a `q!` prompt then you are using Gogo. 
 
-See debug tutorial ...
-
-	g! 
+        g!
 {: .shell }
 
-## Standard OSGi commands 
+Issue the command `help` to list available commands
 
-### lb
+     felix:bundlelevel
+     felix:cd
+     felix:frameworklevel
+     felix:headers
+     ...
+     ...
+     gogo:cat
+     gogo:each
+     gogo:echo
+     ...
+     ...
+     scr:config
+     scr:disable
+     scr:enable
+     scr:info
+     scr:list
+{: .shell }
+
+Notice that the commands are grouped. In the above we can see three command scopes: i.e. `felix`, `gogo` & `scr`; other command groups may also be created.
+
+The following set of commands are immediate of use: follwoing examples using [Debug Tutorial](../tutorial/022-tutorial_osgi_runtime).
+
+### felix:lb, lb
+
+The `felix:lb` command lists the installed bundles.
 
      g! lb
      START LEVEL 1
@@ -56,12 +76,46 @@ See debug tutorial ...
         24|Active     |    1|slf4j-api (1.7.25)|1.7.25
 {: .shell }
 
-### inspect 
 
-[test](../FAQ/200-resolving.html#namespaces)
+### felix:bundle, bundle
+
+Detailed information on a select bundle is provided by the `bundles` command
+
+     g! bundle 19
+     Location             jar/impl-1.0-SNAPSHOT.jar
+     State                32
+     RegisteredServices   [Upper]
+     ServicesInUse        [ConfigurationAdmin, ServletContextHelper]
+     Bundle                  19|Active     |    1|org.osgi.enroute.examples.quickstart.rest.impl (1.0.0.201803052117)
+     Revisions            [org.osgi.enroute.examples.quickstart.rest.impl [19](R 19.0)]
+     BundleContext        org.apache.felix.framework.BundleContextImpl@69653e16
+     SymbolicName         org.osgi.enroute.examples.quickstart.rest.impl
+     BundleId             19
+     Version              1.0.0.201803052117
+     LastModified         1520685956190
+     Headers              [Service-Component=OSGI-INF/org.osgi.enroute.examples.quickstart.rest.Upper.xml, Created-By=1.8.0_162 (Oracle Corporation), Manifest-Version=1.0, Bnd-LastModified=1520284643255, Private-Package=org.osgi.enroute.examples.quickstart.rest, Bundle-Name=impl, Build-Jdk=1.8.0_162, Import-Package=javax.ws.rs, Provide-Capability=osgi.service;objectClass:List<String>="org.osgi.enroute.examples.quickstart.rest.Upper", Bundle-ManifestVersion=2, Bundle-SymbolicName=org.osgi.enroute.examples.quickstart.rest.impl, Bundle-Version=1.0.0.201803052117, Built-By=richardnicholson, Require-Capability=osgi.extender;filter:="(&(osgi.extender=osgi.component)(version>=1.3.0)(!(version>=2.0.0)))",osgi.extender;filter:="(&(osgi.extender=osgi.component)(&(version>=1.4.0)(!(version>=2.0.0))))",osgi.implementation;filter:="(&(osgi.implementation=osgi.http)(&(version>=1.1.0)(!(version>=2.0.0))))",osgi.implementation;filter:="(&(osgi.implementation=osgi.jaxrs)(&(version>=1.0.0)(!(version>=2.0.0))))",osgi.contract;osgi.contract=JavaJAXRS;filter:="(&(osgi.contract=JavaJAXRS)(version=2.1.0))",osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))", Tool=Bnd-4.0.0.201803042323-SNAPSHOT]
+{: .shell }
 
 
-### scr:list
+### felix:inspect, inspect 
+
+The `inspect` command can be used to look at the runtime `Requirements` and `Capabilities` of a selected Bundle: see [Namespaces](../FAQ/200-resolving.html#namespaces) for currently supported Req/Cap namespaces. 
+
+Example of usage. 
+
+     g! inspect req osgi.wiring.package 19
+     org.osgi.enroute.examples.quickstart.rest.impl [19] requires:
+     -------------------------------------------------------------
+     osgi.wiring.package; (osgi.wiring.package=javax.ws.rs) resolved by:
+        osgi.wiring.package; javax.ws.rs 2.1.0 from org.apache.aries.javax.jax.rs-api [5]
+{: .shell }
+
+Indicates that looking at the `osgi.wiring.package` namespacem, `org.osgi.enroute.examples.quickstart.rest.impl` has a runtime Requirement on `javax.ws.rs 2.1.0`, which has been successfully satisfied by `org.apache.aries.javax.jax.rs-api`.
+
+
+### scr:list, list
+
+The `scr` scope concerns the Declarative Services layer of the runtime: `scr:list` lists all running DS components.
 
      g! scr:list
       BundleId Component Name Default State
@@ -71,7 +125,9 @@ See debug tutorial ...
 {: .shell }
 
 
-### scr:info
+### scr:info, info
+
+The `scr:info` command can then be used to list detailed information for a selected DS component.
 
      g! scr:info org.osgi.enroute.examples.quickstart.rest.Upper 
      *** Bundle: org.osgi.enroute.examples.quickstart.rest.impl (19)
@@ -103,7 +159,30 @@ See debug tutorial ...
              osgi.jaxrs.resource = true
 {: .shell }
 
-## Commands
+### System Functions
+
+By default Gogo adds all public methods on the `java.lang.System` class and the public methods on the session's `BundleContext` as command. This gives us access to some interesting System functions:
+
+        g! currenttimemillis
+        1458158111374
+        g! property user.dir
+        property user.dir
+        /opt/enRoute/enRoutetest/quickstart/app/target
+        g! nanotime
+        1373044343558515
+        g! identityhashcode abc
+        828301628
+        g! property foo FOO
+        g! property foo
+        FOO
+        g! env JAVA_HOME
+        /Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
+        g! gc
+        g!
+{: .shell }
+
+
+## The Command Shell
 
 The most simple command is `echo` which works as expected.
 
@@ -167,66 +246,13 @@ Two built-in commands `cat` and `tac` ( tac = reversed cat because it stores) ar
 
 ### Help
 
-Notice that You can find out about the options of a command by using `-?` (This is not implemented on commands without options and it is not always consistently implemented:
+Notice that you can find out about the options of a command by using `-?` (This is not implemented on commands without options and it is not always consistently implemented:
 
 	g! tac -?
 	Usage: tac \[-al\] \[FILE\]
 		-a --append              append to FILE
 		-l --list                return List<String>
 		-? --help                show help
-{: .shell }
-
-### Built-in Commands
-
-Gogo's commands are methods on objects. By default Gogo adds all public methods on the `java.lang.System` class and the public methods on the session's `BundleContext` as command. This gives us access to some interesting System functions:
-
-	G! currenttimemillis
-	1458158111374
-	G! property user.dir
-	property user.dir
-	/Ws/enroute/osgi.enroute.examples/osgi.enroute.gogo.commands.provider
-	G! nanotime
-	1373044343558515
-	G! identityhashcode abc
-	828301628
-	G! property foo FOO 
-	G! property foo
-	FOO
-	G! env JAVA_HOME
-	/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
-	G! gc
-	G! 
-{: .shell }
-
-More interesting is the fact that the current Bundle Context is also available. This interface has a method `getBundles` so we can now just get the bundles with the `bundles` command.
-
-    g! bundles
-    0|Active     |    0|org.eclipse.osgi (3.10.100.v20150529-1857)
-    1|Active     |    1|org.apache.felix.configadmin (1.8.6)
-    2|Active     |    1|org.apache.felix.gogo.runtime (0.16.2)
-    3|Active     |    1|org.apache.felix.log (1.0.1)
-    4|Active     |    1|org.apache.felix.scr (2.0.0)
-    5|Active     |    1|org.eclipse.equinox.metatype (1.4.100.v20150408-1437)
-    6|Active     |    1|org.osgi.service.metatype (1.3.0.201505202024)
-    7|Active     |    1|osgi.enroute.gogo.commands.provider (1.0.0.201603161954)
-    8|Active     |    1|org.apache.felix.gogo.shell (1.0.0.201603041814)
-{: .shell }
-
-We could now also get a specific bundle:
-
-	g! bundle 4
-	Location             reference:file:/...
-	State                32
-	Bundle                   4|Active     |    1|org.apache.felix.scr (2.0.0)
-	Module               osgi.identity; ...
-	RegisteredServices   [ConfigurationListener, ServiceComponentRuntime, ScrGogoCommand, ManagedService]
-	ServicesInUse        [LogService]
-	BundleContext        org.eclipse.osgi.internal.framework.BundleContextImpl@3943a2be
-	SymbolicName         org.apache.felix.scr
-	BundleId             4
-	LastModified         1458156749977
-	Headers              ...
-	Version              2.0.0
 {: .shell }
 
 
@@ -236,13 +262,13 @@ We could now also get a specific bundle:
 
 Notice that neither command required anything special, they are just the methods defined on Bundle Context. The implementation has no clue about Gogo. All these commands return domain plain unadorned objects. We can test this because Gogo has variables that store these plain objects. We can then use those objects in the shell as commands.
 
-	G! bundle = bundle 4
+	g! bundle = bundle 4
 	...
-	G! $bundle tostring
+	g! $bundle tostring
 	org.apache.felix.scr_2.0.0 [4]
-	G! $bundle bundleid
+	g! $bundle bundleid
 	4
-	G! $bundle headers
+	g! $bundle headers
 	Bundle-License      http://www.apache.org/licenses/LICENSE-2.0.txt
 	Manifest-Version    1.0
 	Created-By          Apache Maven Bundle Plugin
@@ -255,7 +281,7 @@ Notice that neither command required anything special, they are just the methods
 
 Variables can be have any name. They are set with `<name>=<expr>`. They are referred to by `$<name>`. Gogo uses variables also itself. For example, the prompt can be changed by setting a new `prompt` variable.
 
-	G! prompt= '$ '
+	g! prompt= '$ '
 	$   
 {: .shell }
 	
@@ -285,9 +311,9 @@ We've already use string literals. However, it is also possible to use lists and
 
 So how do we access a specific header. A command like `$bundle headers get Bundle-Version` cannot work because Gogo will see this as one command and will complain with: `Cannot coerce headers(String, String) to any of [(), (String)]`. The parentheses come to the rescue:
 
-	G! $bundle headers get Bundle-Version
+	g! $bundle headers get Bundle-Version
 	Cannot coerce headers(String, String) to any of [(), (String)]
-	G! ($bundle headers) get Bundle-Version
+	g! ($bundle headers) get Bundle-Version
 	2.0.0
 {: .shell }
 
@@ -297,7 +323,7 @@ The parentheses first calculate the expression in their inner bowels which then 
 
 The bash shell has this wonderful capability of executing commands to get an argument by placing back ticks around a command. We can use the parentheses for the same effect, with the added benefit that the parentheses work recursively.
 
-	G! echo Bundle ($bundle bundleid) has name ((bundle ($bundle bundleid)) symbolicname) 
+	g! echo Bundle ($bundle bundleid) has name ((bundle ($bundle bundleid)) symbolicname) 
 	Bundle 4 has name org.apache.felix.scr
 {: .shell }
 
@@ -305,9 +331,9 @@ The bash shell has this wonderful capability of executing commands to get an arg
 
 The Gogo shell can store commands for later execution. The `{` and `}` delimiters are used for that purpose. We can store these functions in objects or pass them as parameters. To execute a function as a command, you should use the name of the variable without the dollar ('$') sign.   
 
-	G! f = { echo Hello }
+	g! f = { echo Hello }
 	echo Hello
-	G! f
+	g! f
 	Hello
 {: .shell }
 
@@ -333,7 +359,7 @@ The `$args` list of arguments cannot be manipulated as a normal object, it gets 
 
 Gogo provides a number of built in commands that use the functions to provide conditional and repeated execution. For example, the `each` command takes a collection and a function. It then iterates over the collection and calls the function with the element of the iteration.
 
-	G! each [1 2 3] { echo -- $it --  }
+	g! each [1 2 3] { echo -- $it --  }
 	-- 1 --
 	-- 2 --
 	-- 3 --
@@ -411,11 +437,11 @@ Gogo was designed to format an object to a string in two places.
 
 You (and any code you call) can throw exceptions. The last exception is stored in the `$exception` variable and there is a built in function `e` that shows the stack trace.
 
-	G! throw Foo
+	g! throw Foo
 	Foo
-	G! $exception message
+	g! $exception message
 	Foo
-	G! e
+	g! e
 	java.lang.IllegalArgumentException: Foo
 	at org.apache.felix.gogo.shell.Procedural._throw(Procedural.java:83)
 	...
@@ -423,17 +449,18 @@ You (and any code you call) can throw exceptions. The last exception is stored i
 
 You can also catch the exceptions with a `try` command.
 
-	G! exception = null
-	G! try { throw Foo }
-	G! $exception
-	G! 	
+	g! exception = null
+	g! try { throw Foo }
+	g! $exception
+	g! 	
 {: .shell }
 
 Of course we now silently ignore the exception, not a good idea. So we can provide a catch function that receives the exception as the $it variable.
 
-	G! try { throw Foo } { echo ouch }
+	g! try { throw Foo } { echo ouch }
 	ouch
-	G!
+	g!
+{: .shell }
 
 ## Providing a Command
 
@@ -460,9 +487,9 @@ A primary goal of the design was to make it possible to add commands to existing
 
 In the shell, we can now call the function:
 
-	G! sysout
+	g! sysout
 	Hello World
-	G! hello:sysout
+	g! hello:sysout
 	Hello World
 {: .shell }
 
@@ -474,7 +501,7 @@ In the example we use `System.out`. For some surprisingly, this is ok, even if t
 
 No running it in the shell makes it look the same:
 
-	G! value
+	g! value
 	Hello World
 {: .shell }
 
@@ -488,7 +515,7 @@ We can also provide an argument. Gogo attempts to use a syntax that one expects 
 
 So let's try this out:
 
-	G! parameter OSGi
+	g! parameter OSGi
 	Hello OSGi
 {: .shell }
 
@@ -505,11 +532,11 @@ It is also quite easy to make the parameter an option:
 
 Since we have an absent value, we do not need the value to be specified. So we can call the command with and without a parameter.
 
-	G! option
+	g! option
 	Hello World
-	G! option -p OSGi
+	g! option -p OSGi
 	Hello OSGi
-	G! option --parameter OSGi
+	g! option --parameter OSGi
 	Hello OSGi
 {: .shell }
 
@@ -524,12 +551,11 @@ So far we have had a 1:1 relation between the command name and the method. Howev
 
 We can now call this command in many different ways.
 	
-	G! foo
+	g! foo
 	Foo
-	G! FOO
+	g! FOO
 	Foo
-	G! Foo
+	g! Foo
 	Foo
 {: .shell }
 
-[osgi.enroute.gogo.commands.provider]: https://github.com/osgi/osgi.enroute.examples/osgi.enroute.gogo.commands.provider
