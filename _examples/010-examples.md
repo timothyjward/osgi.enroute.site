@@ -3,7 +3,7 @@ title: Quick Start
 layout: toc-guide-page
 lprev: 020-tutorial_qs.html 
 lnext: 015-Prerequisite.html
-summary: A walkthrough of the Quick Start exmple
+summary: A walkthrough of the Quick Start example
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---

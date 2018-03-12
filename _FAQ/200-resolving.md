@@ -87,7 +87,7 @@ Working in this way reduces the repository management overhead to maintaining th
 
 ## Resolving in quickstart?  
 
-When working through the quickstart tutorial the OSGi resolver was run ether in [eclipse](../tutorial/020-tutorial_qs.html#resolve-eclipse), or manually via the [cli](../tutorial/020-tutorial_qs.html#resolve-cli): if in eclipse you'll have seen the `Resolution Results` window lists the set of Bundles required.
+When working through the quickstart tutorial the OSGi resolver was run ether in [eclipse](../tutorial/020-tutorial_qs.html#resolving-the-application), or manually via the [cli](../tutorial/020-tutorial_qs.html#resolving-the-application): if in eclipse you'll have seen the `Resolution Results` window lists the set of Bundles required.
 
 The enRoute release artefact `app.jar` was then created with its own internal respository with contents determined by the resolution: to see this `jar xf app.jar`. 
 

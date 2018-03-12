@@ -79,7 +79,7 @@ The `felix:lb` command lists the installed bundles.
 
 ### felix:bundle, bundle
 
-Detailed information on a select bundle is provided by the `bundles` command
+Detailed information on a select bundle is provided by the `bundle` command
 
      g! bundle 19
      Location             jar/impl-1.0-SNAPSHOT.jar
