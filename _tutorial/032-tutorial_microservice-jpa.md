@@ -8,7 +8,7 @@ author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---
 
-This tuturial is an abridged version of the previous (microservice) tutorial, but using `jpa` rather than `jdbc`. 
+This tutorial demonstrates upgrading a Application and also the use of JPA: the previous microservices example which uses `jdbc` provides the start-point for this tutorial.
 
 In the `microservice` project root directory, create the `jpa` project.
 
