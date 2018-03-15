@@ -35,6 +35,8 @@ plugins:
   - jekyll-feed
 
 collections:
+  doc:
+    output: true
   tutorial:
     output: true
   FAQ:

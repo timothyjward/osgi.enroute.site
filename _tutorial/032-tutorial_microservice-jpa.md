@@ -3,12 +3,12 @@ title: Persistence with JPA
 layout: toc-guide-page
 lprev: 030-tutorial_microservice.html 
 lnext: 015-Prerequisite.html
-summary: A variant of the Microservices example using JPA & Hibernate (< 10 minutes).
+summary: Demonstrates how to upgrade an Application and the use JPA & Hibernate (< 10 minutes).
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---
 
-This tutorial demonstrates upgrading a Application and also the use of JPA: the previous microservices example which uses `jdbc` provides the start-point for this tutorial.
+The previous Microservices example which uses `jdbc` provides the start-point for this tutorial.
 
 In the `microservice` project root directory, create the `jpa` project.
 
