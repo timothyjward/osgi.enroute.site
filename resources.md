@@ -8,37 +8,39 @@ author: enRoute@paremus.com
 sponsor: OSGi™ Alliance
 ---
 
-This section provides addition information that may be useful to you once you've completed the enRoute tutorials.
+The following sites provide information useful for your ongoing OSGi journey. 
 
-<style>
-table, td, th {    
-    text-align: left;
-}
+![OSGi Alliance](img/OSGi_Alliance_Logo.png){: width="150px"}
 
-table {
-    width: 100%;
-}
+The latest specifications used by enRoute are available at:
 
-th {
-    padding: 15px;
-    color: Black;
-}
-td {
-    padding 10px;
-    color: Black;
-}
-</style>
-<table>
-        <colgroup>
-                <col style="width:30%">
-                <col style="width:70%">
-        </colgroup>
-{% for f in site.resources %}{%unless f.noindex%}<tr>
-        <td><a href="{{f.url}}">{{f.title}}</a></td><td> {{f.summary}}</td>
-</tr>
-{%endunless%}{% endfor %}
-
-</table>
+* [R7 Core Specifications](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/index.html)
+* [R7 Compendium Specifications](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/index.html)
 
 
----
+![test](img/OSGiMark_Enabled_RGB.png){: width="150px"}
+
+A list of OSGi runtime solutuons and testimonials can be found at the following URL's 
+
+* [OSGi Enabled Runtimes & Services](https://www.osgi.org/osgi-compliance/osgi-enabled/osgi-enabled-products-and-services/)
+* [OSGi Testimonials](https://www.osgi.org/about-us/testimonials/)
+
+
+The following sites provide further information and guidance on developing OSGi. 
+
+* [The bndtools IDE plugin for Eclipse](http://bndtools.org) 
+* [The bnd Community Site](http://bnd.bndtools.org)
+
+
+The following sites provide addition R7 based OSGi examples and tutorials. 
+
+* A
+* B
+* C
+
+
+
+
+
+
+
