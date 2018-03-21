@@ -112,6 +112,7 @@ The important modifications include:
 * A JAX-RS resource method implementation, replacing the the `TODO` section
 * The `@Component` is modified to register this component as an OSGi service
 * The `@JaxrsResource` annotation is used to mark this as a JAX-RS whiteboard resource.
+* Remember to change the name of the component from `ComponentImpl.java` to `Upper.java`
 
 ### Building the implementation
 
@@ -130,8 +131,10 @@ From the `quickstart/impl` project we now build the impl bundle.
 $ mvn install
 {% endhighlight %}
       
-We use the `install` goal here to make sure that the built artifact is available to other projects in later steps
-{: .note }
+Here, we use the `install` goal to make sure that the built artifact is available to other projects in later steps
+
+If the `install` fails, continue to the next stage - resolve - then repeate `mvn install` 
+{: .warning }
   </div>
   <div  markdown="1" role="tabpanel" class="tab-pane" id="impl-build-eclipse">
 When using Bndtools your IDE will be incrementally rebuilding your projects every time that you save, so there's no need to run a build. You can also run a build manually.
@@ -148,7 +151,7 @@ Enter package as the goal and click **Run**
 
 ### Resolving the Application
 
-Before generating the runtime dependency information used by the OSGi framework take a look at `quickstart\app\app.bndrun`
+Before generating the runtime dependency information used by the OSGi framework take a look at the file `quickstart\app\app.bndrun`
 
     index: target/index.xml
 
@@ -158,7 +161,9 @@ Before generating the runtime dependency information used by the OSGi framework 
     -runfw: org.apache.felix.framework
     -runee: JavaSE-1.8
 
-As shown the bndrun contains a `runrequires` defining the key bundles in the application, but no `runbundles` listing the actual bundles needed at runtime. The `runbundles` can be calculated for us automatically.
+As shown, the bndrun contains a `runrequires` statement that specifies a [capability](../FAQ/200-resolving.html#namespaces); i.e. the implementation for `quickstart`. However, no `runbundles` a currently listed; i.e. the actual bundles needed at runtime to create `quickstart`.
+
+The `runbundles` are automatically calculated for us via the process of [resolving](../FAQ/200-resolving.html).
 
 <div>
  <ul class="nav nav-tabs" role="tablist">
@@ -188,7 +193,32 @@ Now click **Finish** button...
  </div>
 </div>
 
-If you look again at the `app.bndrun` file you will see that our rest service implementation `org.osgi.enroute.examples.quickstart.impl`, an OSGi Declarative Services implementation, and a number of other bundles have been included in the `runbundles`.
+If you look again at the `app.bndrun` file you will now see that our rest service implementation `org.osgi.enroute.examples.quickstart.impl`, OSGi Declarative Services implementation `org.apache.felix.scr`, and a number of other bundles required at runtime are now listed by `runbundles`.
+
+    index: target/index.xml
+
+    -standalone: ${index}
+
+    -runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
+    -runfw: org.apache.felix.framework
+    -runee: JavaSE-1.8
+    -runbundles: \
+            ch.qos.logback.classic;version='[1.2.3,1.2.4)',\
+            ch.qos.logback.core;version='[1.2.3,1.2.4)',\
+            javax.json-api;version='[1.0.0,1.0.1)',\
+            org.apache.aries.javax.annotation-api;version='[0.0.1,0.0.2)',\
+            org.apache.aries.javax.jax.rs-api;version='[0.0.1,0.0.2)',\
+            org.apache.aries.jax.rs.whiteboard;version='[0.0.1,0.0.2)',\
+            org.apache.felix.configadmin;version='[1.9.0,1.9.1)',\
+            org.apache.felix.http.jetty;version='[3.4.7,3.4.8)',\
+            org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
+            org.apache.felix.scr;version='[2.1.0,2.1.1)',\
+            org.osgi.enroute.examples.quickstart.impl;version='[1.0.0,1.0.1)',\
+            org.osgi.service.jaxrs;version='[1.0.0,1.0.1)',\
+            org.osgi.util.function;version='[1.1.0,1.1.1)',\
+            org.osgi.util.promise;version='[1.1.0,1.1.1)',\
+            slf4j.api;version='[1.7.25,1.7.26)'
+
 
 ### Running the application
 
@@ -211,7 +241,7 @@ Now that the initial development is done we're ready to build and package the wh
 $ mvn package
 {% endhighlight %}
 
-Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-example).
+Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-example); the REST endpoint at [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower).
   </div>
   <div markdown="1" role="tabpanel" class="tab-pane" id="run-eclipse">
 In the `app` maven module, open the `app.bndrun` to display the `Bndtools Resolve` screen. Select the **Run OSGi** button
@@ -238,7 +268,7 @@ Wait for maven to finish the generation.
 
 ![Modularity and complexity](img/12.png)
 
-The runnable jar file created will be `app/target/app.jar`, and may be started as described [above](020-tutorial_qs.html#running-the-example).
+The runnable jar file created will be `app/target/app.jar`, and may be started as described [above](020-tutorial_qs.html#running-the-example); the REST endpoint at [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower).
 
    </div>
  </div>

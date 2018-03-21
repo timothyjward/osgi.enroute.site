@@ -48,16 +48,16 @@ A module archetype defines an enRoute Maven module that will be built and output
 
 ### The api Archetype
 
-The api archetype is used to build an API bundle for your enRoute application. This type of bundle is where you should define your public interfaces and DTOs. These packages should be versioned and exported.
-The ds-component Archetype
+The api archetype is used to build an API bundle for your enRoute application. This type of bundle is where you should define your [public interfaces](../FAQ/450-Designing-APIs.html) and [DTO](../FAQ/420--dtos.html)s. These packages should be versioned and exported.
+
 
 ### The ds-component Archetype 
 
-The ds-component archetype is used to create an OSGi service using Declarative Services. This provides a simple programming model for referencing services from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
+The ds-component archetype is used to create an OSGi service using [Declarative Services](../FAQ/300-declarative-services.html). This provides a simple programming model for referencing services from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
 
 ### The rest-component Archetype
 
-The rest-component archetype is similar to the ds-component  archetype, in that it defines an OSGi service using Declarative Services. This service, however, makes use of the OSGi JAX-RS whiteboard specification to transparently provide the JAX-RS resource methods as REST endpoints. This archetype is therefore an excellent way to get started when writing a REST microservice 
+The rest-component archetype is similar to the ds-component  archetype, in that it defines an OSGi service using Declarative Services. This service, however, makes use of the OSGi [JAX-RS whiteboard](../FAQ/400-patterns.html#whiteboard-pattern) specification to transparently provide the JAX-RS resource methods as REST endpoints. This archetype is therefore an excellent way to get started when writing a REST microservice. 
                                                   
 ### The bundle-test Archetype 
 
