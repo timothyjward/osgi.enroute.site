@@ -12,24 +12,23 @@ sponsor: OSGi™ Alliance
 
 This Tutorial walks through the creation of REST microservice comprised of the following structural elements:
 * An API module
-* A DAO implemetation module
+* A DAO Implemetation module
 * A Rest Service module 
-* An application module
+* The Application module
 
-As with the Quick Start Tutorial, the following is Maven and command-line based; the reader may follow this verbatim or use their favorite Java/IDE. 
+The tutorial is Maven and command-line based; the reader may follow this verbatim or use their favorite Java/IDE. 
+
+## Create the Project
 
 We start by creating the required project skeleton. 
 
-if you change the example `groupId`, `artifactId` values to alternates, you'll also need to update the `packageinfo` and `import` statements in the files used in this tutorial.
-{: .note }
-
-In the directory with the `settings.xml` configuration (i.e. the directory above the [Quick Start](tutorial_qs) project home), create the **microservice** project as follows:
+In your Project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project as follows:
 
 {% highlight shell-session %}
 $ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project-bare -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-input the following values:
+with the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples
     Define value for property 'artifactId': microservice
@@ -42,19 +41,20 @@ input the following values:
     package: org.osgi.enroute.examples
     Y: :
 
+**Note** - if you use alternative `groupId`, `artifactId` values remember to update the `packageinfo` and `import` statements in the files used throughout the rest of this tutorial.
+{: .note }
+
 We'll now created the required modules. 
 
 ## The microservice DAO API 
 
-Now change directory into the newly created `microservice` project directory
-
-To create the `api` module
+Change directory into the newly created `microservice` project directory and create the `api` module
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=api -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-input the following values:
+with the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': dao-api
@@ -165,15 +165,13 @@ Now create a `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/d
 
 ## The microservice DAO Impl
 
-Check that you are in the `microservice` project directory, then ...
-
-To create the `impl` module
+In the `microservice` project director now create the `impl` module
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-input the following values:
+With the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': dao-impl
@@ -186,7 +184,7 @@ input the following values:
     package: org.osgi.enroute.examples.microservice
     Y: :
 
-Now add the following module dependencies to the `<dependencies>` section in `dao-impl/pom.xml`
+As our `DAO Impl` module has a dependecy on the `DAO API`, and the `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below), have dependencies on `slf4j`, we add the following module dependencies to the `<dependencies>` section in `dao-impl/pom.xml`
 
 {% highlight xml %}
 <dependency>
@@ -201,8 +199,10 @@ Now add the following module dependencies to the `<dependencies>` section in `da
 </dependency>
 {% endhighlight %}
 
+Now create the module content as follows:
+
 * Delete the template files in `dao-impl/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
-* Now create the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl` into which we create the following four files:
+* Create the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl` into which we create the following four files:
 
 `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java`
 <p>
@@ -272,15 +272,13 @@ Now add the following module dependencies to the `<dependencies>` section in `da
 
 ## The REST Service
 
-Check that you are in the `microservice` project directory, then ...
-
-To create the `rest-component` module
+In the `microservice` project director create the `rest-component` module
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=rest-component -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-input the following values:
+With the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-service
@@ -293,7 +291,7 @@ input the following values:
     package: org.osgi.enroute.examples.microservice
     Y: :
 
-Now add the following module dependencies to the `<dependencies>` section in `rest-service/pom.xml`
+As the `rest-service` module has dependencies on the `DAO-API` module, JAX-RS & JSON we added the following module dependencies to the `<dependencies>` section in `rest-service/pom.xml`
 
 {% highlight xml %}
 <dependency>
@@ -313,8 +311,9 @@ Now add the following module dependencies to the `<dependencies>` section in `re
 </dependency>
 {% endhighlight %}
 
-* Delete the itemplate files in `rest-service/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
-* Now create the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest` into which we create the following two files: 
+Now create the module content as follows:
+* Delete the template files in `rest-service/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
+* Create the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest` into which we create the following two files: 
 
 `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java`
 <p>
@@ -411,15 +410,13 @@ Finally create the directory `rest-service/src/main/resources/static/main/img` i
 
 ## The Composite Application 
 
-Check that you are in the `microservice` project directory, then ...
-
-To create the `application` module
+In the `microservice` project directory create the `application` module
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-input the following values:
+With the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-app
@@ -473,7 +470,7 @@ Also add the following plugin inside `<plugins>` section in the file `rest-app/p
 </plugin>
 {% endhighlight %}
 
-Create the directory `rest-app/src/main/java/config` in which 
+In the directory `rest-app/src/main/java/config` check that `package-info` is as follows: 
 
 `rest-app/src/main/java/config/package-info.java`
 <p>
@@ -491,10 +488,9 @@ Create the directory `rest-app/src/main/java/config` in which
 </div>
 
 
-Create the directory `rest-app/src/main/resources/OSGI-INF/configurator` and then the following file 
+Also overwrite the contents of `rest-app/src/main/resources/OSGI-INF/configurator/configuration.json` with the following:
 
-`rest-app/src/main/resources/OSGI-INF/configurator/configuration.json`
-<p>
+ <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#configuration" aria-expanded="false" aria-controls="configuration">
     configuration.json
   </a>
@@ -509,7 +505,7 @@ Create the directory `rest-app/src/main/resources/OSGI-INF/configurator` and the
 </div>
 </div>
 
-Copy the contents below over `rest-app/rest-app.bndrun`
+Finally overwrite the contents of `rest-app/rest-app.bndrun` with:
 
 `rest-app/rest-app.bndrun`
 {% highlight shell-session %}
@@ -534,6 +530,9 @@ Build the modules and install in local maven repository from the top level proje
 
     mvn install
 
+**Note** - if `rest-app` fails, run the following resolve command and then re-run `mvn install` 
+{: .note }
+
 We now Generate OSGi™ index with the project dependencies from the top level project directory
 
     mvn bnd-resolver:resolve
@@ -548,7 +547,7 @@ To run the resultant OSGi based REST Microservice change back to the top level p
 
 The REST service can be seen by pointing a browser to [http://localhost:8080/microservice/index.html](http://localhost:8080/microservice/index.html)
 
-![MicroService demo](img/MicroService.png)
+![MicroService demo](img/MicroService.png){: height="450px" width="450px"}
 
 Stop the application using Ctrl+C in the console.
 

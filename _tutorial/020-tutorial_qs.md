@@ -10,9 +10,9 @@ sponsor: OSGi™ Alliance
 
 ## Summary 
 
-A simple tutorial where we first run, and then re-create and re-run, a simple OSGi™ Microservice.
+In this tutorial we'll first run, and then re-create and re-run, a simple OSGi™ Microservice.
 
-## Building and Running the Example
+## Build & Run
 
 We start by first downloading, building and running the enRoute `quickstart` example. In addition to demonstrating the simple application this will also confirm that your local [environment](015-Prerequisite.html#required-tools) meets the require prerequisits.
 
@@ -42,7 +42,7 @@ or if minimalisim is more your thing, the raw REST endpoint [http://localhost:80
 
 When you want to terminate the application press **Ctrl+C**.
 
-## Recreating the Quickstart example
+## Recreating Quickstart
 
 We'll now recreate the quickstart example locally as though it were your own greenfield OSGi project. 
 
@@ -153,13 +153,15 @@ Enter package as the goal and click **Run**
 
 Before generating the runtime dependency information used by the OSGi framework take a look at the file `quickstart\app\app.bndrun`
 
-    index: target/index.xml
+{% highlight shell-session %}
+index: target/index.xml
 
-    -standalone: ${index}
+-standalone: ${index}
 
-    -runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
-    -runfw: org.apache.felix.framework
-    -runee: JavaSE-1.8
+-runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+{% endhighlight %}
 
 As shown, the bndrun contains a `runrequires` statement that specifies a [capability](../FAQ/200-resolving.html#namespaces); i.e. the implementation for `quickstart`. However, no `runbundles` a currently listed; i.e. the actual bundles needed at runtime to create `quickstart`.
 
@@ -195,30 +197,31 @@ Now click **Finish** button...
 
 If you look again at the `app.bndrun` file you will now see that our rest service implementation `org.osgi.enroute.examples.quickstart.impl`, OSGi Declarative Services implementation `org.apache.felix.scr`, and a number of other bundles required at runtime are now listed by `runbundles`.
 
-    index: target/index.xml
+{% highlight shell-session %}
+index: target/index.xml
 
-    -standalone: ${index}
+-standalone: ${index}
 
-    -runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
-    -runfw: org.apache.felix.framework
-    -runee: JavaSE-1.8
-    -runbundles: \
-            ch.qos.logback.classic;version='[1.2.3,1.2.4)',\
-            ch.qos.logback.core;version='[1.2.3,1.2.4)',\
-            javax.json-api;version='[1.0.0,1.0.1)',\
-            org.apache.aries.javax.annotation-api;version='[0.0.1,0.0.2)',\
-            org.apache.aries.javax.jax.rs-api;version='[0.0.1,0.0.2)',\
-            org.apache.aries.jax.rs.whiteboard;version='[0.0.1,0.0.2)',\
-            org.apache.felix.configadmin;version='[1.9.0,1.9.1)',\
-            org.apache.felix.http.jetty;version='[3.4.7,3.4.8)',\
-            org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
-            org.apache.felix.scr;version='[2.1.0,2.1.1)',\
-            org.osgi.enroute.examples.quickstart.impl;version='[1.0.0,1.0.1)',\
-            org.osgi.service.jaxrs;version='[1.0.0,1.0.1)',\
-            org.osgi.util.function;version='[1.1.0,1.1.1)',\
-            org.osgi.util.promise;version='[1.1.0,1.1.1)',\
-            slf4j.api;version='[1.7.25,1.7.26)'
-
+-runrequires: osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.quickstart.impl)'
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+-runbundles: \
+        ch.qos.logback.classic;version='[1.2.3,1.2.4)',\
+        ch.qos.logback.core;version='[1.2.3,1.2.4)',\
+        javax.json-api;version='[1.0.0,1.0.1)',\
+        org.apache.aries.javax.annotation-api;version='[0.0.1,0.0.2)',\
+        org.apache.aries.javax.jax.rs-api;version='[0.0.1,0.0.2)',\
+        org.apache.aries.jax.rs.whiteboard;version='[0.0.1,0.0.2)',\
+        org.apache.felix.configadmin;version='[1.9.0,1.9.1)',\
+        org.apache.felix.http.jetty;version='[3.4.7,3.4.8)',\
+        org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
+        org.apache.felix.scr;version='[2.1.0,2.1.1)',\
+        org.osgi.enroute.examples.quickstart.impl;version='[1.0.0,1.0.1)',\
+        org.osgi.service.jaxrs;version='[1.0.0,1.0.1)',\
+        org.osgi.util.function;version='[1.1.0,1.1.1)',\
+        org.osgi.util.promise;version='[1.1.0,1.1.1)',\
+        slf4j.api;version='[1.7.25,1.7.26)'
+{% endhighlight %}
 
 ### Running the application
 
