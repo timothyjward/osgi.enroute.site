@@ -12,9 +12,11 @@ sponsor: OSGi™ Alliance
 
 This Tutorial walks through the creation of REST microservice comprised of the following structural elements:
 * An API module
-* A DAO Implemetation module
-* A Rest Service module 
-* The Application module
+* A DAO Implementation module
+* A Rest Service Implementation module 
+* The Composite Application module
+
+Each _Implementation_ and _Composite Application_ Module having a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).  
 
 The tutorial is Maven and command-line based; the reader may follow this verbatim or use their favorite Java/IDE. 
 
@@ -44,7 +46,7 @@ with the following values:
 **Note** - if you use alternative `groupId`, `artifactId` values remember to update the `packageinfo` and `import` statements in the files used throughout the rest of this tutorial.
 {: .note }
 
-We'll now created the required modules. 
+We'll now create the required modules. 
 
 ## The microservice DAO API 
 
@@ -59,18 +61,16 @@ with the following values:
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': dao-api
     Define value for property 'version' 1.0-SNAPSHOT: : 0.0.1-SNAPSHOT
-    Define value for property 'package' org.osgi.enroute.examples.microservice: :
+    Define value for property 'package' org.osgi.enroute.examples.microservice: :org.osgi.enroute.examples.microservice.dao
     Confirm properties configuration:
     groupId: org.osgi.enroute.examples.microservice
     artifactId: dao-api
     version: 0.0.1-SNAPSHOT
-    package: org.osgi.enroute.examples.microservice
+    package: org.osgi.enroute.examples.microservice.dao 
     Y: :
 
-* Delete the template files created in `dao-api/src/main/java/org/osgi/enroute/examples/microservice` as these are not required.
-* Create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao` into which we create the following three files:
 
-`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java`
+Check that the created `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` file is as shown:
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dao" aria-expanded="false" aria-controls="package-info-dao">
     package-info.java 
@@ -84,6 +84,8 @@ with the following values:
 
   </div>
 </div>
+
+Now place the following two files into the `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao` directory:
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java`
 <p>
@@ -115,7 +117,7 @@ with the following values:
 </div>
 </div>
 
-Now create a `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` directory to which we add the following three files
+Now create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` into which we place the following three files
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
 <p>
@@ -176,12 +178,12 @@ With the following values:
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': dao-impl
     Define value for property 'version' 1.0-SNAPSHOT: : 0.0.1-SNAPSHOT
-    Define value for property 'package' org.osgi.enroute.examples.microservice: :
+    Define value for property 'package' org.osgi.enroute.examples.microservice: : org.osgi.enroute.examples.microservice.dao.impl
     Confirm properties configuration:
     groupId: org.osgi.enroute.examples.microservice
     artifactId: dao-impl
     version: 0.0.1-SNAPSHOT
-    package: org.osgi.enroute.examples.microservice
+    package: org.osgi.enroute.examples.microservice.dao.impl
     Y: :
 
 As our `DAO Impl` module has a dependecy on the `DAO API`, and the `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below), have dependencies on `slf4j`, we add the following module dependencies to the `<dependencies>` section in `dao-impl/pom.xml`
@@ -199,10 +201,8 @@ As our `DAO Impl` module has a dependecy on the `DAO API`, and the `PersonalDaoI
 </dependency>
 {% endhighlight %}
 
-Now create the module content as follows:
 
-* Delete the template files in `dao-impl/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
-* Create the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl` into which we create the following four files:
+Now place the following four files into the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl`:
 
 `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java`
 <p>
@@ -283,12 +283,12 @@ With the following values:
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-service
     Define value for property 'version' 1.0-SNAPSHOT: : 0.0.1-SNAPSHOT
-    Define value for property 'package' org.osgi.enroute.examples.microservice: :
+    Define value for property 'package' org.osgi.enroute.examples.microservice: : org.osgi.enroute.examples.microservice.rest
     Confirm properties configuration:
     groupId: org.osgi.enroute.examples.microservice
     artifactId: rest-service
     version: 0.0.1-SNAPSHOT
-    package: org.osgi.enroute.examples.microservice
+    package: org.osgi.enroute.examples.microservice.rest
     Y: :
 
 As the `rest-service` module has dependencies on the `DAO-API` module, JAX-RS & JSON we added the following module dependencies to the `<dependencies>` section in `rest-service/pom.xml`
@@ -311,9 +311,7 @@ As the `rest-service` module has dependencies on the `DAO-API` module, JAX-RS & 
 </dependency>
 {% endhighlight %}
 
-Now create the module content as follows:
-* Delete the template files in `rest-service/src/main/java/org/osgi/enroute/examples/microservice` as these are not required. 
-* Create the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest` into which we create the following two files: 
+Copy the following two files into the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest`: 
 
 `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java`
 <p>
