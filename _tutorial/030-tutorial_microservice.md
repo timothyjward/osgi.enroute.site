@@ -8,6 +8,8 @@ author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---
 
+This tutorial is Maven and command-line based; the reader may follow this verbatim or use their favorite Java/IDE.
+
 ## Introduction
 
 This Tutorial walks through the creation of REST microservice comprised of the following structural elements:
@@ -16,15 +18,13 @@ This Tutorial walks through the creation of REST microservice comprised of the f
 * A Rest Service Implementation module 
 * The Composite Application module
 
-Each _Implementation_ and _Composite Application_ Module having a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).  
+each of these _Implementation_ and _Composite Application_ Modules having a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).  
 
-The tutorial is Maven and command-line based; the reader may follow this verbatim or use their favorite Java/IDE. 
+We start by creating the required project skeleton.
 
-## Create the Project
+## Creating the Project
 
-We start by creating the required project skeleton. 
-
-In your Project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project as follows:
+In your Project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project:
 
 {% highlight shell-session %}
 $ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project-bare -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -46,7 +46,8 @@ with the following values:
 **Note** - if you use alternative `groupId`, `artifactId` values remember to update the `packageinfo` and `import` statements in the files used throughout the rest of this tutorial.
 {: .note }
 
-We'll now create the required modules. 
+
+We now create the required modules. 
 
 ## The microservice DAO API 
 
@@ -85,7 +86,7 @@ Check that the created `dao-api/src/main/java/org/osgi/enroute/examples/microser
   </div>
 </div>
 
-Now place the following two files into the `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao` directory:
+Now create the following two files:
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java`
 <p>
@@ -117,7 +118,7 @@ Now place the following two files into the `dao-api/src/main/java/org/osgi/enrou
 </div>
 </div>
 
-Now create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` into which we place the following three files
+Now create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` in which we create the following three files
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
 <p>
@@ -173,7 +174,7 @@ In the `microservice` project director now create the `impl` module
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-With the following values:
+with the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': dao-impl
@@ -186,7 +187,7 @@ With the following values:
     package: org.osgi.enroute.examples.microservice.dao.impl
     Y: :
 
-As our `DAO Impl` module has a dependecy on the `DAO API`, and the `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below), have dependencies on `slf4j`, we add the following module dependencies to the `<dependencies>` section in `dao-impl/pom.xml`
+As `dao-impl` module has a dependency on `dao-api`, and `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below) have dependencies on the `slf4j` logging API, we add this dependency information to the `<dependencies>` section of `dao-impl/pom.xml`: i.e. `dao-impl`'s repository.
 
 {% highlight xml %}
 <dependency>
@@ -291,7 +292,7 @@ With the following values:
     package: org.osgi.enroute.examples.microservice.rest
     Y: :
 
-As the `rest-service` module has dependencies on the `DAO-API` module, JAX-RS & JSON we added the following module dependencies to the `<dependencies>` section in `rest-service/pom.xml`
+As the `rest-service` module has dependencies on the `dao-api` and `json-api` these dependencies are added to the `<dependencies>` section in `rest-service/pom.xml`. A `JAX-RS` implementation dependency is also included so that the `rest-service` can be unit tested.  
 
 {% highlight xml %}
 <dependency>
