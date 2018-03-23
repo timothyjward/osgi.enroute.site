@@ -46,6 +46,24 @@ To reflect this the bundle version must also have a major change. However this n
 Note that exactly the same problems applies with respect to REST based Microservices and relying on container image versions: yet another reason to use OSGi as the basis for modular Microservices.
 
 
+## Where is this information kept?
+
+So packages may be shared between Bundles, and those that are, are versioned: this information recorded in the package's directory via the `package-info.java` file.
+
+The following `package-info.java` file is for the [`dao-api`](../tutorial/030-tutorial_microservice.html#the-microservice-dao-api) package in the microservices example.  
+{% highlight java tabsize=4 %}
+@org.osgi.annotation.bundle.Export
+@org.osgi.annotation.versioning.Version("1.0.0")
+package org.osgi.enroute.examples.microservice.dao;
+{% endhighlight %}
+
+
+The [bnd plugin](../520-bnd) will pickup this information and add it to the OSGi Bundle manifest. As a Developers you should change the version information in `package-info.java` when you make changes to the package content.
+
+**Note** - This is automatically managed if you are using bndtools.
+{: .note }
+
+
 ## Further reading
 
 [Bndtools documentation](http://bnd.bndtools.org/chapters/170-versioning.html) provides further information on Semantic Versioning, and how Bndtools simplifies the management of this.

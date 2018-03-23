@@ -49,7 +49,7 @@ with the following values:
 
 We now create the required modules. 
 
-## The microservice DAO API 
+## The DAO API 
 
 Change directory into the newly created `microservice` project directory and create the `api` module
 
@@ -70,21 +70,6 @@ with the following values:
     package: org.osgi.enroute.examples.microservice.dao 
     Y: :
 
-
-Check that the created `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` file is as shown:
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dao" aria-expanded="false" aria-controls="package-info-dao">
-    package-info.java 
-  </a>
-</p>
-<div class="collapse" id="package-info-dao">
-  <div class="card card-block">
-{% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java %}
-{% endhighlight %}
-
-  </div>
-</div>
 
 Now create the following two files:
 
@@ -118,7 +103,33 @@ Now create the following two files:
 </div>
 </div>
 
-Now create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` in which we create the following three files
+### Dependencies
+
+`dao-api` has no dependencies.
+
+### Visibility
+`dao-api` is an API package that is shared between bundles: e.g. `RestComponentImpl`, `PersonDaoImpl` & `AddressDaoImpl` all import `dao-api`. This sharing information is conveyed by the file `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` which was automatically generated for you: 
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dao" aria-expanded="false" aria-controls="package-info-dao">
+    package-info.java
+  </a>
+</p>
+<div class="collapse" id="package-info-dao">
+  <div class="card card-block">
+{% highlight java tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java %}
+{% endhighlight %}
+
+  </div>
+</div>
+
+For more information on `package-info.java` see [Semantic Versioning](../FAQ/210-semantic_versioning.html).
+
+### Defining the DTO 
+
+Data transfer between the components is achieved via the use of [Data Transfer Objects (DTO's)](../FAQ/420--dtos.html).
+
+To achieve this create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` into which we place the following three files:
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
 <p>
@@ -166,7 +177,7 @@ Now create the directory `dao-api/src/main/java/org/osgi/enroute/examples/micros
 </div>
 </div>
 
-## The microservice DAO Impl
+## The DAO implementation 
 
 In the `microservice` project director now create the `impl` module
 
@@ -187,23 +198,7 @@ with the following values:
     package: org.osgi.enroute.examples.microservice.dao.impl
     Y: :
 
-As `dao-impl` module has a dependency on `dao-api`, and `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below) have dependencies on the `slf4j` logging API, we add this dependency information to the `<dependencies>` section of `dao-impl/pom.xml`: i.e. `dao-impl`'s repository.
-
-{% highlight xml %}
-<dependency>
-    <groupId>org.osgi.enroute.examples.microservice</groupId>
-    <artifactId>dao-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-</dependency>
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.25</version>
-</dependency>
-{% endhighlight %}
-
-
-Now place the following four files into the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl`:
+Place the following four files into the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl`:
 
 `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java`
 <p>
@@ -271,6 +266,28 @@ Now place the following four files into the directory `dao-impl/src/main/java/or
 </div>
 </div>
 
+### Dependencies
+
+The `dao-impl` has a dependency on `dao-api`. Also `PersonalDaoImpl.java` and `AddressDaoImpl.java` implementations (see below) have dependencies on the `slf4j` logging API. This dependency information is added to the `<dependencies>` section of `dao-impl/pom.xml`: i.e. `dao-impl`'s [repository](../FAQ/200-resolving.html#managing-repositories).
+
+{% highlight xml %}
+<dependency>
+    <groupId>org.osgi.enroute.examples.microservice</groupId>
+    <artifactId>dao-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.25</version>
+</dependency>
+{% endhighlight %}
+
+### Visibility
+
+Implmentations should **NOT** be shared; hence no `package-info.java` file.
+{: .note } 
+
 ## The REST Service
 
 In the `microservice` project director create the `rest-component` module
@@ -291,26 +308,6 @@ With the following values:
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples.microservice.rest
     Y: :
-
-As the `rest-service` module has dependencies on the `dao-api` and `json-api` these dependencies are added to the `<dependencies>` section in `rest-service/pom.xml`. A `JAX-RS` implementation dependency is also included so that the `rest-service` can be unit tested.  
-
-{% highlight xml %}
-<dependency>
-    <groupId>org.apache.servicemix.specs</groupId>
-    <artifactId>org.apache.servicemix.specs.json-api-1.1</artifactId>
-    <version>2.9.0</version>
-</dependency>
-<dependency>
-    <groupId>org.osgi.enroute.examples.microservice</groupId>
-    <artifactId>dao-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.johnzon</groupId>
-    <artifactId>johnzon-core</artifactId>
-    <version>1.1.0</version>
-</dependency>
-{% endhighlight %}
 
 Copy the following two files into the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest`: 
 
@@ -405,6 +402,33 @@ In directory `rest-service/src/main/resources/static` add the following `index.h
 Finally create the directory `rest-service/src/main/resources/static/main/img` into which save the following icon with the name `enroute-logo-64.png`
 
 ![enRoute logo](img/enroute-logo-64.png) 
+
+### Dependencies
+
+As the `rest-service` module has dependencies on the `dao-api` and `json-api` these dependencies are added to the `<dependencies>` section in `rest-service/pom.xml`. A `JAX-RS` implementation dependency is also included so that the `rest-service` can be unit tested. 
+
+{% highlight xml %}
+<dependency>
+    <groupId>org.apache.servicemix.specs</groupId>
+    <artifactId>org.apache.servicemix.specs.json-api-1.1</artifactId>
+    <version>2.9.0</version>
+</dependency>
+<dependency>
+    <groupId>org.osgi.enroute.examples.microservice</groupId>
+    <artifactId>dao-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.johnzon</groupId>
+    <artifactId>johnzon-core</artifactId>
+    <version>1.1.0</version>
+</dependency>
+{% endhighlight %}
+
+### Visibility
+
+Implmentations should **NOT** be shared; hence no `package-info.java` file.
+{: .note }
 
 
 ## The Composite Application 
