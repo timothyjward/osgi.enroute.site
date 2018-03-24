@@ -463,8 +463,44 @@ with the following values:
     impl-version: 0.0.1-SNAPSHOT
     Y: :
 
+### Define Runtime Entity
+
+Our Microservice is composed of the following elements:
+* A rest-service
+* An implementation of JAX-RS
+* A database.
+
+and we express this as runtime Requirements in the `rest-app/rest-app.bndrun` file as follows:
+
+{% highlight shell-session %}
+index: target/index.xml
+
+-standalone: ${index}
+
+-resolve.effective: active
+
+-runrequires: \
+    osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
+    osgi.identity;filter:='(osgi.identity=org.h2)',\
+    bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app'
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+{% endhighlight %}
+
+
+Add the following plugin inside `<plugins>` section in the file `rest-app/pom.xml`
+
+{% highlight xml %}
+<plugin>
+    <groupId>biz.aQute.bnd</groupId>
+    <artifactId>bnd-maven-plugin</artifactId>
+</plugin>
+{% endhighlight %}
+
 ### Dependencies
-Add the following dependencies inside `<dependencies>` section of the file `rest-app/pom.xml`
+
+By adding the following dependencies inside the `<dependencies>` section of the file `rest-app/pom.xml`, we added the necessary Capabilities to the `rest-app`'s respository.
 
 {% highlight xml %}
 <dependency>
@@ -490,40 +526,11 @@ Add the following dependencies inside `<dependencies>` section of the file `rest
 </dependency>
 {% endhighlight %}
 
-### Define Runtime Entity
-Overwrite the contents of `rest-app/rest-app.bndrun` with:
-
-`rest-app/rest-app.bndrun`
-{% highlight shell-session %}
-index: target/index.xml
-
--standalone: ${index}
-
--resolve.effective: active
-
--runrequires: \
-    osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
-    osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
-    osgi.identity;filter:='(osgi.identity=org.h2)',\
-    bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app'
--runfw: org.apache.felix.framework
--runee: JavaSE-1.8
-{% endhighlight %}
-
-Add the following plugin inside `<plugins>` section in the file `rest-app/pom.xml`
-
-{% highlight xml %}
-<plugin>
-    <groupId>biz.aQute.bnd</groupId>
-    <artifactId>bnd-maven-plugin</artifactId>
-</plugin>
-{% endhighlight %}
-
 ### Runtime Configuration
 
-The microservice will be configured using the new R7 Configurator mechanism, and 
+Finally, our Microservice will be configured using the new R7 Configurator mechanism.
 
-The [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetype) enables our microservice application to use the new R7 Configurator mechanism: see `rest-app/src/main/java/config/package-info.java`. 
+The [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetype) enables this via `rest-app/src/main/java/config/package-info.java`. 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info-config" aria-expanded="false" aria-controls="package-info-config">
     package-info.java
