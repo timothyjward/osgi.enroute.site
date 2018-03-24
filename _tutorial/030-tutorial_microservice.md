@@ -12,13 +12,14 @@ This tutorial is Maven and command-line based; the reader may follow this verbat
 
 ## Introduction
 
-This Tutorial walks through the creation of REST microservice comprised of the following structural elements:
+Using the [enRoute ArcheTypes](017-enRoute-ArcheTypes.html) this tutorial walks through the creation of REST microservice comprised of the following structural elements:
 * An API module
 * A DAO Implementation module
 * A Rest Service Implementation module 
 * The Composite Application module
 
-each of these _Implementation_ and _Composite Application_ Modules having a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).  
+Note that each _Implementation_ and _Composite Application_ module that we will create has a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).
+{: .note } 
 
 We start by creating the required project skeleton.
 
@@ -108,7 +109,9 @@ Now create the following two files:
 `dao-api` has no dependencies.
 
 ### Visibility
-`dao-api` is an API package that is shared between bundles: e.g. `RestComponentImpl`, `PersonDaoImpl` & `AddressDaoImpl` all import `dao-api`. This sharing information is conveyed by the file `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` which was automatically generated for you: 
+`dao-api` is an API package that is shared between bundles: e.g. `RestComponentImpl`, `PersonDaoImpl` & `AddressDaoImpl` all import `dao-api`. 
+
+This sharing information is conveyed by the file `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` which was automatically generated for you: 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dao" aria-expanded="false" aria-controls="package-info-dao">
     package-info.java
@@ -129,7 +132,7 @@ For more information on `package-info.java` see [Semantic Versioning](../FAQ/210
 
 Data transfer between the components is achieved via the use of [Data Transfer Objects (DTO's)](../FAQ/420--dtos.html).
 
-To achieve this create the directory `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto` into which we place the following three files:
+To achieve this create the following three files:
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
 <p>
@@ -198,7 +201,7 @@ with the following values:
     package: org.osgi.enroute.examples.microservice.dao.impl
     Y: :
 
-Place the following four files into the directory `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl`:
+Now create the following four files:
 
 `dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java`
 <p>
@@ -309,7 +312,7 @@ with the following values:
     package: org.osgi.enroute.examples.microservice.rest
     Y: :
 
-Copy the following two files into the directory `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest`: 
+Now create the following two files: 
 
 `rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java`
 <p>
@@ -345,7 +348,7 @@ Copy the following two files into the directory `rest-service/src/main/java/org/
 </div>
 
 
-We now create the directory `rest-service/src/main/resources/static/main/html` in which we create the following file:
+Create the directory `rest-service/src/main/resources/static/main/html` and added the following file:
 
 `rest-service/src/main/resources/static/main/html/person.html`
 <p>
@@ -363,7 +366,7 @@ We now create the directory `rest-service/src/main/resources/static/main/html` i
 </div>
 </div>
 
-And we create the `rest-service/src/main/resources/static/css` directory for the `style.css` file
+And also the `rest-service/src/main/resources/static/css` directory for the following `style.css` file
 
 `rest-service/src/main/resources/static/css/style.css`
 <p>
@@ -381,7 +384,7 @@ And we create the `rest-service/src/main/resources/static/css` directory for the
 </div>
 </div>
 
-In directory `rest-service/src/main/resources/static` add the following `index.html`
+Finally, place the following `index.html` file in directory `rest-service/src/main/resources/static`
 
 `rest-service/src/main/resources/static/index.html`
 <p>
@@ -399,7 +402,7 @@ In directory `rest-service/src/main/resources/static` add the following `index.h
 </div>
 </div>
 
-Finally create the directory `rest-service/src/main/resources/static/main/img` into which save the following icon with the name `enroute-logo-64.png`
+and create the directory `rest-service/src/main/resources/static/main/img` into which save the following icon with the name `enroute-logo-64.png`
 
 ![enRoute logo](img/enroute-logo-64.png) 
 
@@ -518,9 +521,9 @@ Add the following plugin inside `<plugins>` section in the file `rest-app/pom.xm
 
 ### Runtime Configuration
 
-In the directory `rest-app/src/main/java/config` check that `package-info` is as follows: 
+The microservice will be configured using the new R7 Configurator mechanism, and 
 
-`rest-app/src/main/java/config/package-info.java`
+The [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetype) enables our microservice application to use the new R7 Configurator mechanism: see `rest-app/src/main/java/config/package-info.java`. 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info-config" aria-expanded="false" aria-controls="package-info-config">
     package-info.java
@@ -535,8 +538,7 @@ In the directory `rest-app/src/main/java/config` check that `package-info` is as
 </div>
 </div>
 
-
-Also overwrite the contents of `rest-app/src/main/resources/OSGI-INF/configurator/configuration.json` with the following:
+All that is required is to pass in the appropriate configuration by overwrite the contents of `rest-app/src/main/resources/OSGI-INF/configurator/configuration.json` with the following:
 
  <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#configuration" aria-expanded="false" aria-controls="configuration">
