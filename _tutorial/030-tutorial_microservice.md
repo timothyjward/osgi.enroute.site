@@ -24,7 +24,7 @@ We start by creating the required project skeleton.
 
 ## Creating the Project
 
-In your Project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project:
+Using the [bare-project Archetype](017-enRoute-ArcheTypes.html#the-project-archetype), in your project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project:
 
 {% highlight shell-session %}
 $ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project-bare -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -51,7 +51,7 @@ We now create the required modules.
 
 ## The DAO API 
 
-Change directory into the newly created `microservice` project directory and create the `api` module
+Change directory into the newly created `microservice` project directory; then create the `api` module using the [api Archetype](017-enRoute-ArcheTypes.html#the-api-archetype) as shown:
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=api -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -179,7 +179,7 @@ To achieve this create the directory `dao-api/src/main/java/org/osgi/enroute/exa
 
 ## The DAO implementation 
 
-In the `microservice` project director now create the `impl` module
+In the `microservice` project director now create the `impl` module using the [ds-component Archetype](017-enRoute-ArcheTypes.html#the-ds-component-archetype):
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
@@ -290,13 +290,13 @@ Implmentations should **NOT** be shared; hence no `package-info.java` file.
 
 ## The REST Service
 
-In the `microservice` project director create the `rest-component` module
+In the `microservice` project director now create the `rest-component` module using the [rest-component Archetype](017-enRoute-ArcheTypes.html#the-rest-component-archetype):
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=rest-component -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-With the following values:
+with the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-service
@@ -433,13 +433,15 @@ Implmentations should **NOT** be shared; hence no `package-info.java` file.
 
 ## The Composite Application 
 
-In the `microservice` project directory create the `application` module
+We now pull these Modules together to create the Composite Application.
+ 
+In the `microservice` project directory create the `application` module using the [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetype):
 
 {% highlight shell-session %}
 $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
 {% endhighlight %}
 
-With the following values:
+with the following values:
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-app
@@ -458,6 +460,7 @@ With the following values:
     impl-version: 0.0.1-SNAPSHOT
     Y: :
 
+### Dependencies
 Add the following dependencies inside `<dependencies>` section of the file `rest-app/pom.xml`
 
 {% highlight xml %}
@@ -484,7 +487,27 @@ Add the following dependencies inside `<dependencies>` section of the file `rest
 </dependency>
 {% endhighlight %}
 
-Also add the following plugin inside `<plugins>` section in the file `rest-app/pom.xml`
+### Define Runtime Entity
+Overwrite the contents of `rest-app/rest-app.bndrun` with:
+
+`rest-app/rest-app.bndrun`
+{% highlight shell-session %}
+index: target/index.xml
+
+-standalone: ${index}
+
+-resolve.effective: active
+
+-runrequires: \
+    osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
+    osgi.identity;filter:='(osgi.identity=org.h2)',\
+    bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app'
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+{% endhighlight %}
+
+Add the following plugin inside `<plugins>` section in the file `rest-app/pom.xml`
 
 {% highlight xml %}
 <plugin>
@@ -492,6 +515,8 @@ Also add the following plugin inside `<plugins>` section in the file `rest-app/p
     <artifactId>bnd-maven-plugin</artifactId>
 </plugin>
 {% endhighlight %}
+
+### Runtime Configuration
 
 In the directory `rest-app/src/main/java/config` check that `package-info` is as follows: 
 
@@ -528,24 +553,6 @@ Also overwrite the contents of `rest-app/src/main/resources/OSGI-INF/configurato
 </div>
 </div>
 
-Finally overwrite the contents of `rest-app/rest-app.bndrun` with:
-
-`rest-app/rest-app.bndrun`
-{% highlight shell-session %}
-index: target/index.xml
- 
--standalone: ${index}
- 
--resolve.effective: active
- 
--runrequires: \
-    osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
-    osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
-    osgi.identity;filter:='(osgi.identity=org.h2)',\
-    bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app'
--runfw: org.apache.felix.framework
--runee: JavaSE-1.8
-{% endhighlight %}
 
 ## Build & Run
 

@@ -53,7 +53,7 @@ The api archetype is used to build an API bundle for your enRoute application. T
 
 ### The ds-component Archetype 
 
-The ds-component archetype is used to create an OSGi service using [Declarative Services](../FAQ/300-declarative-services.html). This provides a simple programming model for referencing services from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
+The ds-component archetype is used to create an OSGi service using [Declarative Services](../FAQ/300-declarative-services.html). This provides a simple programming model for referencing [services](../FAQ/400-patterns.html#services) from the OSGi service registry and then publishing your implementation as a service. Declarative Services uses annotations to define components and injection sites, and these annotations are ready for use in the basic component.
 
 ### The rest-component Archetype
 
@@ -69,7 +69,7 @@ The application archetype is different from the other enRoute modules, in that i
 
 These requirements are provided in a bndrun file, which defines how the OSGi application should be launched, and what should be contained in it. This bndrun can be resolved to turn its requirements into a list of bundles to run, and then exported into a runnable jar file.
 
-In addition to gathering requirements an application module also defines the configuration that will be supplied to the application. This configuration is supplied as a bundle which gets deployed into the application framework and is processed by an OSGi configurator implementation.
+In addition to gathering requirements an application module also defines the configuration that will be supplied to the application. This configuration is supplied as a bundle which gets deployed into the application framework and is processed by an [OSGi configurator implementation](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/service.configurator.html).
 
 ## Project Setup For SNAPSHOT Archetypes
 
