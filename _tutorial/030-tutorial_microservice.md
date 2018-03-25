@@ -450,7 +450,7 @@ with the following values:
     Define value for property 'artifactId': rest-app
     Define value for property 'version' 1.0-SNAPSHOT: : 0.0.1-SNAPSHOT
     Define value for property 'package' org.osgi.enroute.examples.microservice: :
-    Define value for property 'impl-artifactId': dao-impl
+    Define value for property 'impl-artifactId': rest-service 
     Define value for property 'impl-groupId' org.osgi.enroute.examples.microservice: :
     Define value for property 'impl-version' 0.0.1-SNAPSHOT: :
     Confirm properties configuration:
@@ -489,28 +489,14 @@ index: target/index.xml
 {% endhighlight %}
 
 
-Add the following plugin inside `<plugins>` section in the file `rest-app/pom.xml`
-
-{% highlight xml %}
-<plugin>
-    <groupId>biz.aQute.bnd</groupId>
-    <artifactId>bnd-maven-plugin</artifactId>
-</plugin>
-{% endhighlight %}
-
 ### Dependencies
 
 By adding the following dependencies inside the `<dependencies>` section of the file `rest-app/pom.xml`, we added the necessary Capabilities to the `rest-app`'s respository.
 
 {% highlight xml %}
 <dependency>
-    <groupId>org.osgi.enroute</groupId>
-    <artifactId>osgi-api</artifactId>
-    <type>pom</type>
-</dependency>
-<dependency>
     <groupId>org.osgi.enroute.examples.microservice</groupId>
-    <artifactId>rest-service</artifactId>
+    <artifactId>dao-impl</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 <dependency>
