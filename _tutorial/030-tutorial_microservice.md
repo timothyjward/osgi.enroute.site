@@ -132,23 +132,7 @@ For more information on `package-info.java` see [Semantic Versioning](../FAQ/210
 
 Data transfer between the components is achieved via the use of [Data Transfer Objects (DTO's)](../FAQ/420--dtos.html).
 
-To achieve this create the following three files:
-
-`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dto" aria-expanded="false" aria-controls="package-info-dto">
-    package-info.java
-  </a>
-</p>
-<div class="collapse" id="package-info-dto">
-  <div class="card card-block">
-
-{% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java %}
-{% endhighlight %}
-</div>
-</div>
-
+To achieve this create the following two files:
 
 `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/PersonDTO.java`
 <p>
@@ -179,6 +163,26 @@ To achieve this create the following three files:
 {% endhighlight %} 
 </div>
 </div>
+
+and again, we advertise this Capability by creating the following `package-info.java` file: 
+
+`dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dto" aria-expanded="false" aria-controls="package-info-dto">
+    package-info.java
+  </a>
+</p>
+<div class="collapse" id="package-info-dto">
+  <div class="card card-block">
+
+{% highlight java %}
+{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java %}
+{% endhighlight %}
+</div>
+</div>
+
+
+
 
 ## The DAO implementation 
 
@@ -549,7 +553,7 @@ All that is required is to pass in the appropriate configuration by overwrite th
 </div>
 
 
-## Build & Run
+## Build
 
 Build the modules and install in local maven repository from the top level project directory
 
@@ -566,6 +570,53 @@ And generate the runnable jar from the top level project directory
 
     mvn package
 
+If we re-inspect `rest-app/rest-app.bndrun` we now see that this explicitly references all the necessary OSGi bundles, and their semantic versions, required for our OSGi runtime to assemble and run our highly modular transational REST service!
+
+{% highlight shell-session %}
+index: target/index.xml
+
+-standalone: ${index}
+
+-resolve.effective: active
+
+-runrequires: \
+    osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
+    osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
+    osgi.identity;filter:='(osgi.identity=org.h2)',\
+    bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app'
+-runfw: org.apache.felix.framework
+-runee: JavaSE-1.8
+-runbundles: \
+        ch.qos.logback.classic;version='[1.2.3,1.2.4)',\
+        ch.qos.logback.core;version='[1.2.3,1.2.4)',\
+        org.apache.aries.javax.annotation-api;version='[0.0.1,0.0.2)',\
+        org.apache.aries.javax.jax.rs-api;version='[0.0.1,0.0.2)',\
+        org.apache.aries.jax.rs.whiteboard;version='[0.0.1,0.0.2)',\
+        org.apache.felix.configadmin;version='[1.9.0,1.9.1)',\
+        org.apache.felix.configurator;version='[0.0.1,0.0.2)',\
+        org.apache.felix.http.jetty;version='[3.4.7,3.4.8)',\
+        org.apache.felix.http.servlet-api;version='[1.1.2,1.1.3)',\
+        org.apache.felix.scr;version='[2.1.0,2.1.1)',\
+        org.apache.johnzon.core;version='[1.1.0,1.1.1)',\
+        org.apache.servicemix.specs.json-api-1.1;version='[2.9.0,2.9.1)',\
+        org.h2;version='[1.4.196,1.4.197)',\
+        org.osgi.enroute.examples.microservice.dao-api;version='[0.0.1,0.0.2)',\
+        org.osgi.enroute.examples.microservice.dao-impl;version='[0.0.1,0.0.2)',\
+        org.osgi.enroute.examples.microservice.rest-app;version='[0.0.1,0.0.2)',\
+        org.osgi.enroute.examples.microservice.rest-service;version='[0.0.1,0.0.2)',\
+        org.osgi.service.jaxrs;version='[1.0.0,1.0.1)',\
+        org.osgi.util.converter;version='[1.0.0,1.0.1)',\
+        org.osgi.util.function;version='[1.1.0,1.1.1)',\
+        org.osgi.util.promise;version='[1.1.0,1.1.1)',\
+        slf4j.api;version='[1.7.25,1.7.26)',\
+        tx-control-provider-jdbc-xa;version='[1.0.0,1.0.1)',\
+        tx-control-service-xa;version='[1.0.0,1.0.1)'
+{% endhighlight %}
+
+
+
+## Run 
+
 To run the resultant OSGi based REST Microservice change back to the top level project directory and run
 
     java -jar rest-app/target/rest-app.jar
@@ -575,5 +626,4 @@ The REST service can be seen by pointing a browser to [http://localhost:8080/mic
 ![MicroService demo](img/MicroService.png){: height="450px" width="450px"}
 
 Stop the application using Ctrl+C in the console.
-
 
