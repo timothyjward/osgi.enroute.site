@@ -22,17 +22,16 @@ Download the [enroute examples](https://github.com/timothyjward/osgi.enroute/tre
  
 Build the Application with the following commands:
 
-{% highlight shell-session %}
-$ mvn bnd-resolver:resolve
-$ mvn package 
-{% endhighlight %}
+    $ mvn bnd-resolver:resolve
+    $ mvn package
+{: .shell } 
 
 ### Running the example
 
 We now have a runnable artifact which can be started with the command 
-{% highlight shell-session %}
-$ java -jar app/target/app.jar
-{% endhighlight %}
+
+    $ java -jar app/target/app.jar
+{: .shell }
 
 To test that the application is running visit the [quickstart](http://localhost:8080/quickstart/index.html) application URL for a friendly greeting,
 
@@ -53,8 +52,8 @@ It is assumed that you have the required [environment](015-Prerequisite.html#req
 
 First issue the command to create the project template
 
-    mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project -DarchetypeVersion=7.0.0-SNAPSHOT
-
+    $ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 Fillng the the project details with appropriate values 
 
@@ -68,6 +67,7 @@ Fillng the the project details with appropriate values
     version: 1.0-SNAPSHOT
     package: com.acme.example
     Y: : 
+{: .shell }
 
 If you're using an IDE then this would be a good time to import the generated maven projects
 {: .note }
@@ -127,9 +127,9 @@ It's now time to build the implementation project.
  <div class="tab-content">
   <div markdown="1" role="tabpanel" class="tab-pane active" id="impl-build-cli">
 From the `quickstart/impl` project we now build the impl bundle.
-{% highlight shell-session %}
-$ mvn install
-{% endhighlight %}
+
+    $ mvn install
+{: .shell }
       
 Here, we use the `install` goal to make sure that the built artifact is available to other projects in later steps
 
@@ -177,9 +177,9 @@ The `runbundles` are automatically calculated for us via the process of [resolvi
   <div markdown="1" role="tabpanel" class="tab-pane active" id="resolve-cli">
 From the `quickstart/app` project we now resolve the application using the bnd-resolver-maven-plugin
 
-{% highlight shell-session %}
-$ mvn bnd-resolver:resolve
-{% endhighlight %}
+    $ mvn bnd-resolver:resolve
+{: .shell }
+
   </div>
   <div markdown="1" role="tabpanel" class="tab-pane" id="resolve-eclipse">
 In the `app` maven module, open the `app.bndrun` to display the `Bndtools Resolve` screen. Here we can see that the implementation bundle is added to the run requirements.
@@ -240,9 +240,8 @@ Note that in this version of `quickstart` only the REST endpoint will be availab
   <div markdown="1" role="tabpanel" class="tab-pane active" id="run-cli">
 Now that the initial development is done we're ready to build and package the whole application by running the following command in the project root
       
-{% highlight shell-session %}
-$ mvn package
-{% endhighlight %}
+    $ mvn package
+{: .shell }
 
 Your version of `quickstart` may now be started as described [above](020-tutorial_qs.html#running-the-example); the REST endpoint at [http://localhost:8080/rest/upper/lower](http://localhost:8080/rest/upper/lower).
   </div>

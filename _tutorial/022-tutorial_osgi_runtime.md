@@ -63,17 +63,15 @@ to `<bndrun>debug.bndrun</bndrun>` as shown
 
 Now re-build your `quickstart` application
 
-{% highlight shell-session %}
-$ mvn install
-$ mvn bnd-resolver:resolve
-$ mvn package 
-{% endhighlight %}
+    $ mvn install
+    $ mvn bnd-resolver:resolve
+    $ mvn package 
+{: .shell }
 
 and run the new debug version.
 
-{% highlight shell-session %}
-$ java -jar app/target/debug.jar 
-{% endhighlight %}
+    $ java -jar app/target/debug.jar
+{: .shell } 
 
 
 ## Gogo & the OSGi runtime

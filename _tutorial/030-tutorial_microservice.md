@@ -27,9 +27,8 @@ We start by creating the required project skeleton.
 
 Using the [bare-project Archetype](017-enRoute-ArcheTypes.html#the-project-archetype), in your project root directory (i.e. the directory containing your [`settings.xml` configuration](017-enRoute-ArcheTypes.html#project-setup-for-snapshot-archetypes)), create the **microservice** project:
 
-{% highlight shell-session %}
-$ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project-bare -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+    $ mvn -s settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=project-bare -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 with the following values:
 
@@ -43,6 +42,7 @@ with the following values:
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples
     Y: :
+{: .shell }
 
 **Note** - if you use alternative `groupId`, `artifactId` values remember to update the `packageinfo` and `import` statements in the files used throughout the rest of this tutorial.
 {: .note }
@@ -54,9 +54,8 @@ We now create the required modules.
 
 Change directory into the newly created `microservice` project directory; then create the `api` module using the [api Archetype](017-enRoute-ArcheTypes.html#the-api-archetype) as shown:
 
-{% highlight shell-session %}
-$ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=api -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+    $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=api -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 with the following values:
 
@@ -70,7 +69,7 @@ with the following values:
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples.microservice.dao 
     Y: :
-
+{: .shell }
 
 Now create the following two files:
 
@@ -109,9 +108,7 @@ Now create the following two files:
 `dao-api` has no dependencies.
 
 ### Visibility
-`dao-api` is an API package that is shared between bundles: e.g. `RestComponentImpl`, `PersonDaoImpl` & `AddressDaoImpl` all import `dao-api`. 
-
-This sharing information is conveyed by the file `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java` which was automatically generated for you: 
+`dao-api` is an API package which is imported by `RestComponentImpl`, `PersonDaoImpl` & `AddressDaoImpl`; hence it must must be exported. This is indicated by the automatically generated file `dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java`: 
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info-dao" aria-expanded="false" aria-controls="package-info-dao">
     package-info.java
@@ -126,7 +123,7 @@ This sharing information is conveyed by the file `dao-api/src/main/java/org/osgi
   </div>
 </div>
 
-For more information on `package-info.java` see [Semantic Versioning](../FAQ/210-semantic_versioning.html).
+For further detail see [Semantic Versioning](../FAQ/210-semantic_versioning.html).
 
 ### Defining the DTO 
 
@@ -188,9 +185,8 @@ and again, we advertise this Capability by creating the following `package-info.
 
 In the `microservice` project director now create the `impl` module using the [ds-component Archetype](017-enRoute-ArcheTypes.html#the-ds-component-archetype):
 
-{% highlight shell-session %}
-$ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+    $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 with the following values:
 
@@ -204,6 +200,7 @@ with the following values:
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples.microservice.dao.impl
     Y: :
+{: .shell }
 
 Now create the following four files:
 
@@ -299,9 +296,8 @@ Implmentations should **NOT** be shared; hence no `package-info.java` file.
 
 In the `microservice` project director now create the `rest-component` module using the [rest-component Archetype](017-enRoute-ArcheTypes.html#the-rest-component-archetype):
 
-{% highlight shell-session %}
-$ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=rest-component -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+    $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=rest-component -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 with the following values:
 
@@ -315,6 +311,7 @@ with the following values:
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples.microservice.rest
     Y: :
+{: .shell }
 
 Now create the following two files: 
 
@@ -444,9 +441,8 @@ We now pull these Modules together to create the Composite Application.
  
 In the `microservice` project directory create the `application` module using the [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetype):
 
-{% highlight shell-session %}
-$ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+    $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 with the following values:
 
@@ -466,15 +462,16 @@ with the following values:
     impl-groupId: org.osgi.enroute.examples.microservice
     impl-version: 0.0.1-SNAPSHOT
     Y: :
+{: .shell }
 
 ### Define Runtime Entity
 
 Our Microservice is composed of the following elements:
 * A rest-service
-* An implementation of JAX-RS
-* A database.
+* An implementation of JAX-RS (org.apache.johnzon.core)
+* An in memory database (H2).
 
-and we express this as runtime Requirements in the `rest-app/rest-app.bndrun` file as follows:
+These dependencies are expressed as runtime Requirements in the `rest-app/rest-app.bndrun` file:
 
 {% highlight shell-session %}
 index: target/index.xml
@@ -558,6 +555,7 @@ All that is required is to pass in the appropriate configuration by overwrite th
 Build the modules and install in local maven repository from the top level project directory
 
     mvn install
+{: .shell }
 
 **Note** - if `rest-app` fails, run the following resolve command and then re-run `mvn install` 
 {: .note }
@@ -565,12 +563,14 @@ Build the modules and install in local maven repository from the top level proje
 We now Generate OSGi™ index with the project dependencies from the top level project directory
 
     mvn bnd-resolver:resolve
+{: .shell }
 
 And generate the runnable jar from the top level project directory
 
     mvn package
+{: .shell }
 
-If we re-inspect `rest-app/rest-app.bndrun` we now see that this explicitly references all the necessary OSGi bundles, and their semantic versions, required for our OSGi runtime to assemble and run our highly modular transational REST service!
+Re-inspecting `rest-app/rest-app.bndrun` we can see that this now explicitly references the acceptable version range for each required OSGi bundle. At runtime the OSGi framework resolves these _requirements_ against the _capabilities_ in the specified target repository: i.e. `target/index.xml`.  
 
 {% highlight shell-session %}
 index: target/index.xml
@@ -614,16 +614,57 @@ index: target/index.xml
 {% endhighlight %}
 
 
-
 ## Run 
 
-To run the resultant OSGi based REST Microservice change back to the top level project directory and run
+To dynamically assembled and run the resultant REST Microservice; simply change back to the top level project directory and type the command: 
 
     java -jar rest-app/target/rest-app.jar
+{: .shell }
 
 The REST service can be seen by pointing a browser to [http://localhost:8080/microservice/index.html](http://localhost:8080/microservice/index.html)
 
 ![MicroService demo](img/MicroService.png){: height="450px" width="450px"}
 
 Stop the application using Ctrl+C in the console.
+
+Finally, if we create and run the [debug version](022-tutorial_osgi_runtime.html) of the Microservice we can see all of the OSGi bundles used in the actual runtime assembly.
+
+    g! lb
+    START LEVEL 1
+       ID|State      |Level|Name
+        0|Active     |    0|System Bundle (5.7.0.SNAPSHOT)|5.7.0.SNAPSHOT
+        1|Active     |    1|Logback Classic Module (1.2.3)|1.2.3
+        2|Active     |    1|Logback Core Module (1.2.3)|1.2.3
+        3|Active     |    1|Apache Aries Javax Annotation API (0.0.1.201711291743)|0.0.1.201711291743
+        4|Active     |    1|Apache Aries JAX-RS Specification API (0.0.1.201803231639)|0.0.1.201803231639
+        5|Active     |    1|Apache Aries JAX-RS Whiteboard (0.0.1.201803231640)|0.0.1.201803231640
+        6|Active     |    1|Apache Commons FileUpload (1.3.2)|1.3.2
+        7|Active     |    1|Apache Commons IO (2.5.0)|2.5.0
+        8|Active     |    1|Apache Felix Configuration Admin Service (1.9.0.SNAPSHOT)|1.9.0.SNAPSHOT
+        9|Active     |    1|Apache Felix Configurer Service (0.0.1.SNAPSHOT)|0.0.1.SNAPSHOT
+       10|Active     |    1|Apache Felix Gogo Command (1.0.2)|1.0.2
+       11|Active     |    1|Apache Felix Gogo Runtime (1.0.10)|1.0.10
+       12|Active     |    1|Apache Felix Gogo Shell (1.0.0)|1.0.0
+       13|Active     |    1|Apache Felix Http Jetty (3.4.7.R7-SNAPSHOT)|3.4.7.R7-SNAPSHOT
+       14|Active     |    1|Apache Felix Servlet API (1.1.2)|1.1.2
+       15|Active     |    1|Apache Felix Inventory (1.0.4)|1.0.4
+       16|Active     |    1|Apache Felix Declarative Services (2.1.0.SNAPSHOT)|2.1.0.SNAPSHOT
+       17|Active     |    1|Apache Felix Web Management Console (4.3.4)|4.3.4
+       18|Active     |    1|Apache Felix Web Console Service Component Runtime/Declarative Services Plugin (2.0.8)|2.0.8
+       19|Active     |    1|Johnzon :: Core (1.1.0)|1.1.0
+       20|Active     |    1|Apache ServiceMix :: Specs :: JSon API 1.1 (2.9.0)|2.9.0
+       21|Active     |    1|H2 Database Engine (1.4.196)|1.4.196
+       22|Active     |    1|dao-api (0.0.1.201803251221)|0.0.1.201803251221
+       23|Active     |    1|dao-impl (0.0.1.201803251221)|0.0.1.201803251221
+       24|Active     |    1|rest-app (0.0.1.201803251650)|0.0.1.201803251650
+       25|Active     |    1|rest-service (0.0.1.201803251221)|0.0.1.201803251221
+       26|Active     |    1|org.osgi:org.osgi.service.jaxrs (1.0.0.201803131808-SNAPSHOT)|1.0.0.201803131808-SNAPSHOT
+       27|Active     |    1|org.osgi:org.osgi.util.converter (1.0.0.201803131810-SNAPSHOT)|1.0.0.201803131810-SNAPSHOT
+       28|Active     |    1|org.osgi:org.osgi.util.function (1.1.0.201803131808-SNAPSHOT)|1.1.0.201803131808-SNAPSHOT
+       29|Active     |    1|org.osgi:org.osgi.util.promise (1.1.0.201803131808-SNAPSHOT)|1.1.0.201803131808-SNAPSHOT
+       30|Active     |    1|osgi.cmpn (4.3.1.201210102024)|4.3.1.201210102024
+       31|Active     |    1|slf4j-api (1.7.25)|1.7.25
+       32|Active     |    1|OSGi Transaction Control JDBC Resource Provider - XA Transactions (1.0.0.201801251821)|1.0.0.201801251821
+       33|Active     |    1|Apache Aries OSGi Transaction Control Service - XA Transactions (1.0.0.201801251821)|1.0.0.201801251821
+{: .shell }
 
