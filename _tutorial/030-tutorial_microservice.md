@@ -18,8 +18,7 @@ Using the [enRoute ArcheTypes](017-enRoute-ArcheTypes.html) this tutorial walks 
 * A Rest Service Implementation module 
 * The Composite Application module
 
-Note that each _Implementation_ and _Composite Application_ module that we will create has a corresponding Index POM: i.e. a [dedicated curated repository](../FAQ/200-resolving.html#managing-repositories).
-{: .note } 
+with each module having a POM that describes its dependencies.
 
 We start by creating the required project skeleton.
 
@@ -409,7 +408,7 @@ and create the directory `rest-service/src/main/resources/static/main/img` into 
 
 ### Dependencies
 
-As the `rest-service` module has dependencies on the `dao-api` and `json-api` these dependencies are added to the `<dependencies>` section in `rest-service/pom.xml`. A `JAX-RS` implementation dependency is also included so that the `rest-service` can be unit tested. 
+As the `rest-service` module has dependencies on the `dao-api` and `json-api` these dependencies are added to the `<dependencies>` section in `rest-service/pom.xml`. A `JSON-P` implementation dependency is also included so that the `rest-service` can be unit tested. 
 
 {% highlight xml %}
 <dependency>
@@ -468,7 +467,7 @@ with the following values:
 
 Our Microservice is composed of the following elements:
 * A rest-service
-* An implementation of JAX-RS (org.apache.johnzon.core)
+* An implementation of JSON-P (org.apache.johnzon.core)
 * An in memory database (H2).
 
 These dependencies are expressed as runtime Requirements in the `rest-app/rest-app.bndrun` file:
@@ -560,12 +559,12 @@ Build the modules and install in local maven repository from the top level proje
 **Note** - if `rest-app` fails, run the following resolve command and then re-run `mvn install` 
 {: .note }
 
-We now Generate OSGi™ index with the project dependencies from the top level project directory
+We now generate the required OSGi indexes from the project dependencies.
 
     mvn bnd-resolver:resolve
 {: .shell }
 
-And generate the runnable jar from the top level project directory
+And ifinally generate the runnable jar from the top level project directory
 
     mvn package
 {: .shell }

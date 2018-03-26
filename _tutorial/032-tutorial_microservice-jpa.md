@@ -10,11 +10,12 @@ sponsor: OSGi™ Alliance
 
 The previous Microservices example which uses `jdbc` provides the start-point for this tutorial.
 
+## Creating the JPA dao-impl
+ 
 In the `microservice` project root directory, create the `jpa` project.
 
-{% highlight shell-session %}
-mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
-{% endhighlight %}
+      mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=ds-component -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
 input the following values:
 
@@ -27,38 +28,8 @@ input the following values:
     artifactId: dao-impl-jpa
     version: 0.0.1-SNAPSHOT
     package: org.osgi.enroute.examples.microservice
-    Y: :  
-
-Edit `pom.xml` to add the following dependencies in the `<dependencies>` section:
-
-{% highlight xml %}
-        <dependency>
-            <groupId>org.osgi.enroute</groupId>
-            <artifactId>enterprise-api</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi.enroute.examples.microservice</groupId>
-            <artifactId>dao-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-{% endhighlight %}
-
-Add the following file `examples/microservice/dao-impl-jpa/bnd.bnd`
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#bnd" aria-expanded="false" aria-controls="bnd">
-    bnd.bnd 
-  </a>
-</p>
-<div class="collapse" id="bnd">
-  <div class="card card-block">
-{% highlight shell tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/bnd.bnd %}
-{% endhighlight %}
-
-  </div>
-</div>
-
+    Y: : 
+{: .shell } 
 
 
 Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/AddressDaoImpl.java`
@@ -91,6 +62,8 @@ Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osg
   </div>
 </div>
 
+### Creating the JPA Entity
+
 Create the directory `examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities`
 
 Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/AddressEntity.java`
@@ -119,22 +92,6 @@ Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osg
   <div class="card card-block">
 {% highlight java tabsize=4 %}
 {% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/PersonEntity.java %}
-{% endhighlight %}
-
-  </div>
-</div>
-
-
-Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java`
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#package-info" aria-expanded="false" aria-controls="package-info">
-    package-info.java
-  </a>
-</p>
-<div class="collapse" id="package-info">
-  <div class="card card-block">
-{% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java %}
 {% endhighlight %}
 
   </div>
@@ -173,10 +130,62 @@ Add the following file to `examples/microservice/dao-impl-jpa/src/main/java/org/
 </div>
 
 
-Create the alternative jpa application project
-{% highlight shell-session %}
-$ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
+Add the following file `examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#package-info" aria-expanded="false" aria-controls="package-info">
+    package-info.java
+  </a>
+</p>
+<div class="collapse" id="package-info">
+  <div class="card card-block">
+{% highlight java tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java %}
 {% endhighlight %}
+
+  </div>
+</div>
+
+
+Add the following file `examples/microservice/dao-impl-jpa/bnd.bnd`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#bnd" aria-expanded="false" aria-controls="bnd">
+    bnd.bnd
+  </a>
+</p>
+<div class="collapse" id="bnd">
+  <div class="card card-block">
+{% highlight shell tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/bnd.bnd %}
+{% endhighlight %}
+
+  </div>
+</div>
+
+
+### Dependencies
+
+Edit `pom.xml` to add the following dependencies in the `<dependencies>` section:
+
+{% highlight xml %}
+        <dependency>
+            <groupId>org.osgi.enroute</groupId>
+            <artifactId>enterprise-api</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi.enroute.examples.microservice</groupId>
+            <artifactId>dao-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+{% endhighlight %}
+
+
+## The JPA Composite Application 
+
+Create the alternative jpa application project
+
+     $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.archetype -DarchetypeArtifactId=application -DarchetypeVersion=7.0.0-SNAPSHOT
+{: .shell }
 
     Define value for property 'groupId': org.osgi.enroute.examples.microservice
     Define value for property 'artifactId': rest-app-jpa
@@ -194,6 +203,34 @@ $ mvn -s ../settings.xml archetype:generate -DarchetypeGroupId=org.osgi.enroute.
     impl-groupId: org.osgi.enroute.examples.microservice
     impl-version: 0.0.1-SNAPSHOT
     Y: : 
+{: .shell }
+
+
+### Define Runtime Entity
+
+Add the following sections to `rest-app-jpa.bndrun`
+
+    -resolve.effective: active
+
+    -runpath: org.jboss.spec.javax.transaction.jboss-transaction-api_1.2_spec;version=1.0.1.Final
+
+    -runsystempackages: \
+      javax.transaction;version=1.2.0,\
+      javax.transaction.xa;version=1.2.0,\
+      javax.xml.stream;version=1.0.0,\
+      javax.xml.stream.events;version=1.0.0,\
+      javax.xml.stream.util;version=1.0.0 
+
+Edit the following section in `res-app-jpa.bndrun`:
+
+    -runrequires: \
+        osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
+        osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
+        osgi.identity;filter:='(osgi.identity=org.h2)',\
+        bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app-jpa'
+
+
+### Dependencies
 
 Edit `pom.xml` to add the following dependencies in the `<dependencies>` section:
 
@@ -231,26 +268,8 @@ Edit `pom.xml` to add the following dependencies in the `<dependencies>` section
         </dependency>
 {% endhighlight %}
 
-Add the following sections to `rest-app-jpa.bndrun`
 
-    -resolve.effective: active
-
-    -runpath: org.jboss.spec.javax.transaction.jboss-transaction-api_1.2_spec;version=1.0.1.Final
-
-    -runsystempackages: \
-      javax.transaction;version=1.2.0,\
-      javax.transaction.xa;version=1.2.0,\
-      javax.xml.stream;version=1.0.0,\
-      javax.xml.stream.events;version=1.0.0,\
-      javax.xml.stream.util;version=1.0.0 
-
-Edit the following section in `res-app-jpa.bndrun`:
-
-    -runrequires: \
-        osgi.identity;filter:='(osgi.identity=org.osgi.enroute.examples.microservice.rest-service)',\
-        osgi.identity;filter:='(osgi.identity=org.apache.johnzon.core)',\
-        osgi.identity;filter:='(osgi.identity=org.h2)',\
-        bnd.identity;version='0.0.1.201801031655';id='org.osgi.enroute.examples.microservice.rest-app-jpa'
+### Runtime Configuration
 
 Add the following configuration file `examples/microservice/rest-app-jpa/sec/main/resources/OSGI-INF/congiguratior/configuration.json`:
 <p>
