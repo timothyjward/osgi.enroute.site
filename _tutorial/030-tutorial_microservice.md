@@ -564,7 +564,7 @@ We now generate the required OSGi indexes from the project dependencies.
     mvn bnd-resolver:resolve
 {: .shell }
 
-And ifinally generate the runnable jar from the top level project directory
+And finally generate the runnable jar from the top level project directory
 
     mvn package
 {: .shell }

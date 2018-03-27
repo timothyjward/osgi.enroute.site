@@ -15,7 +15,7 @@ In this tutorial we'll modify the Microservice to switch the data-layer from a J
 **Note** - because of the use of DTO's, OSGi allows us, via setting one property, to seperate the data-layer and rest-services layers of our Microservice across a local IP local network using secure low latency [Remote Services](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/service.remoteservices.html).
 {: .note }   
 
-## A JPA version of dao-impl
+## A JPA implementation 
  
 In the `microservice` project root directory, create the `jpa` project.
 
@@ -67,6 +67,24 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
   </div>
 </div>
 
+
+To address a hibernate bug we need to add the following `dao-impl-jpa/bnd.bnd`file
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#bnd" aria-expanded="false" aria-controls="bnd">
+    bnd.bnd
+  </a>
+</p>
+<div class="collapse" id="bnd">
+  <div class="card card-block">
+{% highlight shell tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/bnd.bnd %}
+{% endhighlight %}
+
+  </div>
+</div>
+
+**Note** - it is rare to declare an `Import-Package` when using [bnd](../FAQ/520-bnd.html). As in this case, this is only usually needed to work around a bug.
+
 ### The JPA Entities
 
 Create the directory `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities`
@@ -102,40 +120,7 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
   </div>
 </div>
 
-
-Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/persistence.xml`
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#persistence" aria-expanded="false" aria-controls="persistence">
-    persistence.xml 
-  </a>
-</p>
-<div class="collapse" id="persistence">
-  <div class="card card-block">
-{% highlight xml tabsize=4 %}
-{% remote_file_content  https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/persistence.xml%}
-{% endhighlight %}
-
-  </div>
-</div>
-
-
-Add the following file to `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/tables.sql`
-<p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-   tables.sql 
-  </a>
-</p>
-<div class="collapse" id="tables">
-  <div class="card card-block">
-{% highlight sql tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/tables.sql%}
-{% endhighlight %}
-
-  </div>
-</div>
-
-
-Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java`
+The resultant persistence bundle has a Requirement for a JPA service extender. Hence we add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java`
 <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#package-info" aria-expanded="false" aria-controls="package-info">
     package-info.java
@@ -151,20 +136,41 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
 </div>
 
 
-Add the following file `dao-impl-jpa/bnd.bnd`
+## JPA Resources
+
+Create the following JPA resources
+
+`dao-impl-jpa/src/main/resources/META-INF/persistence.xml`
 <p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#bnd" aria-expanded="false" aria-controls="bnd">
-    bnd.bnd
+  <a class="btn btn-primary" data-toggle="collapse" href="#persistence" aria-expanded="false" aria-controls="persistence">
+    persistence.xml
   </a>
 </p>
-<div class="collapse" id="bnd">
+<div class="collapse" id="persistence">
   <div class="card card-block">
-{% highlight shell tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/bnd.bnd %}
+{% highlight xml tabsize=4 %}
+{% remote_file_content  https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/persistence.xml%}
 {% endhighlight %}
 
   </div>
 </div>
+
+
+`dao-impl-jpa/src/main/resources/META-INF/tables.sql`
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+   tables.sql
+  </a>
+</p>
+<div class="collapse" id="tables">
+  <div class="card card-block">
+{% highlight sql tabsize=4 %}
+{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/tables.sql%}
+{% endhighlight %}
+
+  </div>
+</div>
+
 
 
 ### Dependencies
@@ -228,7 +234,13 @@ Add the following sections to `rest-app-jpa/rest-app-jpa.bndrun`
     javax.xml.stream.util;version=1.0.0 
 {% endhighlight %}
 
-Edit the following section in `rest-app-jpa/res-app-jpa.bndrun`:
+The `-runpath` needs to be specified because the JRE has a split package for javax.transaction and a uses constraint between javax.sql and javax.transaction. This breaks JPA unless the JTA API is always provided from outside the OSGi framework.
+{: .note }
+
+The `-runsystempackages` is required because hibernate has versioned imports for JTA, and its dependency dom4j has versioned imports for the STAX API. Both of these should come from the JRE.
+{: .note }
+
+Edit the `-runrequires`  section in `rest-app-jpa/res-app-jpa.bndrun` to include the Composite Application's requirements:
 
 {% highlight shell-session %}
 -runrequires: \
@@ -240,7 +252,7 @@ Edit the following section in `rest-app-jpa/res-app-jpa.bndrun`:
 
 ### Dependencies
 
-Edit `rest-app-jpa/pom.xml` to add the following dependencies in the `<dependencies>` section:
+Edit `rest-app-jpa/pom.xml` adding the following dependencies in the `<dependencies>` section:
 
 {% highlight xml %}
     <dependency>
@@ -294,3 +306,27 @@ Add the following configuration file `rest-app-jpa/src/main/resources/OSGI-INF/c
   </div>
 </div>
 
+
+## Build & Run 
+
+We build and run the examples as in the previous JDBC Microservices example.
+
+
+    mvn install
+{: .shell }
+
+**Note** - if `rest-app` fails, run the following resolve command and then re-run `mvn install` 
+{: .note }
+
+    mvn bnd-resolver:resolve
+{: .shell }
+
+    mvn package
+{: .shell }
+
+    java -jar rest-app/target/rest-app.jar
+{: .shell }
+
+The REST service can be seen by pointing a browser to [http://localhost:8080/microservice/index.html](http://localhost:8080/microservice/index.html)
+
+Stop the application using Ctrl+C in the console.
