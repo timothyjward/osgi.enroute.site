@@ -14,7 +14,7 @@ enRoute is based upon the lastest OSGi Allaince Specifications, see:
 * [R7 Core Specifications](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/index.html)
 * [R7 Compendium Specifications](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/index.html)
 
-Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite: these resources maintained by the OSGi Allaince Members.
+Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite: these resources maintained by the OSGi Alliance Members.
 
 Noteable Reference Implementions include:
 

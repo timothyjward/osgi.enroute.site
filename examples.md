@@ -7,7 +7,7 @@ order: 2
 author: enRoute@paremus.com
 sponsor: OSGi™ Alliance
 ---
-enRoute examples illustrate the use of the more frequently used OSGi™ specifications. These examples will be added to over time: requests, suggestions and contributions are most welcome.
+enRoute examples illustrate the use of the more frequently used OSGi™ specifications. Additional examples will be added over time: requests, suggestions and contributions are most welcome.
 
 All of the examples are available on Github, so clone the workspaces and play!
 

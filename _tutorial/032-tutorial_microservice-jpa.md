@@ -83,7 +83,7 @@ To address a hibernate bug we need to add the following `dao-impl-jpa/bnd.bnd`fi
   </div>
 </div>
 
-**Note** - it is rare to declare an `Import-Package` when using [bnd](../FAQ/520-bnd.html). As in this case, this is only usually needed to work around a bug.
+**Note** - it is rare to declare an `Import-Package` when using [bnd](../FAQ/520-bnd.html#import-package). As in this case, this is only usually needed to work around a bug.
 
 ### The JPA Entities
 
