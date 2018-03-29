@@ -9,14 +9,14 @@ sponsor: OSGi™ Alliance
 
 ## OSGi Specifications
 
-The OSGi Allaince R7 Specifications, upon which enRoute is based, are now viewable online: see,
+enRoute is based upon the lastest OSGi Allaince Specifications, see:
 
 * [R7 Core Specifications](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/index.html)
 * [R7 Compendium Specifications](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/index.html)
 
 Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite: these resources maintained by the OSGi Allaince Members.
 
-These include:
+Noteable Reference Implementions include:
 
 * [Apache Felix](http://felix.apache.org) -
 * [Eclipse Equinox](https://www.eclipse.org/equinox/) -
@@ -25,24 +25,33 @@ These include:
 
 ## R7 Examples 
 
-The following resources provide additional examples and tutorials. Development toolschains may vary to that used by enRoute.
+The following resources provide additional examples and tutorials. Development toolchains may vary relative to that used by enRoute.
 
-* [Paremus Service Fabric](https://docs.paremus.com) - a set of distributed enRoute style examples running upon the Service Fabric: an OSGi Enabled Cloud platform..
+* [Paremus Service Fabric](https://docs.paremus.com) - a set of distributed enRoute style examples running upon the Service Fabric: an OSGi Enabled Cloud platform.
 * B
 * C
 
-## OSGi ToolChains
+
+## OSGi Toolchains
 
 The following resources provide further information and guidance on developing with OSGi. 
 
-* [The bndtools IDE plugin for Eclipse](http://bndtools.org) - 
-* [The bnd Community Site](http://bnd.bndtools.org) -
+* [The bndtools IDE plugin for Eclipse](http://bndtools.org) - The easy, powerful and productive way to develop with OSGi. Based on bnd and Eclipse. 
+* [The bnd Community Site](http://bnd.bndtools.org) - The engine behind popular software development tools that support OSGi.
+
 
 ## OSGi Developer Certification
 
-The [OSGi Alliance Developer Certification Program](https://www.osgi.org/osgi-compliance/developer-certification/) validates the OSGi skills and knowledge of IT professionals; so providing independent referenceable verification. 
+The [OSGi Alliance Developer Certification Program](https://www.osgi.org/osgi-compliance/developer-certification/) validates the OSGi skills and knowledge of IT professionals; so providing an independent referenceable verification.
 
-The current certification program is intended for experienced hands-on OSGi Developers. However, the OSGi Alliance are considering an online enRoute Certification as a first step towards full Certification.
+The current certification program is intended for experienced hands-on OSGi Developers. However, the OSGi Alliance are considering an online enRoute Certification, this as a first step towards full Certification.
+
+
+## OSGi Testimonials
+
+It is increasingly realised that OSGi Specifications provide the modular foundations upon which economically sustainable software solutions can be built. The following testimonials are from Solutions providers (Enterprise, E-Commerce, IoT) that have realised this unique opportunity.
+   
+[OSGi Testimonials](https://www.osgi.org/about-us/testimonials/)
 
 
 ## The 'OSGi Enabled' Ingredient Mark
@@ -52,16 +61,4 @@ The **OSGi Enabled** mark is available to software vendors which wish to demonst
 
 The **OSGi Enabled** [solutions register](https://www.osgi.org/osgi-compliance/osgi-enabled/osgi-enabled-products-and-services/).
 
-
-## OSGi Testimonials
-
-[OSGi Testimonials](https://www.osgi.org/about-us/testimonials/)
- 
-## Active OSGi communities 
-
-The following active sites provide additional OSGi examples and tutorials. 
-
-* A
-* B
-* C
 
