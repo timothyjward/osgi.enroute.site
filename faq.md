@@ -8,6 +8,10 @@ author: enRoute@paremus.com
 sponsor: OSGi™ Alliance 
 ---
 
+This section provides a brief introduction to OSGi, enRoute and important core concepts. 
+
+<br>
+<hr>
 <style>
 table, td, th {    
     text-align: left;
