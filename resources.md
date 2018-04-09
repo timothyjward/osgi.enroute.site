@@ -14,13 +14,7 @@ enRoute is based upon the lastest OSGi Allaince Specifications, see:
 * [R7 Core Specifications](https://osgi.org/hudson/job/build.core/lastSuccessfulBuild/artifact/osgi.specs/generated/html/core/index.html)
 * [R7 Compendium Specifications](https://osgi.org/hudson/job/build.cmpn/lastSuccessfulBuild/artifact/osgi.specs/generated/html/cmpn/index.html)
 
-Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite: these resources maintained by the OSGi Alliance Members.
-
-Noteable Reference Implementions include:
-
-* [Apache Felix](http://felix.apache.org) -
-* [Eclipse Equinox](https://www.eclipse.org/equinox/) -
-* [Apache Aries](http://aries.apache.org) -
+Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite. These resources maintained by the OSGi Alliance Members: [OSGi Specification Implementations](https://en.wikipedia.org/wiki/OSGi_Specification_Implementations) lists implementations of released Specifications.
 
 
 ## R7 Examples 
@@ -28,15 +22,14 @@ Noteable Reference Implementions include:
 The following resources provide additional examples and tutorials. Development toolchains may vary relative to that used by enRoute.
 
 * [Paremus Service Fabric](https://docs.paremus.com) - a set of distributed enRoute style examples running upon the Service Fabric: an OSGi Enabled Cloud platform.
-* B
-* C
 
 
 ## OSGi Toolchains
 
 The following resources provide further information and guidance on developing with OSGi. 
 
-* [The bndtools IDE plugin for Eclipse](http://bndtools.org) - The easy, powerful and productive way to develop with OSGi. Based on bnd and Eclipse. 
+* [The bndtools IDE plugin for Eclipse](http://bndtools.org) - The easy, powerful and productive way to develop with OSGi. Based on bnd and Eclipse.
+* [ Maven plugins provided by the Bnd project](https://github.com/bndtools/bnd/tree/master/maven) - The Maven plugins used by enRoute.  
 * [The bnd Community Site](http://bnd.bndtools.org) - The engine behind popular software development tools that support OSGi.
 
 

@@ -1,18 +1,56 @@
 ---
-layout: page
-title: About
-permalink: /about/
+layout: toc-page
+title: About 
+description: About enRoute 
+permalink: /About/
+order: 0 
+author: enRoute@paremus.com
+sponsor: OSGi™ Alliance 
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+<br>
+<hr>
+<style>
+table, td, th {    
+    text-align: left;
+}
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+table {
+    width: 100%;
+}
+
+th {
+    padding: 15px;
+    color: Black;
+}
+td {
+    padding 10px;
+    color: Black;
+}
+</style>
+<table>
+        <colgroup>
+                <col style="width:30%">
+                <col style="width:70%">
+        </colgroup>
+{% for f in site.about %}{%unless f.noindex%}<tr>
+        <td><a href="{{f.url}}">{{f.title}}</a></td><td> {{f.summary}}</td>
+</tr>
+{%endunless%}{% endfor %}
+
+</table>
 
 
-[jekyll-organization]: https://github.com/jekyll
+---
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

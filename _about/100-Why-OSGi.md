@@ -1,7 +1,7 @@
 ---
 title: Why OSGi? 
 layout: toc-guide-page
-lprev: 520-bnd.html 
+lprev: 120-Sponsors.html 
 lnext: 110-What-is-enRoute.html 
 summary: The foundations for Economical Sustainable Software Systems  
 author: enRoute@paremus.com

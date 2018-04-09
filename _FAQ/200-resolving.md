@@ -1,7 +1,7 @@
 ---
 title: Resolving - OSGi's Best Kept Secret?
 layout: toc-guide-page
-lprev: 110-What-is-enRoute.html
+lprev: 520-bnd.html
 lnext: 210-semantic_versioning.html  
 summary: Resolving is one of the cornerstones of OSGi, but what actually is going on?
 author: enRoute@paremus.com
