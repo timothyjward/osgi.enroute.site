@@ -56,9 +56,8 @@ It is increasingly realised that OSGi Specifications provide the modular foundat
 
 ## The 'OSGi Enabled' Ingredient Mark
 
-The **OSGi Enabled** mark is available to software vendors which wish to demonstrate that their products and / or services are compliant with one or more OSGi specifications. **OSGi Enabled** identifies a product or service that is modular in both design and implementation.
 ![test](img/OSGiMark_Enabled_RGB.png){: width="150px"}
 
-The **OSGi Enabled** [solutions register](https://www.osgi.org/osgi-compliance/osgi-enabled/osgi-enabled-products-and-services/).
+**OSGi Enabled** identifies a Product or Service that is compliant with one or more OSGi specifications, and so modular in both design and implementation: see the **OSGi Enabled** [solutions register](https://www.osgi.org/osgi-compliance/osgi-enabled/osgi-enabled-products-and-services/).
 
-
+For further details on Usage Terms see [**OSGi Enabled**](https://www.osgi.org/osgi-compliance/osgi-enabled/get-osgi-enabled/). 
