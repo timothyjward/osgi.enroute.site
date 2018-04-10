@@ -83,7 +83,7 @@ The DS component contains a number of important annotations.
 <div class="collapse" id="Upper">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
+{% include osgi.enroute/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
 {% endhighlight %}
 
   </div>

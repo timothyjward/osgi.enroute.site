@@ -46,7 +46,7 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
 <div class="collapse" id="AddressDaoImpl">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/AddressDaoImpl.java %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/AddressDaoImpl.java %}
 {% endhighlight %}
 
   </div>
@@ -61,7 +61,7 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
 <div class="collapse" id="PersonDaoImpl">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/PersonDaoImpl.java %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/PersonDaoImpl.java %}
 {% endhighlight %}
 
   </div>
@@ -77,7 +77,7 @@ To address a hibernate bug we need to add the following `dao-impl-jpa/bnd.bnd`fi
 <div class="collapse" id="bnd">
   <div class="card card-block">
 {% highlight shell tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/bnd.bnd %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/bnd.bnd %}
 {% endhighlight %}
 
   </div>
@@ -98,7 +98,7 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
 <div class="collapse" id="AddressEntity">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/AddressEntity.java %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/AddressEntity.java %}
 {% endhighlight %}
 
   </div>
@@ -114,7 +114,7 @@ Add the following file `dao-impl-jpa/src/main/java/org/osgi/enroute/examples/mic
 <div class="collapse" id="PersonEntity">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/PersonEntity.java %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/PersonEntity.java %}
 {% endhighlight %}
 
   </div>
@@ -129,7 +129,7 @@ The resultant persistence bundle has a Requirement for a JPA service extender. H
 <div class="collapse" id="package-info">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java %}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/jpa/entities/package-info.java %}
 {% endhighlight %}
 
   </div>
@@ -149,7 +149,7 @@ Create the following JPA resources
 <div class="collapse" id="persistence">
   <div class="card card-block">
 {% highlight xml tabsize=4 %}
-{% remote_file_content  https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/persistence.xml%}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/persistence.xml%}
 {% endhighlight %}
 
   </div>
@@ -165,7 +165,7 @@ Create the following JPA resources
 <div class="collapse" id="tables">
   <div class="card card-block">
 {% highlight sql tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/R7/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/tables.sql%}
+{% include osgi.enroute/examples/microservice/dao-impl-jpa/src/main/resources/META-INF/tables.sql%}
 {% endhighlight %}
 
   </div>
@@ -300,7 +300,7 @@ Add the following configuration file `rest-app-jpa/src/main/resources/OSGI-INF/c
 <div class="collapse" id="configuration">
   <div class="card card-block">
 {% highlight json tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/osgi/osgi.enroute/67b725d97736b72ee2b7e1c0ff1f69455d84c91c/examples/microservice/rest-app-jpa/src/main/resources/OSGI-INF/configurator/configuration.json%}
+{% include osgi.enroute/examples/microservice/rest-app-jpa/src/main/resources/OSGI-INF/configurator/configuration.json%}
 {% endhighlight %}
 
   </div>

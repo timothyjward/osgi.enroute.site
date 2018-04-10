@@ -14,9 +14,9 @@ In this tutorial we'll first run, and then re-create and re-run, a simple OSGiâ„
 
 ## Build & Run
 
-We start by first downloading, building and running the enRoute `quickstart` example. In addition to demonstrating the simple application this will also confirm that your local [environment](015-Prerequisite.html#required-tools) meets the require prerequisits.
+We start by first downloading, building and running the enRoute `quickstart` example. In addition to demonstrating the simple application this will also confirm that your local [environment](015-Prerequisite.html#required-tools) meets the require prerequisites.
 
-Download the [enroute examples](https://github.com/timothyjward/osgi.enroute/tree/55e14b52e277c653ad8975eccf7e92d7813abfec) from GitHub and change directory into `examples/quickstart`.
+Download the [enroute examples](https://github.com/osgi/osgi.enroute) from GitHub and change directory into `examples/quickstart`.
 
 ### Building the example
  
@@ -100,7 +100,7 @@ and add the following implementation details
 <div class="collapse" id="Upper">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
+{% include osgi.enroute/examples/quickstart/rest/src/main/java/org/osgi/enroute/examples/quickstart/rest/Upper.java %}
 {% endhighlight %}
 
   </div>

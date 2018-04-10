@@ -82,7 +82,7 @@ Now create the following two files:
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/PersonDao.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -97,7 +97,7 @@ Now create the following two files:
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/AddressDao.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/AddressDao.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -116,7 +116,7 @@ Now create the following two files:
 <div class="collapse" id="package-info-dao">
   <div class="card card-block">
 {% highlight java tabsize=4 %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/package-info.java %}
 {% endhighlight %}
 
   </div>
@@ -140,7 +140,7 @@ To achieve this create the following two files:
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/PersonDTO.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/PersonDTO.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -155,7 +155,7 @@ To achieve this create the following two files:
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/AddressDTO.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/AddressDTO.java %}
 {% endhighlight %} 
 </div>
 </div>
@@ -172,7 +172,7 @@ and again, we advertise this Capability by creating the following `package-info.
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java %}
+{% include osgi.enroute/examples/microservice/dao-api/src/main/java/org/osgi/enroute/examples/microservice/dao/dto/package-info.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -214,7 +214,7 @@ Now create the following four files:
 
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java %}
+{% include osgi.enroute/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonTable.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -231,7 +231,7 @@ Now create the following four files:
 
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonDaoImpl.java %}
+{% include osgi.enroute/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/PersonDaoImpl.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -247,7 +247,7 @@ Now create the following four files:
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressTable.java %}
+{% include osgi.enroute/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressTable.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -264,7 +264,7 @@ Now create the following four files:
 
 
 {% highlight java %}
-{% remote_file_content  https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressDaoImpl.java%}
+{% include osgi.enroute/examples/microservice/dao-impl/src/main/java/org/osgi/enroute/examples/microservice/dao/impl/AddressDaoImpl.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -325,7 +325,7 @@ Now create the following two files:
 
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java %}
+{% include osgi.enroute/examples/microservice/rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/RestComponentImpl.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -342,7 +342,7 @@ Now create the following two files:
 
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/JsonpConvertingPlugin.java %}
+{% include osgi.enroute/examples/microservice/rest-service/src/main/java/org/osgi/enroute/examples/microservice/rest/JsonpConvertingPlugin.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -361,7 +361,7 @@ Create the directory `rest-service/src/main/resources/static/main/html` and adde
 
 
 {% highlight html %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-service/src/main/resources/static/main/html/person.html %}
+{% include osgi.enroute/examples/microservice/rest-service/src/main/resources/static/main/html/person.html %}
 {% endhighlight %}  
 </div>
 </div>
@@ -379,7 +379,7 @@ And also the `rest-service/src/main/resources/static/css` directory for the foll
 
 
 {% highlight css %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-service/src/main/resources/static/css/style.css %}
+{% include osgi.enroute/examples/microservice/rest-service/src/main/resources/static/css/style.css %}
 {% endhighlight %}
 </div>
 </div>
@@ -397,7 +397,7 @@ Finally, place the following `index.html` file in directory `rest-service/src/ma
 
 
 {% highlight html %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-service/src/main/resources/static/index.html %}
+{% include osgi.enroute/examples/microservice/rest-service/src/main/resources/static/index.html %}
 {% endhighlight %}
 </div>
 </div>
@@ -526,7 +526,7 @@ The [application Archetype](017-enRoute-ArcheTypes.html#the-application-archetyp
   <div class="card card-block">
 
 {% highlight java %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-app/src/main/java/config/package-info.java %}
+{% include osgi.enroute/examples/microservice/rest-app/src/main/java/config/package-info.java %}
 {% endhighlight %}
 </div>
 </div>
@@ -543,7 +543,7 @@ All that is required is to pass in the appropriate configuration by overwrite th
 
 
 {% highlight json %}
-{% remote_file_content https://raw.githubusercontent.com/timothyjward/osgi.enroute/R7/examples/microservice/rest-app/src/main/resources/OSGI-INF/configurator/configuration.json %}
+{% include osgi.enroute/examples/microservice/rest-app/src/main/resources/OSGI-INF/configurator/configuration.json %}
 {% endhighlight %}
 </div>
 </div>
