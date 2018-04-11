@@ -30,6 +30,5 @@ OSGi has a long history, starting in 1998 as a software standard for Java based 
 
 ## Further reading
 
-The primary focus of the enRoute project is to get you writing code, not reading articles, but there's lots of information about Modularity and OSGi technology available if you want to learn more.
+The primary focus of the enRoute project is to get you writing code, not reading articles, but there's lots of information about Modularity and OSGi technology available if you want to learn more: see [OSGi Benefits](https://www.osgi.org/developer/benefits-of-using-osgi/).
 
-**TODO add links to the OSGi site**

@@ -17,13 +17,6 @@ enRoute is based upon the lastest OSGi Allaince Specifications, see:
 Each OSGi Alliance Specification is accompanied by a Reference Implementation and an associated Conformance Test suite. These resources maintained by the OSGi Alliance Members: [OSGi Specification Implementations](https://en.wikipedia.org/wiki/OSGi_Specification_Implementations) lists implementations of released Specifications.
 
 
-## R7 Examples 
-
-The following resources provide additional examples and tutorials. Development toolchains may vary relative to that used by enRoute.
-
-* [Paremus Service Fabric](https://docs.paremus.com) - a set of distributed enRoute style examples running upon the Service Fabric: an OSGi Enabled Cloud platform.
-
-
 ## OSGi Toolchains
 
 The following resources provide further information and guidance on developing with OSGi. 
