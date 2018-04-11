@@ -13,7 +13,7 @@ syntax_highlighter_opts:
 collections:
   about:
     output: true
-  concepts:
+  doc:
     output: true
   tutorial:
     output: true
