@@ -193,6 +193,6 @@ As long as the Assembly / Orchestration complexity (~224/928 of the original Mon
 
 Software Complexity is a foundational problem and Modularity is the solution to that problem. However, Modularity is not a one-off apply and forget activity. The Modularisation process creates a structural hierarchy, and introduces new management considerations for each new layer in that hierarchy. 
 
-Howevevr, even after accounting for the new layers of structural Complexity created by Modularity, the reduction of overall System Complexity is profound.
+However, even after accounting for the new layers of structural Complexity created by Modularity, the reduction of overall System Complexity is profound.
 
 Ofcourse the most important Complexity measure, and the one of most interest to your senior management, is expressed via the Total Cost of Ownership of the System, and this will be the subject of the next section.

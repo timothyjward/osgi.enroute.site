@@ -11,9 +11,9 @@ syntax_highlighter_opts:
   disable: true
 
 collections:
-  doc:
-    output: true
   about:
+    output: true
+  concepts:
     output: true
   tutorial:
     output: true
